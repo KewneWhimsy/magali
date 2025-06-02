@@ -1,0 +1,160 @@
+---
+// src/pages/[lang]/index.astro
+import Layout from '../../layouts/layout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "fr" } },
+    { params: { lang: "en" } },
+    { params: { lang: "de" } },
+  ];
+}
+
+const lang = Astro.params.lang as "fr" | "en" | "de";
+
+const content = {
+  fr: {
+    title: 'ABC Gourmet - Conseil en Agroalimentaire',
+    description: 'Expertise stratégique et accompagnement opérationnel dans le secteur alimentaire. Développement produit, marketing, export et management.',
+    heroTitle: 'Votre partenaire conseil en agroalimentaire',
+    heroSubtitle: 'Expertise stratégique et accompagnement opérationnel pour développer votre activité dans le secteur alimentaire',
+    heroButton: 'Découvrir nos services',
+    expertiseTitle: 'Nos domaines d\'expertise',
+    expertiseItems: [
+      {
+        title: 'Développement produit',
+        description: 'Innovation alimentaire, formulation et mise sur le marché de nouveaux produits'
+      },
+      {
+        title: 'Marketing alimentaire',
+        description: 'Stratégie de marque, positionnement et communication dans l\'univers food'
+      },
+      {
+        title: 'Export agroalimentaire', 
+        description: 'Accompagnement à l\'international, réglementation et développement commercial'
+      },
+      {
+        title: 'Management opérationnel',
+        description: 'Optimisation des processus, qualité et organisation des équipes'
+      }
+    ],
+    ctaTitle: 'Prêt à développer votre projet alimentaire ?',
+    ctaButton: 'Nous contacter'
+  },
+  en: {
+    title: 'ABC Gourmet - Food Industry Consulting',
+    description: 'Strategic expertise and operational support in the food sector. Product development, marketing, export and management.',
+    heroTitle: 'Your food industry consulting partner',
+    heroSubtitle: 'Strategic expertise and operational support to develop your business in the food sector',
+    heroButton: 'Discover our services',
+    expertiseTitle: 'Our areas of expertise',
+    expertiseItems: [
+      {
+        title: 'Product development',
+        description: 'Food innovation, formulation and market launch of new products'
+      },
+      {
+        title: 'Food marketing',
+        description: 'Brand strategy, positioning and communication in the food universe'
+      },
+      {
+        title: 'Agri-food export',
+        description: 'International support, regulations and commercial development'
+      },
+      {
+        title: 'Operational management',
+        description: 'Process optimization, quality and team organization'
+      }
+    ],
+    ctaTitle: 'Ready to develop your food project?',
+    ctaButton: 'Contact us'
+  },
+  de: {
+    title: 'ABC Gourmet - Beratung für die Lebensmittelindustrie',
+    description: 'Strategische Expertise und operative Unterstützung im Lebensmittelsektor. Produktentwicklung, Marketing, Export und Management.',
+    heroTitle: 'Ihr Beratungspartner für die Lebensmittelindustrie',
+    heroSubtitle: 'Strategische Expertise und operative Unterstützung zur Entwicklung Ihres Geschäfts im Lebensmittelsektor',
+    heroButton: 'Unsere Dienstleistungen entdecken',
+    expertiseTitle: 'Unsere Fachbereiche',
+    expertiseItems: [
+      {
+        title: 'Produktentwicklung',
+        description: 'Lebensmittelinnovation, Formulierung und Markteinführung neuer Produkte'
+      },
+      {
+        title: 'Lebensmittelmarketing',
+        description: 'Markenstrategie, Positionierung und Kommunikation im Food-Bereich'
+      },
+      {
+        title: 'Agrar- und Lebensmittelexport',
+        description: 'Internationale Unterstützung, Vorschriften und Geschäftsentwicklung'
+      },
+      {
+        title: 'Operatives Management',
+        description: 'Prozessoptimierung, Qualität und Teamorganisation'
+      }
+    ],
+    ctaTitle: 'Bereit, Ihr Lebensmittelprojekt zu entwickeln?',
+    ctaButton: 'Kontaktieren Sie uns'
+  }
+};
+
+const t = content[lang] || content.fr;
+---
+
+<Layout title={t.title} description={t.description} lang={lang}>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        {t.heroTitle}
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+        {t.heroSubtitle}
+      </p>
+      <a 
+        href={`/${lang}/services/`}
+        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+      >
+        {t.heroButton}
+      </a>
+    </div>
+  </section>
+
+  <!-- Expertise Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+        {t.expertiseTitle}
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {t.expertiseItems.map((item) => (
+          <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <h3 class="text-xl font-semibold mb-4 text-blue-600">
+              {item.title}
+            </h3>
+            <p class="text-gray-600">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-blue-600 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8">
+        {t.ctaTitle}
+      </h2>
+      <a 
+        href={`/${lang}/contact/`}
+        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+      >
+        {t.ctaButton}
+      </a>
+    </div>
+  </section>
+</Layout>

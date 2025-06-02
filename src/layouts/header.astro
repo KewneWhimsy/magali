@@ -1,0 +1,106 @@
+---
+// src/layouts/header.astro
+import LanguageSwitcher from '../components/language_switcher.astro';
+
+// Récupérer le chemin actuel pour gérer l'état actif des liens
+const { pathname } = Astro.url;
+
+// Détecter la langue actuelle depuis l'URL
+const langMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
+const currentLang = langMatch ? langMatch[1] : 'fr';
+
+// Traduction des labels de navigation pour ABC Gourmet
+const navLabels = {
+  fr: {
+    services: 'Services',
+    expertise: 'Expertise',
+    about: 'À propos',
+    references: 'Références',
+    contact: 'Contact'
+  },
+  en: {
+    services: 'Services',
+    expertise: 'Expertise', 
+    about: 'About',
+    references: 'References',
+    contact: 'Contact'
+  },
+  de: {
+    services: 'Dienstleistungen',
+    expertise: 'Expertise',
+    about: 'Über uns',
+    references: 'Referenzen',
+    contact: 'Kontakt'
+  }
+};
+
+// Utiliser la langue courante ou le français par défaut
+const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
+---
+
+<header class="bg-white shadow-sm border-b border-gray-200">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <!-- Logo / Nom de l'entreprise -->
+      <div class="mb-4 md:mb-0" data-astro-transition-persist="header-logo">
+        <a 
+          href=`/${currentLang}/` 
+          class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+        >
+          ABC Gourmet
+        </a>
+      </div>
+      
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <!-- Navigation principale avec URL localisées -->
+        <nav class="w-full md:w-auto">
+          <ul class="flex flex-wrap justify-center items-center gap-6">
+            <li>
+              <a 
+                href=`/${currentLang}/services/` 
+                class={`hover:text-blue-600 transition-colors ${pathname.includes('/services') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.services}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/expertise/` 
+                class={`hover:text-blue-600 transition-colors ${pathname.includes('/expertise') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.expertise}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/about/`
+                class={`hover:text-blue-600 transition-colors ${pathname.includes('/about') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.about}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/references/`
+                class={`hover:text-blue-600 transition-colors ${pathname.includes('/references') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.references}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/contact/`
+                class={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
+              >
+                {labels.contact}
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <!-- Sélecteur de langue -->
+        <LanguageSwitcher />
+      </div>
+    </div>
+  </div>
+</header>

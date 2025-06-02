@@ -1,0 +1,160 @@
+/* src/styles/global.css */
+@import "tailwindcss";
+
+/* Variables CSS pour ABC Gourmet */
+:root {
+  --color-primary: #2563eb; /* blue-600 */
+  --color-primary-hover: #1d4ed8; /* blue-700 */
+  --color-secondary: #64748b; /* slate-500 */
+  --color-text: #1f2937; /* gray-800 */
+  --color-text-muted: #6b7280; /* gray-500 */
+  --color-background: #ffffff;
+  --color-background-secondary: #f9fafb; /* gray-50 */
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* Transitions par défaut */
+* {
+  transition-property: color, background-color, border-color, opacity, transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Style pour les liens de navigation */
+.nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--color-primary);
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* Boutons primaires */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Boutons secondaires */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Section spacing */
+.section {
+  padding: 4rem 0;
+}
+
+.section-lg {
+  padding: 6rem 0;
+}
+
+/* Container responsive */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Animation d'apparition */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive text */
+.text-responsive {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+.heading-responsive {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Focus states pour l'accessibilité */
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling pour les ancres */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

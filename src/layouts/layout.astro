@@ -1,0 +1,76 @@
+---
+// src/layouts/layout.astro
+import "../styles/global.css";
+import Header from "./header.astro";
+import Footer from "./footer.astro";
+import HreflangLinks from "../components/hreflang_links.astro";
+
+// Props du composant
+export interface Props {
+  title: string;
+  description: string;
+  lang: string;
+}
+
+const {
+  title,
+  description,
+  lang: requestedLang = "fr",
+} = Astro.props;
+
+// Détection de la langue pour mettre les bonnes meta
+const langAttributes = {
+  fr: {
+    htmlLang: "fr",
+    ogLocale: "fr_FR",
+  },
+  en: {
+    htmlLang: "en",
+    ogLocale: "en_US",
+  },
+  de: {
+    htmlLang: "de",
+    ogLocale: "de_DE",
+  },
+};
+
+// Vérifier si la langue demandée est supportée, sinon utiliser le français
+const lang = requestedLang in langAttributes ? requestedLang : "fr";
+const { htmlLang, ogLocale } =
+  langAttributes[lang as keyof typeof langAttributes];
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="ABC Gourmet" />
+
+    <!-- Métadonnées pour SEO -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={ogLocale} />
+    
+    <!-- Favicon (à remplacer par le logo ABC Gourmet) -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Liens hreflang pour le SEO multilingue -->
+    <HreflangLinks/>
+
+    <title>{title}</title>
+  </head>
+  
+  <body class="min-h-screen flex flex-col bg-white text-gray-900">
+    <Header />
+
+    <main class="flex-1">
+      <!-- Le contenu principal sera inséré ici -->
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,57 @@
+---
+// src/components/LanguageSwitcher.astro
+
+// Langues disponibles
+const languages = [
+  { code: 'fr', label: 'FR' },
+  { code: 'en', label: 'EN' },
+  { code: 'de', label: 'DE' }
+];
+
+// Obtenir l'URL actuelle
+const { pathname } = Astro.url;
+
+// Détecter la langue actuelle
+const langMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
+const currentLang = langMatch ? langMatch[1] : 'fr';
+
+// Fonction pour déterminer l'URL dans une autre langue
+const getLocalizedPath = (langCode: string): string => {
+  // Extraire le chemin sans le code de langue
+  const pathWithoutLang = pathname.replace(/^\/[a-z]{2}/, '');
+  
+  // Construire le nouveau chemin avec la langue souhaitée
+  let localizedPath = `/${langCode}${pathWithoutLang}`;
+  
+  // S'assurer qu'il y a un slash final
+  if (!localizedPath.endsWith('/')) {
+    localizedPath += '/';
+  }
+  
+  return localizedPath;
+};
+---
+
+<div class="relative inline-block text-left">
+  <div class="flex items-center gap-2">
+    {languages.map((lang, index) => (
+      <>
+        <a 
+          href={getLocalizedPath(lang.code)} 
+          class={`text-sm transition-colors duration-200 ${
+            lang.code === currentLang 
+              ? 'text-blue-600 font-medium' 
+              : 'text-gray-600 hover:text-blue-600'
+          }`}
+          onclick={`localStorage.setItem('preferredLanguage', '${lang.code}')`}
+        >
+          {lang.label}
+        </a>
+        
+        {index < languages.length - 1 && (
+          <span class="text-gray-400">|</span>
+        )}
+      </>
+    ))}
+  </div>
+</div>

@@ -1,47 +1,31 @@
-# Astro Starter Kit: Minimal
+# Site web pour ABC Gourmet - Conseil en Agroalimentaire
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Un site web professionnel multilingue construit avec Astro et Tailwind CSS, présentant les services de conseil stratégique et d'accompagnement opérationnel dans le secteur alimentaire de ABC Gourmet. Intégrant TinaCMS pour permettre la gestion de contenu autonome.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Fonctionnalités
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **Support multilingue**: Disponible en français, anglais et allemand
+- **Design responsive**: Mise en page entièrement adaptable qui fonctionne sur tous les appareils
+- **Optimisé pour la performance**: Temps de chargement rapides et utilisation minimale des ressources
+- **Accessibilité**: Conçu en tenant compte de l'accessibilité
+- **Navigation fluide**: Utilisation de transition-persist pour conserver les éléments communs entre les pages
+- **Gestion de contenu**: Interface TinaCMS intégrée pour permettre la modification autonome du contenu
 
-## 🚀 Project Structure
+## Technologies utilisées
 
-Inside of your Astro project, you'll see the following folders and files:
+- [Astro](https://astro.build/) - Le framework principal pour construire le site
+- [Tailwind CSS](https://tailwindcss.com/) - Pour le stylisme
+- [TypeScript](https://www.typescriptlang.org/) - Pour la fiabilité et le typage
+- [TinaCMS](https://tina.io/) - Système de gestion de contenu pour l'édition autonome
+- [Cloudflare Pages](https://pages.cloudflare.com/) - Pour l'hébergement
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Sections principales
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. **Accueil**: Présentation d'ABC Gourmet et des services principaux
+2. **Qui sommes-nous**: Vision, mission et valeurs de l'entreprise
+3. **Expertises**: Vision stratégique, marketing, management et export
+4. **Formation et ateliers**: description bréves des différentes formations
+5. **Services**: Accompagnement stratégique, conseil marketing, développement commercial 
+6. **Résultats & témoignages**: Exemples de parcours clients et témoignages
+7. **Actualités**: Section blog
+8. **Contact**: Formulaire de contact et informations pratiques

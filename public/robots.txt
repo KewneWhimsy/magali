@@ -1,0 +1,5 @@
+# public/robots.txt pour la démo
+User-agent: *
+Disallow: /
+
+# Empêche l'indexation pendant le dev

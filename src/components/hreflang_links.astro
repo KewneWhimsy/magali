@@ -1,0 +1,40 @@
+---
+// src/components/hreflang_links.astro
+const { pathname } = Astro.url;
+
+// Définir les langues supportées
+const langs = ['fr', 'en', 'de'] as const;
+type Lang = typeof langs[number];
+
+// Associer chaque langue à son code hreflang
+const langCodes: Record<Lang, string> = {
+  fr: 'fr-FR',
+  en: 'en-US',
+  de: 'de-DE'
+};
+
+// Extraire la langue actuelle de l'URL
+const langMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
+const currentLang: Lang = (langMatch ? langMatch[1] : 'fr') as Lang;
+
+// Nettoyer et normaliser le chemin pour éviter les doublons
+function getPathWithoutLang(path: string): string {
+  const cleanPath = path.replace(/^\/[a-z]{2}/, ''); // Enlever la langue
+  return cleanPath.replace(/\/{2,}/g, '/').replace(/\/?$/, '/'); // Retirer les doublons et ajouter un '/'
+}
+
+const pathWithoutLang = getPathWithoutLang(pathname);
+
+// Domaine du site
+const siteUrl = import.meta.env.SITE || 'https://abc-gourmet.fr/';
+---
+
+<!-- Balises hreflang pour chaque langue -->
+{langs.map((lang) => {
+  const langPath = `/${lang}${pathWithoutLang}`;
+  const fullUrl = `${siteUrl}${langPath}`;
+  return <link rel="alternate" hreflang={langCodes[lang]} href={fullUrl} />;
+})}
+
+<!-- Balise hreflang pour l'URL par défaut -->
+<link rel="alternate" hreflang="x-default" href={`${siteUrl}/fr${pathWithoutLang}`} />
