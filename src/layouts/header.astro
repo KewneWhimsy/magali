@@ -12,24 +12,30 @@ const currentLang = langMatch ? langMatch[1] : 'fr';
 // Traduction des labels de navigation pour ABC Gourmet
 const navLabels = {
   fr: {
-    services: 'Services',
-    expertise: 'Expertise',
-    about: 'À propos',
-    references: 'Références',
+    home: 'Accueil',
+    about: 'Qui sommes-nous ?',
+    expertise: 'Expertises',
+    training: 'Formation et ateliers',
+    results: 'Résultats & témoignages',
+    news: 'Actualités',
     contact: 'Contact'
   },
   en: {
-    services: 'Services',
+    home: 'Home',
+    about: 'Who are we?',
     expertise: 'Expertise', 
-    about: 'About',
-    references: 'References',
+    training: 'Training & workshops',
+    results: 'Results & testimonials',
+    news: 'News',
     contact: 'Contact'
   },
   de: {
-    services: 'Dienstleistungen',
+    home: 'Startseite',
+    about: 'Wer sind wir?',
     expertise: 'Expertise',
-    about: 'Über uns',
-    references: 'Referenzen',
+    training: 'Schulung und Workshops',
+    results: 'Ergebnisse & Testimonials',
+    news: 'Nachrichten',
     contact: 'Kontakt'
   }
 };
@@ -38,11 +44,11 @@ const navLabels = {
 const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
 ---
 
-<header class="bg-white shadow-sm border-b border-gray-200">
+<header class="bg-white shadow-sm border-b border-gray-200 lg:fixed lg:top-0 lg:left-0 lg:right-0 lg:z-50 fixed top-0 left-0 right-0 z-50 transition-transform duration-300" id="main-header">
   <div class="container mx-auto px-4 py-4">
-    <div class="flex flex-col md:flex-row justify-between items-center">
+    <div class="flex flex-col lg:flex-row justify-between items-center">
       <!-- Logo / Nom de l'entreprise -->
-      <div class="mb-4 md:mb-0" data-astro-transition-persist="header-logo">
+      <div class="mb-4 lg:mb-0" data-astro-transition-persist="header-logo">
         <a 
           href=`/${currentLang}/` 
           class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
@@ -51,46 +57,62 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
         </a>
       </div>
       
-      <div class="flex flex-col md:flex-row gap-4 items-center">
+      <div class="flex flex-col lg:flex-row gap-4 items-center">
         <!-- Navigation principale avec URL localisées -->
-        <nav class="w-full md:w-auto">
-          <ul class="flex flex-wrap justify-center items-center gap-6">
+        <nav class="w-full lg:w-auto">
+          <ul class="flex flex-wrap justify-center items-center gap-4 my-2 xl:gap-6">
             <li>
               <a 
-                href=`/${currentLang}/services/` 
-                class={`hover:text-blue-600 transition-colors ${pathname.includes('/services') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href=`/${currentLang}/` 
+                class={`hover:text-blue-600 transition-colors text-sm ${pathname === `/${currentLang}/` ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
-                {labels.services}
+                {labels.home}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/expertise/` 
-                class={`hover:text-blue-600 transition-colors ${pathname.includes('/expertise') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
-              >
-                {labels.expertise}
-              </a>
-            </li>
-            <li>
-              <a 
-                href=`/${currentLang}/about/`
-                class={`hover:text-blue-600 transition-colors ${pathname.includes('/about') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href=`/${currentLang}/about/` 
+                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/about') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.about}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/references/`
-                class={`hover:text-blue-600 transition-colors ${pathname.includes('/references') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href=`/${currentLang}/expertise/` 
+                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/expertise') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
-                {labels.references}
+                {labels.expertise}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/training/` 
+                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/training') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.training}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/results/`
+                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/results') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.results}
+              </a>
+            </li>
+            <li>
+              <a 
+                href=`/${currentLang}/news/`
+                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/news') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+              >
+                {labels.news}
               </a>
             </li>
             <li>
               <a 
                 href=`/${currentLang}/contact/`
-                class={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
+                class={`bg-blue-600 text-white px-3 py-2 xl:px-4 xl:py-2 rounded hover:bg-blue-700 transition-colors text-sm ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
               >
                 {labels.contact}
               </a>
@@ -99,8 +121,40 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
         </nav>
         
         <!-- Sélecteur de langue -->
-        <LanguageSwitcher />
+        <div class="mt-2 lg:mt-0">
+          <LanguageSwitcher />
+        </div>
       </div>
     </div>
   </div>
 </header>
+
+<!-- Script pour le comportement du header mobile -->
+<script>
+  let lastScrollY = 0;
+  const header = document.getElementById('main-header');
+
+  if (header) {
+    window.addEventListener('scroll', () => {
+      // Seulement sur mobile
+      if (window.innerWidth < 1100) {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          // Scroll down - hide
+          header.style.transform = 'translateY(-100%)';
+        } else if (currentScrollY < lastScrollY) {
+          // Scroll up - show (dès qu'on remonte, même d'1px)
+          header.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollY = currentScrollY;
+      }
+    });
+
+    // Réinitialiser le header quand on redimensionne
+    window.addEventListener('resize', () => {
+      header.style.transform = 'translateY(0)';
+    });
+  }
+</script>
