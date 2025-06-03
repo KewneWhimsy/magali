@@ -104,9 +104,9 @@ const t = content[lang] || content.fr;
 
 <Layout title={t.title} description={t.description} lang={lang}>
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+  <section class="bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-(--color-white) py-20">
     <div class="max-w-6xl mx-auto px-4 text-center">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 fade-in-up">
         {t.heroTitle}
       </h1>
       <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
@@ -124,14 +124,14 @@ const t = content[lang] || content.fr;
   <!-- Expertise Section -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-(--color-primary)">
         {t.expertiseTitle}
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {t.expertiseItems.map((item) => (
           <div class="card">
-            <h3 class="text-xl font-semibold mb-4 text-blue-600">
+            <h3 class="text-xl font-semibold mb-4 text-(--color-primary)">
               {item.title}
             </h3>
             <p class="text-gray-600">
@@ -144,14 +144,14 @@ const t = content[lang] || content.fr;
   </section>
 
   <!-- CTA Section -->
-  <section class="py-16 bg-blue-600 text-white">
+  <section class="py-16 bg-(--color-primary) text-(--color-white)">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-8">
         {t.ctaTitle}
       </h2>
       <a 
         href={`/${lang}/contact/`}
-        class="btn-primary bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4"
+        class="btn-primary bg-(--color-white) text-(--color-primary) hover:bg-(--color-gray-50) text-lg px-8 py-4"
       >
         {t.ctaButton}
       </a>

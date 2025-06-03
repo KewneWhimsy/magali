@@ -36,8 +36,9 @@ const langAttributes = {
 
 // Vérifier si la langue demandée est supportée, sinon utiliser le français
 const lang = requestedLang in langAttributes ? requestedLang : "fr";
-const { htmlLang, ogLocale } =
-  langAttributes[lang as keyof typeof langAttributes];
+const { htmlLang, ogLocale } = langAttributes[lang as keyof typeof langAttributes];
+
+import { ClientRouter } from "astro:transitions";
 ---
 
 <!doctype html>
@@ -61,16 +62,18 @@ const { htmlLang, ogLocale } =
     <HreflangLinks/>
 
     <title>{title}</title>
+
+    <ClientRouter />
   </head>
   
   <body class="min-h-screen flex flex-col bg-white text-gray-900">
-    <Header />
+    <Header transition:persist />
 
     <main class="flex-1">
       <!-- Le contenu principal sera inséré ici -->
       <slot />
     </main>
 
-    <Footer />
+    <Footer transition:persist />
   </body>
 </html>

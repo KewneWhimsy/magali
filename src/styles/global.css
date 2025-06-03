@@ -1,5 +1,17 @@
-/* src/styles/global.css - Version intelligente */
+/* src/styles/global.css - Version KISS avec variables */
 @import "tailwindcss";
+
+/* === VARIABLES CSS SIMPLES === */
+:root {
+  --color-primary: rgb(8, 177, 124);
+  --color-primary-hover: #34b689;
+  --color-secondary: #f97316;
+  --color-gray-50: #f9fafb;
+  --color-gray-600: #4b5563;
+  --color-gray-900: #111827;
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
 
 /* === STYLES DE BASE === */
 
@@ -16,8 +28,8 @@ body {
 
 /* Boutons */
 .btn-primary {
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -27,14 +39,14 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #1d4ed8;
+  background-color: var(--color-primary-hover);
   transform: translateY(-2px);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: #2563eb;
-  border: 2px solid #2563eb;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -44,14 +56,14 @@ body {
 }
 
 .btn-secondary:hover {
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   transform: translateY(-2px);
 }
 
 /* Cards */
 .card {
-  background: white;
+  background: var(--color-white);
   border-radius: 0.75rem;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -71,18 +83,18 @@ body {
 }
 
 .nav-link:hover {
-  color: #2563eb;
+  color: var(--color-primary);
 }
 
 .nav-link.active {
-  color: #2563eb;
+  color: var(--color-primary);
   font-weight: 500;
 }
 
 /* === FOCUS ACCESSIBILITY === */
 
 *:focus {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

@@ -44,14 +44,14 @@ const navLabels = {
 const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
 ---
 
-<header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300" id="main-header">
+<header class="bg-(--color-white) shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300" id="main-header">
   <div class="max-w-7xl mx-auto px-4">
     <div class="flex flex-col lg:flex-row justify-between items-center">
       <!-- Logo / Nom de l'entreprise -->
       <div class="mb-4 lg:mb-0" data-astro-transition-persist="header-logo">
         <a 
           href={`/${currentLang}/`}
-          class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+          class="text-2xl font-bold text-(--color-primary) hover:text-(--color-primary-hover) transition-colors"
         >
           ABC Gourmet
         </a>
@@ -112,7 +112,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/contact/`}
-                class={`bg-blue-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-200 hover:bg-blue-700 hover:-translate-y-0.5 lg:text-sm ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
+                class={`bg-(--color-primary) text-(--color-white) px-4 py-2 rounded-full font-semibold transition-all duration-200 hover:bg-(--color-primary-hover) hover:-translate-y-0.5 lg:text-sm ${pathname.includes('/contact') ? 'bg-(--color-primary-hover)' : ''}`}
               >
                 {labels.contact}
               </a>
