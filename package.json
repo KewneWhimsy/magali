@@ -1,5 +1,5 @@
 {
-  "name": "abc-gourmet-website",
+  "name": "magali",
   "type": "module",
   "version": "1.0.0",
   "description": "Site web multilingue pour ABC Gourmet, conseil stratégique et accompagnement opérationnel dans le secteur alimentaire",
@@ -24,7 +24,7 @@
     "astro",
     "multilingue"
   ],
-  "author": "ABC Gourmet",
+  "author": "Magali",
   "license": "UNLICENSED",
   "private": true
 }

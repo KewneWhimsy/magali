@@ -147,11 +147,6 @@ body {
   outline-offset: 2px;
 }
 
-/* Smooth scrolling pour les ancres */
-html {
-  scroll-behavior: smooth;
-}
-
 /* Print styles */
 @media print {
   .no-print {
