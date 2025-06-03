@@ -44,7 +44,7 @@ const navLabels = {
 const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
 ---
 
-<header class="bg-white shadow-sm border-b border-gray-200 lg:fixed lg:top-0 lg:left-0 lg:right-0 lg:z-50 fixed top-0 left-0 right-0 z-50 transition-transform duration-300" id="main-header">
+<header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300" id="main-header">
   <div class="container mx-auto px-4 py-4">
     <div class="flex flex-col lg:flex-row justify-between items-center">
       <!-- Logo / Nom de l'entreprise -->
@@ -64,7 +64,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/` 
-                class={`hover:text-blue-600 transition-colors text-sm ${pathname === `/${currentLang}/` ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname === `/${currentLang}/` ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.home}
               </a>
@@ -72,7 +72,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/about/` 
-                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/about') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/about') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.about}
               </a>
@@ -80,7 +80,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/expertise/` 
-                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/expertise') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/expertise') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.expertise}
               </a>
@@ -88,7 +88,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/training/` 
-                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/training') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/training') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.training}
               </a>
@@ -96,7 +96,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/results/`
-                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/results') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/results') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.results}
               </a>
@@ -104,7 +104,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/news/`
-                class={`hover:text-blue-600 transition-colors text-sm ${pathname.includes('/news') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/news') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
               >
                 {labels.news}
               </a>
@@ -112,7 +112,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href=`/${currentLang}/contact/`
-                class={`bg-blue-600 text-white px-3 py-2 xl:px-4 xl:py-2 rounded hover:bg-blue-700 transition-colors text-sm ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
+                class={`bg-blue-600 text-white px-3 py-2 xl:px-4 xl:py-2 rounded hover:bg-blue-700 transition-colors lg:text-sm ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
               >
                 {labels.contact}
               </a>
@@ -136,7 +136,6 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
 
   if (header) {
     window.addEventListener('scroll', () => {
-      // Seulement sur mobile
       if (window.innerWidth < 1100) {
         const currentScrollY = window.scrollY;
         
@@ -144,7 +143,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
           // Scroll down - hide
           header.style.transform = 'translateY(-100%)';
         } else if (currentScrollY < lastScrollY) {
-          // Scroll up - show (dès qu'on remonte, même d'1px)
+          // Scroll up - show
           header.style.transform = 'translateY(0)';
         }
         
