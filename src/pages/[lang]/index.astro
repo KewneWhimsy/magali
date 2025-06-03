@@ -105,7 +105,7 @@ const t = content[lang] || content.fr;
 <Layout title={t.title} description={t.description} lang={lang}>
   <!-- Hero Section -->
   <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-    <div class="container mx-auto px-4 text-center">
+    <div class="max-w-6xl mx-auto px-4 text-center">
       <h1 class="text-4xl md:text-6xl font-bold mb-6">
         {t.heroTitle}
       </h1>
@@ -114,7 +114,7 @@ const t = content[lang] || content.fr;
       </p>
       <a 
         href={`/${lang}/services/`}
-        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+        class="btn-primary text-lg px-8 py-4"
       >
         {t.heroButton}
       </a>
@@ -123,14 +123,14 @@ const t = content[lang] || content.fr;
 
   <!-- Expertise Section -->
   <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
         {t.expertiseTitle}
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {t.expertiseItems.map((item) => (
-          <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <div class="card">
             <h3 class="text-xl font-semibold mb-4 text-blue-600">
               {item.title}
             </h3>
@@ -145,13 +145,13 @@ const t = content[lang] || content.fr;
 
   <!-- CTA Section -->
   <section class="py-16 bg-blue-600 text-white">
-    <div class="container mx-auto px-4 text-center">
+    <div class="max-w-6xl mx-auto px-4 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-8">
         {t.ctaTitle}
       </h2>
       <a 
         href={`/${lang}/contact/`}
-        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+        class="btn-primary bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4"
       >
         {t.ctaButton}
       </a>

@@ -45,12 +45,12 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
 ---
 
 <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300" id="main-header">
-  <div class="container mx-auto px-4 py-4">
+  <div class="max-w-7xl mx-auto px-4">
     <div class="flex flex-col lg:flex-row justify-between items-center">
       <!-- Logo / Nom de l'entreprise -->
       <div class="mb-4 lg:mb-0" data-astro-transition-persist="header-logo">
         <a 
-          href=`/${currentLang}/` 
+          href={`/${currentLang}/`}
           class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
         >
           ABC Gourmet
@@ -60,59 +60,59 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
       <div class="flex flex-col lg:flex-row gap-4 items-center">
         <!-- Navigation principale avec URL localisées -->
         <nav class="w-full lg:w-auto">
-          <ul class="flex flex-wrap justify-center items-center gap-4 my-2 xl:gap-6">
+          <ul class="flex flex-wrap justify-center items-center gap-3 my-1 xl:gap-5">
             <li>
               <a 
-                href=`/${currentLang}/` 
-                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname === `/${currentLang}/` ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href={`/${currentLang}/`}
+                class={`nav-link lg:text-sm ${pathname === `/${currentLang}/` ? 'active' : ''}`}
               >
                 {labels.home}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/about/` 
-                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/about') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href={`/${currentLang}/about/`}
+                class={`nav-link lg:text-sm ${pathname.includes('/about') ? 'active' : ''}`}
               >
                 {labels.about}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/expertise/` 
-                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/expertise') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href={`/${currentLang}/expertise/`}
+                class={`nav-link lg:text-sm ${pathname.includes('/expertise') ? 'active' : ''}`}
               >
                 {labels.expertise}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/training/` 
-                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/training') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href={`/${currentLang}/training/`}
+                class={`nav-link lg:text-sm ${pathname.includes('/training') ? 'active' : ''}`}
               >
                 {labels.training}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/results/`
-                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/results') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href={`/${currentLang}/results/`}
+                class={`nav-link lg:text-sm ${pathname.includes('/results') ? 'active' : ''}`}
               >
                 {labels.results}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/news/`
-                class={`hover:text-blue-600 transition-colors lg:text-sm ${pathname.includes('/news') ? 'text-blue-600 font-medium' : 'text-gray-700'}`}
+                href={`/${currentLang}/news/`}
+                class={`nav-link lg:text-sm ${pathname.includes('/news') ? 'active' : ''}`}
               >
                 {labels.news}
               </a>
             </li>
             <li>
               <a 
-                href=`/${currentLang}/contact/`
-                class={`bg-blue-600 text-white px-3 py-2 xl:px-4 xl:py-2 rounded hover:bg-blue-700 transition-colors lg:text-sm ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
+                href={`/${currentLang}/contact/`}
+                class={`bg-blue-600 text-white px-4 py-2 rounded-full font-semibold transition-all duration-200 hover:bg-blue-700 hover:-translate-y-0.5 lg:text-sm ${pathname.includes('/contact') ? 'bg-blue-700' : ''}`}
               >
                 {labels.contact}
               </a>
