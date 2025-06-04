@@ -112,7 +112,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/contact/`}
-                class={`bg-(--color-primary) text-(--color-white) px-4 py-2 rounded-full font-semibold transition-all duration-200 hover:bg-(--color-primary-hover) hover:-translate-y-0.5 lg:text-sm ${pathname.includes('/contact') ? 'bg-(--color-primary-hover)' : ''}`}
+                class={`nav-link lg:text-sm ${pathname.includes('/contact') ? 'active' : ''}`}
               >
                 {labels.contact}
               </a>
@@ -120,10 +120,11 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
           </ul>
         </nav>
         
-        <!-- Sélecteur de langue -->
-        <div class="mt-2 lg:mt-0">
-          <LanguageSwitcher />
-        </div>
+        
+      </div>
+      <!-- Sélecteur de langue -->
+      <div class="mt-2 lg:mt-0">
+        <LanguageSwitcher />
       </div>
     </div>
   </div>

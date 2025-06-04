@@ -104,7 +104,7 @@ const t = content[lang] || content.fr;
 
 <Layout title={t.title} description={t.description} lang={lang}>
   <!-- Hero Section -->
-  <section class="bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-(--color-white) py-20">
+  <section class="bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white py-20">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <h1 class="text-4xl md:text-6xl font-bold mb-6 fade-in-up">
         {t.heroTitle}
@@ -144,14 +144,14 @@ const t = content[lang] || content.fr;
   </section>
 
   <!-- CTA Section -->
-  <section class="py-16 bg-(--color-primary) text-(--color-white)">
+  <section class="py-16 bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white">
     <div class="max-w-6xl mx-auto px-4 text-center">
       <h2 class="text-3xl md:text-4xl font-bold mb-8">
         {t.ctaTitle}
       </h2>
       <a 
         href={`/${lang}/contact/`}
-        class="btn-primary bg-(--color-white) text-(--color-primary) hover:bg-(--color-gray-50) text-lg px-8 py-4"
+        class="btn-primary bg-white text-(--color-primary) hover:bg-gray-50 text-lg px-8 py-4"
       >
         {t.ctaButton}
       </a>

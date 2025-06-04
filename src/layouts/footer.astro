@@ -51,21 +51,21 @@ const footerNavLabels = {
 const navLabels = footerNavLabels[currentLang as keyof typeof footerNavLabels] || footerNavLabels.fr;
 ---
 
-<footer class="bg-(--color-gray-50) border-t border-gray-200 mt-16 py-2">
+<footer class="bg-gray-50 border-t border-gray-200 mt-16 py-2">
   <div class="container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       
       <!-- Informations entreprise -->
       <div>
         <h3 class="text-xl font-bold text-(--color-primary) mb-4">ABC Gourmet</h3>
-        <p class="text-(--color-gray-600) mb-4">{t.description}</p>
-        <p class="text-sm text-(--color-gray-600)">{t.copyright}</p>
+        <p class="text-gray-600 mb-4">{t.description}</p>
+        <p class="text-sm text-gray-600">{t.copyright}</p>
       </div>
       
       <!-- Contact info -->
       <div>
-        <h4 class="font-semibold text-(--color-gray-900) mb-4">{navLabels.contact}</h4>
-        <div class="space-y-2 text-(--color-gray-600)">
+        <h4 class="font-semibold text-gray-900 mb-4">{navLabels.contact}</h4>
+        <div class="space-y-2 text-gray-600">
           <p>📧 contact@abc-gourmet.fr</p>
           <p>📞 +33 X XX XX XX XX</p>
           <p>📍 France</p>
@@ -75,7 +75,7 @@ const navLabels = footerNavLabels[currentLang as keyof typeof footerNavLabels] |
     
     <!-- Liens légaux -->
     <div class="border-t border-gray-200 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-      <div class="flex gap-4 text-sm text-(--color-gray-600)">
+      <div class="flex gap-4 text-sm text-gray-600">
         <a href={`/${currentLang}/legal/`} class="hover:text-(--color-primary) transition-colors">
           {t.legalNotice}
         </a>

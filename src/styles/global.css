@@ -3,14 +3,27 @@
 
 /* === VARIABLES CSS SIMPLES === */
 :root {
-  --color-primary: rgb(8, 177, 124);
-  --color-primary-hover: #34b689;
-  --color-secondary: #f97316;
+  --color-primary: #006d77;
+  --color-primary-hover: #2b9a8e;
+  --color-secondary: #2fa99c;
+  --color-accent: #e29578;
+  --bg-color: #edf6f9;
+  --text-color: #253c46;
+  --color-border: #c2e7e9;
+  --color-primary-rgb: 0, 109, 119;
   --color-gray-50: #f9fafb;
   --color-gray-600: #4b5563;
   --color-gray-900: #111827;
-  --color-white: #ffffff;
-  --color-black: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-white: #1f2937;
+    --color-black: #ffffff;
+    --color-gray-50: #374151;
+    --color-gray-200: #111827;
+    /* etc. */
+  }
 }
 
 /* === STYLES DE BASE === */
@@ -78,8 +91,9 @@ body {
 /* Navigation */
 .nav-link {
   position: relative;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
   text-decoration: none;
+  color: var(--color-black);
 }
 
 .nav-link:hover {
@@ -89,13 +103,6 @@ body {
 .nav-link.active {
   color: var(--color-primary);
   font-weight: 500;
-}
-
-/* === FOCUS ACCESSIBILITY === */
-
-*:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
 }
 
 /* === ANIMATIONS === */
