@@ -1,6 +1,7 @@
 ---
 // src/layouts/header.astro
 import LanguageSwitcher from '../components/language_switcher.astro';
+import OptimizeImage from '../components/optimize_image.astro';
 
 // Récupérer le chemin actuel pour gérer l'état actif des liens
 const { pathname } = Astro.url;
@@ -51,9 +52,15 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
       <div class="mb-4 lg:mb-0" data-astro-transition-persist="header-logo">
         <a 
           href={`/${currentLang}/`}
-          class="text-2xl font-bold text-(--color-primary) hover:text-(--color-primary-hover) transition-colors"
+          class="flex items-center gap-3 hover:opacity-80 transition-opacity mt-1 md:mt-0"
         >
-          ABC Gourmet
+          <!-- Logo image -->
+          <OptimizeImage 
+            src="/src/assets/img/logo_300x205.png"
+            alt="ABC Gourmet Logo"
+            class="h-24 lg:h-12 w-auto"
+            loading="eager"
+          />
         </a>
       </div>
       
