@@ -1,0 +1,276 @@
+---
+// src/components/TestimonialsCarousel.astro
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'fr' } = Astro.props;
+
+// Récupérer tous les témoignages
+let testimonials = await getCollection('testimonials');
+
+// Fonction pour extraire le contenu d'une langue spécifique
+function extractLangContent(content: string, targetLang: string): string {
+  const sections = content.split(/^## /m);
+  
+  for (const section of sections) {
+    const trimmedSection = section.trim();
+    if (trimmedSection.startsWith(targetLang)) {
+      return trimmedSection.substring(targetLang.length).trim();
+    }
+  }
+  
+  // Si la langue demandée n'existe pas, retourner le français par défaut
+  for (const section of sections) {
+    const trimmedSection = section.trim();
+    if (trimmedSection.startsWith('fr')) {
+      return trimmedSection.substring(2).trim();
+    }
+  }
+  
+  return '';
+}
+
+// Préparer les témoignages avec le contenu dans la langue appropriée
+const processedTestimonials = await Promise.all(
+  testimonials.map(async (testimonial: CollectionEntry<'testimonials'>) => {
+    const { Content } = await testimonial.render();
+    const rawContent = testimonial.body;
+    const langContent = extractLangContent(rawContent, lang);
+    
+    return {
+      ...testimonial,
+      langContent
+    };
+  })
+);
+
+// Trier par ordre et date
+const sortedTestimonials = processedTestimonials
+  .sort((a, b) => a.data.order - b.data.order || new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+// Si pas de témoignages, ne pas afficher la section
+if (sortedTestimonials.length === 0) return;
+
+// Traductions pour les labels
+const labels = {
+  fr: {
+    testimonials: "Témoignages",
+    previous: "Précédent", 
+    next: "Suivant",
+    testimonial: "Témoignage"
+  },
+  en: {
+    testimonials: "Testimonials",
+    previous: "Previous",
+    next: "Next", 
+    testimonial: "Testimonial"
+  },
+  de: {
+    testimonials: "Testimonials",
+    previous: "Zurück",
+    next: "Weiter",
+    testimonial: "Testimonial"
+  }
+};
+
+const t = labels[lang as keyof typeof labels] || labels.fr;
+
+// Générer un ID unique pour ce carrousel
+const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class="bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white py-16 min-h-[500px] flex items-center">
+  <div class="max-w-6xl mx-auto px-8 w-full text-center">
+    <h2 class="text-4xl font-light mb-12 uppercase tracking-[2px]">{t.testimonials}</h2>
+    
+    <div class="carousel relative max-w-4xl mx-auto h-[400px]" id={carouselId}>
+      <div class="carousel-inner w-full h-full relative">
+        {sortedTestimonials.map((testimonial, index: number) => (
+          <>
+            <input
+              class="carousel-open"
+              type="radio"
+              id={`${carouselId}-${index + 1}`}
+              name={carouselId}
+              aria-hidden="true"
+              hidden=""
+              checked={index === 0}
+            />
+            <div class="carousel-item absolute opacity-0 w-full top-0 left-0 flex flex-col items-center justify-center h-full p-8 transition-opacity duration-500">
+              <div class={`testimonial-content text-xl leading-relaxed italic max-w-2xl ${testimonial.data.image ? 'mb-8' : 'mb-6'}`}>
+                <div set:html={testimonial.langContent} />
+              </div>
+              
+              {testimonial.data.image && (
+                <div class="mb-6">
+                  <img 
+                    src={testimonial.data.image} 
+                    alt={testimonial.data.imageAlt || testimonial.data.company}
+                    class="max-h-[60px] max-w-[150px] object-contain brightness-0 invert"
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+              )}
+              
+              <div class="text-center">
+                <div class="text-lg font-semibold mb-1">{testimonial.data.clientName}</div>
+                <div class="text-sm opacity-80 italic">{testimonial.data.company}</div>
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
+      
+      {/* Navigation seulement si plus d'un témoignage */}
+      {testimonials.length > 1 && (
+        <>
+          <button 
+            id={`${carouselId}-prevBtn`} 
+            class="absolute top-1/2 -translate-y-1/2 -left-20 bg-transparent border-2 border-white text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl cursor-pointer transition-all duration-300 hover:bg-white hover:text-gray-800 z-10"
+            aria-label={t.previous}
+          >
+            ‹
+          </button>
+          
+          <button 
+            id={`${carouselId}-nextBtn`} 
+            class="absolute top-1/2 -translate-y-1/2 -right-20 bg-transparent border-2 border-white text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl cursor-pointer transition-all duration-300 hover:bg-white hover:text-gray-800 z-10"
+            aria-label={t.next}
+          >
+            ›
+          </button>
+          
+          <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-4 z-10">
+            {sortedTestimonials.map((_, index: number) => (
+              <button 
+                class={`w-3 h-3 rounded-full border-none cursor-pointer transition-all duration-300 hover:bg-white/80 ${index === 0 ? 'bg-white' : 'bg-white/40'}`}
+                data-slide={index}
+                aria-label={`${t.testimonial} ${index + 1}`}
+              >
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ carouselId, testimonialsLength: sortedTestimonials.length }}>
+  document.addEventListener('astro:page-load', function() {
+    if (testimonialsLength <= 1) return;
+    
+    const prevBtn = document.getElementById(`${carouselId}-prevBtn`);
+    const nextBtn = document.getElementById(`${carouselId}-nextBtn`);
+    const carouselItems = document.querySelectorAll(`input[name="${carouselId}"]`);
+    const bullets = document.querySelectorAll(`#${carouselId} button[data-slide]`);
+    const carousel = document.getElementById(carouselId);
+    
+    let currentIndex = 0;
+    
+    function updateIndicators() {
+      bullets.forEach((bullet, index) => {
+        if (index === currentIndex) {
+          bullet.className = bullet.className.replace('bg-white/40', 'bg-white');
+        } else {
+          bullet.className = bullet.className.replace('bg-white', 'bg-white/40');
+        }
+      });
+    }
+    
+    function goToSlide(index) {
+      carouselItems[index].checked = true;
+      currentIndex = index;
+      updateIndicators();
+    }
+    
+    // Navigation avec les boutons
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const prevIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+        goToSlide(prevIndex);
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const nextIndex = (currentIndex + 1) % carouselItems.length;
+        goToSlide(nextIndex);
+      });
+    }
+    
+    // Navigation avec les indicateurs
+    bullets.forEach((bullet, index) => {
+      bullet.addEventListener('click', () => goToSlide(parseInt(bullet.dataset.slide)));
+    });
+    
+    // Event listeners pour détecter le changement de slide
+    carouselItems.forEach((item, index) => {
+      item.addEventListener("change", () => {
+        currentIndex = index;
+        updateIndicators();
+      });
+    });
+    
+    // Support tactile (swipe)
+    let startX = 0;
+    let isDragging = false;
+    
+    if (carousel) {
+      carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+      
+      carousel.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+      
+      carousel.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            const nextIndex = (currentIndex + 1) % carouselItems.length;
+            goToSlide(nextIndex);
+          } else {
+            const prevIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+            goToSlide(prevIndex);
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .carousel-open:checked + .carousel-item {
+    position: static;
+    opacity: 1;
+  }
+
+  /* Responsive - masquer les boutons sur mobile */
+  @media (max-width: 768px) {
+    .carousel button[id$="prevBtn"],
+    .carousel button[id$="nextBtn"] {
+      display: none;
+    }
+  }
+
+  /* Styles pour le contenu Markdown */
+  .testimonial-content :global(p) {
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

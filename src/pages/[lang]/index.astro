@@ -1,6 +1,7 @@
 ---
 // src/pages/[lang]/index.astro
 import Layout from '../../layouts/layout.astro';
+import TestimonialsCarousel from '../../components/testimonials_carousel.astro';
 
 export function getStaticPaths() {
   return [
@@ -143,6 +144,9 @@ const t = content[lang] || content.fr;
     </div>
   </section>
 
+  <!-- Section témoignages -->
+  <TestimonialsCarousel lang={lang} />
+  
   <!-- CTA Section -->
   <section class="py-16 bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white">
     <div class="max-w-6xl mx-auto px-4 text-center">
