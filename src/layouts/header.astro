@@ -137,16 +137,22 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
   </div>
 </header>
 
-<!-- Script pour le comportement du header mobile -->
+<!-- Script pour le comportement du header mobile - Version corrigée -->
 <script>
-  let lastScrollY = 0;
-  const header = document.getElementById('main-header');
+  document.addEventListener('astro:page-load', function() {
+    let lastScrollY = 0;
+    const header = document.getElementById('main-header');
+    let ticking = false;
 
-  if (header) {
-    window.addEventListener('scroll', () => {
+    if (!header) return;
+
+    function updateHeader() {
+      if (!header) return; // Protection supplémentaire
+      
+      const currentScrollY = window.scrollY;
+      
+      // Seulement sur mobile/tablette
       if (window.innerWidth < 1100) {
-        const currentScrollY = window.scrollY;
-        
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
           // Scroll down - hide
           header.style.transform = 'translateY(-100%)';
@@ -154,14 +160,38 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
           // Scroll up - show
           header.style.transform = 'translateY(0)';
         }
-        
-        lastScrollY = currentScrollY;
+      } else {
+        // Sur desktop, toujours visible
+        header.style.transform = 'translateY(0)';
       }
-    });
+      
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }
+
+    // Écouter le scroll avec throttling
+    window.addEventListener('scroll', requestTick, { passive: true });
 
     // Réinitialiser le header quand on redimensionne
     window.addEventListener('resize', () => {
-      header.style.transform = 'translateY(0)';
+      if (header) {
+        header.style.transform = 'translateY(0)';
+        lastScrollY = window.scrollY;
+      }
     });
-  }
+
+    // Gérer les transitions de page Astro
+    document.addEventListener('astro:before-preparation', () => {
+      if (header) {
+        header.style.transform = 'translateY(0)';
+      }
+    });
+  });
 </script>
