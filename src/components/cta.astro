@@ -1,0 +1,128 @@
+---
+// src/components/cta_section.astro
+// Section CTA avec image de fond et effets de transparence
+import OptimizeImage from "./optimize_image.astro";
+
+interface Props {
+  variant?: "overlay" | "blend" | "gradient" | "texture";
+  lang: string;
+  title: string;
+  subtitle?: string;
+  buttonText: string;
+  buttonHref: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  variant = "gradient",
+  lang,
+  title,
+  subtitle,
+  buttonText,
+  buttonHref,
+  imageSrc = "/src/assets/img/vegetables_background.jpg", // Image par défaut différente du hero
+  imageAlt = "ABC Gourmet - Accompagnement alimentaire",
+} = Astro.props;
+---
+
+<section
+  class="relative min-h-[400px] flex items-center justify-center overflow-hidden"
+>
+  <!-- Image de fond -->
+  <div class="absolute inset-0 z-0">
+    <OptimizeImage
+      src={imageSrc}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+      loading="lazy"
+      widths={[800, 1200, 1600]}
+      sizes="100vw"
+    />
+
+    <!-- Variant 1: Superposition classique avec dégradé -->
+    {
+      variant === "overlay" && (
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-primary-hover)] to-[var(--color-secondary)] opacity-85" />
+      )
+    }
+
+    <!-- Variant 2: Mode de fusion (blend mode) -->
+    {
+      variant === "blend" && (
+        <div class="absolute inset-0 bg-[var(--color-primary)] mix-blend-multiply opacity-70" />
+      )
+    }
+
+    <!-- Variant 3: Dégradé complexe avec zones de transparence -->
+    {
+      variant === "gradient" && (
+        <>
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/90 via-[var(--color-primary-hover)]/70 to-[var(--color-secondary)]/80" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+        </>
+      )
+    }
+
+    <!-- Variant 4: Effet de texture avec motif -->
+    {
+      variant === "texture" && (
+        <>
+          <div class="absolute inset-0 bg-[var(--color-primary)] opacity-80" />
+          <div class="absolute inset-0 bg-gradient-to-br from-transparent via-black/15 to-[var(--color-secondary)]/40" />
+          <div
+            class="absolute inset-0"
+            style="background-image: radial-gradient(circle at 80% 20%, transparent 30%, rgba(255,255,255,0.08) 40%);"
+          />
+        </>
+      )
+    }
+  </div>
+
+  <!-- Contenu principal -->
+  <div
+    class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16"
+  >
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 drop-shadow-lg">
+      {title}
+    </h2>
+
+    {
+      subtitle && (
+        <p class="text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light opacity-95">
+          {subtitle}
+        </p>
+      )
+    }
+
+    <a
+      href={buttonHref}
+      class="inline-block bg-white/95 backdrop-blur-sm text-[var(--color-primary)] font-semibold px-8 py-4 text-lg rounded-lg hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+    >
+      {buttonText}
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Amélioration de la lisibilité du texte */
+  h2,
+  p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Effet de hover pour le bouton */
+  a:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  /* Animation subtile au survol de la section */
+  section .absolute {
+    transition: transform 1s ease;
+  }
+
+  section:hover .absolute {
+    transform: scale(1.02);
+  }
+</style>

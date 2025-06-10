@@ -3,6 +3,7 @@
 import Layout from '../../layouts/layout.astro';
 import TestimonialsCarousel from '../../components/testimonials_carousel.astro';
 import Hero from '../../components/hero.astro';
+import CTASection from '../../components/cta.astro';
 
 export function getStaticPaths() {
   return [
@@ -41,6 +42,7 @@ const content = {
       }
     ],
     ctaTitle: 'Prêt à développer votre projet alimentaire ?',
+    ctaSubtitle: 'Contactez-nous pour discuter de vos besoins et découvrir comment nous pouvons vous accompagner.',
     ctaButton: 'Nous contacter'
   },
   en: {
@@ -69,6 +71,7 @@ const content = {
       }
     ],
     ctaTitle: 'Ready to develop your food project?',
+    ctaSubtitle: 'Contact us to discuss your needs and discover how we can support you.',
     ctaButton: 'Contact us'
   },
   de: {
@@ -97,6 +100,7 @@ const content = {
       }
     ],
     ctaTitle: 'Bereit, Ihr Lebensmittelprojekt zu entwickeln?',
+    ctaSubtitle: 'Kontaktieren Sie uns, um über Ihre Bedürfnisse zu sprechen und zu entdecken, wie wir Sie unterstützen können.',
     ctaButton: 'Kontaktieren Sie uns'
   }
 };
@@ -139,18 +143,15 @@ const t = content[lang] || content.fr;
   <!-- Section témoignages -->
   <TestimonialsCarousel lang={lang} />
   
-  <!-- CTA Section -->
-  <section class="py-16 bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-8">
-        {t.ctaTitle}
-      </h2>
-      <a 
-        href={`/${lang}/contact/`}
-        class="btn-primary bg-white text-(--color-primary) hover:bg-gray-50 text-lg px-8 py-4"
-      >
-        {t.ctaButton}
-      </a>
-    </div>
-  </section>
+  <!-- Section CTA avec image de fond -->
+  <CTASection 
+    variant="gradient"
+    lang={lang}
+    title={t.ctaTitle}
+    subtitle={t.ctaSubtitle}
+    buttonText={t.ctaButton}
+    buttonHref={`/${lang}/contact/`}
+    imageSrc="/src/assets/img/jambon_926x474.jpg"
+    imageAlt="ABC Gourmet - Préparation culinaire professionnelle"
+  />
 </Layout>
