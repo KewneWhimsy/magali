@@ -1,0 +1,307 @@
+---
+// src/components/cta_with_toggle.astro
+// Version de test avec sélecteur de variantes pour CTA
+import OptimizeImage from './optimize_image.astro';
+
+interface Props {
+  lang: string;
+  title: string;
+  subtitle?: string;
+  buttonText: string;
+  buttonHref: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  lang,
+  title,
+  subtitle,
+  buttonText,
+  buttonHref,
+  imageSrc = "/src/assets/img/jambon_926x474.jpg",
+  imageAlt = "ABC Gourmet - Accompagnement alimentaire",
+} = Astro.props;
+
+// Labels pour le sélecteur selon la langue
+const variantLabels = {
+  fr: {
+    title: 'Test CTA:',
+    variants: {
+      overlay: 'Superposition',
+      blend: 'Fusion',
+      gradient: 'Dégradé',
+      texture: 'Texture'
+    }
+  },
+  en: {
+    title: 'Test CTA:',
+    variants: {
+      overlay: 'Overlay',
+      blend: 'Blend',
+      gradient: 'Gradient', 
+      texture: 'Texture'
+    }
+  },
+  de: {
+    title: 'CTA testen:',
+    variants: {
+      overlay: 'Überlagerung',
+      blend: 'Mischung',
+      gradient: 'Verlauf',
+      texture: 'Textur'
+    }
+  }
+};
+
+const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabels.fr;
+
+// Générer un ID unique pour ce CTA
+const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class="relative min-h-[400px] flex items-center justify-center overflow-hidden" id={ctaId}>
+  <!-- Sélecteur de variantes - Position fixe pour les tests -->
+  <div class="fixed bottom-20 right-4 z-50 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-200">
+    <h3 class="text-sm font-semibold text-gray-700 mb-3">{labels.title}</h3>
+    <div class="grid grid-cols-2 gap-2">
+      {Object.entries(labels.variants).map(([variant, label]) => (
+        <button 
+          class="cta-variant-btn px-3 py-2 text-xs font-medium rounded border transition-all duration-200 hover:scale-105"
+          data-variant={variant}
+          data-target={ctaId}
+          data-active={variant === 'gradient' ? 'true' : 'false'}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+    <div class="mt-3 pt-3 border-t border-gray-200">
+      <p class="text-xs text-gray-500">🧪 Mode test CTA</p>
+    </div>
+  </div>
+
+  <!-- Image de fond -->
+  <div class="absolute inset-0 z-0">
+    <OptimizeImage
+      src={imageSrc}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+      loading="lazy"
+      widths={[800, 1200, 1600]}
+      sizes="100vw"
+    />
+    
+    <!-- Superpositions pour chaque variante -->
+    
+    <!-- Variant 1: Superposition classique -->
+    <div class="cta-variant-overlay absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-primary-hover)] to-[var(--color-secondary)] opacity-0 transition-opacity duration-500"></div>
+    
+    <!-- Variant 2: Mode de fusion -->
+    <div class="cta-variant-blend absolute inset-0 bg-[var(--color-primary)] mix-blend-multiply transition-opacity duration-500 opacity-0"></div>
+    
+    <!-- Variant 3: Dégradé complexe (actif par défaut) -->
+    <div class="cta-variant-gradient absolute inset-0 transition-opacity duration-500 opacity-100">
+      <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/90 via-[var(--color-primary-hover)]/70 to-[var(--color-secondary)]/80"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20"></div>
+    </div>
+    
+    <!-- Variant 4: Effet de texture -->
+    <div class="cta-variant-texture absolute inset-0 transition-opacity duration-500 opacity-0">
+      <div class="absolute inset-0 bg-[var(--color-primary)] opacity-80"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-transparent via-black/15 to-[var(--color-secondary)]/40"></div>
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 80% 20%, transparent 30%, rgba(255,255,255,0.08) 40%);"></div>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16">
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 drop-shadow-lg">
+      {title}
+    </h2>
+
+    {subtitle && (
+      <p class="text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light opacity-95">
+        {subtitle}
+      </p>
+    )}
+
+    <a
+      href={buttonHref}
+      class="inline-block bg-white/95 backdrop-blur-sm text-[var(--color-primary)] font-semibold px-8 py-4 text-lg rounded-lg hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+    >
+      {buttonText}
+    </a>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', function() {
+    const ctaVariantButtons = document.querySelectorAll('.cta-variant-btn') as NodeListOf<HTMLButtonElement>;
+    
+    // Grouper les boutons par section CTA
+    const ctaSections = new Map<string, {
+      buttons: HTMLButtonElement[],
+      overlays: Record<string, HTMLElement | null>,
+      currentVariant: string
+    }>();
+    
+    // Initialiser les sections CTA
+    ctaVariantButtons.forEach(btn => {
+      const targetId = btn.dataset.target;
+      if (!targetId) return;
+      
+      if (!ctaSections.has(targetId)) {
+        const section = document.getElementById(targetId);
+        if (!section) return;
+        
+        ctaSections.set(targetId, {
+          buttons: [],
+          overlays: {
+            overlay: section.querySelector('.cta-variant-overlay') as HTMLElement | null,
+            blend: section.querySelector('.cta-variant-blend') as HTMLElement | null,
+            gradient: section.querySelector('.cta-variant-gradient') as HTMLElement | null,
+            texture: section.querySelector('.cta-variant-texture') as HTMLElement | null
+          },
+          currentVariant: 'gradient'
+        });
+      }
+      
+      const ctaData = ctaSections.get(targetId)!;
+      ctaData.buttons.push(btn);
+    });
+    
+    // Fonction pour mettre à jour les styles des boutons d'une section
+    function updateCTAButtonStyles(targetId: string) {
+      const ctaData = ctaSections.get(targetId);
+      if (!ctaData) return;
+      
+      ctaData.buttons.forEach(btn => {
+        const variant = btn.dataset.variant;
+        const isActive = variant === ctaData.currentVariant;
+        
+        if (isActive) {
+          btn.classList.remove('border-gray-300', 'text-gray-600', 'bg-white');
+          btn.classList.add('border-blue-500', 'text-white', 'bg-[var(--color-primary)]');
+          btn.dataset.active = 'true';
+        } else {
+          btn.classList.remove('border-blue-500', 'text-white', 'bg-[var(--color-primary)]');
+          btn.classList.add('border-gray-300', 'text-gray-600', 'bg-white');
+          btn.dataset.active = 'false';
+        }
+      });
+    }
+    
+    // Fonction pour changer de variante CTA
+    function switchCTAVariant(targetId: string, newVariant: string) {
+      const ctaData = ctaSections.get(targetId);
+      if (!ctaData || !ctaData.overlays[newVariant]) return;
+      
+      // Masquer toutes les superpositions de cette section
+      Object.values(ctaData.overlays).forEach(overlay => {
+        if (overlay) {
+          overlay.style.opacity = '0';
+        }
+      });
+      
+      // Afficher la variante sélectionnée
+      const targetOverlay = ctaData.overlays[newVariant];
+      if (targetOverlay) {
+        const opacityValue = newVariant === 'overlay' ? '0.85' : 
+                           newVariant === 'blend' ? '0.7' : '1';
+        targetOverlay.style.opacity = opacityValue;
+      }
+      
+      ctaData.currentVariant = newVariant;
+      updateCTAButtonStyles(targetId);
+      
+      // Sauvegarder la préférence
+      localStorage.setItem(`ctaVariant-${targetId}`, newVariant);
+      
+      // Feedback visuel
+      console.log(`🎨 CTA ${targetId} - Variante changée: ${newVariant}`);
+    }
+    
+    // Event listeners pour les boutons CTA
+    ctaVariantButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.target;
+        const variant = btn.dataset.variant;
+        
+        if (targetId && variant) {
+          const ctaData = ctaSections.get(targetId);
+          if (ctaData && variant !== ctaData.currentVariant && variant in ctaData.overlays) {
+            switchCTAVariant(targetId, variant);
+          }
+        }
+      });
+    });
+    
+    // Charger les préférences sauvegardées et initialiser
+    ctaSections.forEach((ctaData, targetId) => {
+      const savedVariant = localStorage.getItem(`ctaVariant-${targetId}`);
+      if (savedVariant && savedVariant in ctaData.overlays) {
+        switchCTAVariant(targetId, savedVariant);
+      } else {
+        updateCTAButtonStyles(targetId);
+      }
+    });
+    
+    // Raccourcis clavier pour les tests (Shift + 1-4 pour CTA)
+    document.addEventListener('keydown', (e) => {
+      if (!e.shiftKey) return;
+      
+      const variants = ['overlay', 'blend', 'gradient', 'texture'];
+      const key = parseInt(e.key);
+      
+      if (key >= 1 && key <= 4) {
+        e.preventDefault();
+        // Appliquer à toutes les sections CTA
+        ctaSections.forEach((_, targetId) => {
+          switchCTAVariant(targetId, variants[key - 1]);
+        });
+      }
+    });
+    
+    console.log('🧪 Mode test CTA activé - Utilisez les boutons ou Shift + 1-4 pour changer de variante');
+  });
+</script>
+
+<style>
+  /* Amélioration de la lisibilité du texte */
+  h2, p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Effet de hover pour le bouton */
+  a:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  /* Animation subtile au survol de la section */
+  section .absolute {
+    transition: transform 1s ease;
+  }
+
+  section:hover .absolute {
+    transform: scale(1.02);
+  }
+  
+  /* Styles pour le sélecteur de variantes */
+  .cta-variant-btn {
+    min-width: 70px;
+    text-align: center;
+  }
+  
+  .cta-variant-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Responsive - masquer le sélecteur sur très petits écrans */
+  @media (max-width: 480px) {
+    .fixed {
+      display: none;
+    }
+  }
+</style>
