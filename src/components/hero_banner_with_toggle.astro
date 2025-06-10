@@ -1,0 +1,257 @@
+---
+// src/components/hero_banner_with_toggle.astro
+// Version de test avec sélecteur de variantes
+import OptimizeImage from './optimize_image.astro';
+
+interface Props {
+  lang: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+const { lang, title, subtitle, buttonText, buttonHref } = Astro.props;
+
+// Labels pour le sélecteur selon la langue
+const variantLabels = {
+  fr: {
+    title: 'Test des variantes:',
+    variants: {
+      overlay: 'Superposition',
+      blend: 'Fusion',
+      gradient: 'Dégradé',
+      texture: 'Texture'
+    }
+  },
+  en: {
+    title: 'Test variants:',
+    variants: {
+      overlay: 'Overlay',
+      blend: 'Blend',
+      gradient: 'Gradient', 
+      texture: 'Texture'
+    }
+  },
+  de: {
+    title: 'Varianten testen:',
+    variants: {
+      overlay: 'Überlagerung',
+      blend: 'Mischung',
+      gradient: 'Verlauf',
+      texture: 'Textur'
+    }
+  }
+};
+
+const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabels.fr;
+---
+
+<section class="relative min-h-[600px] lg:min-h-[700px] flex items-center justify-center overflow-hidden" id="hero-section">
+  <!-- Sélecteur de variantes - Position fixe pour les tests -->
+  <div class="fixed top-20 right-4 z-50 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-200">
+    <h3 class="text-sm font-semibold text-gray-700 mb-3">{labels.title}</h3>
+    <div class="grid grid-cols-2 gap-2">
+      {Object.entries(labels.variants).map(([variant, label]) => (
+        <button 
+          class="variant-btn px-3 py-2 text-xs font-medium rounded border transition-all duration-200 hover:scale-105"
+          data-variant={variant}
+          data-active={variant === 'overlay' ? 'true' : 'false'}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+    <div class="mt-3 pt-3 border-t border-gray-200">
+      <p class="text-xs text-gray-500">🧪 Mode test</p>
+    </div>
+  </div>
+
+  <!-- Image de fond -->
+  <div class="absolute inset-0 z-0">
+    <OptimizeImage 
+      src="/src/assets/img/katsuobushi_5472x3648.jpg"
+      alt="ABC Gourmet - Textures alimentaires"
+      class="w-full h-full object-cover"
+      loading="eager"
+      widths={[800, 1200, 1600, 2000]}
+      sizes="100vw"
+    />
+    
+    <!-- Superpositions pour chaque variante -->
+    
+    <!-- Variant 1: Superposition classique -->
+    <div class="variant-overlay absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-primary-hover)] to-[var(--color-secondary)] opacity-85 transition-opacity duration-500"></div>
+    
+    <!-- Variant 2: Mode de fusion -->
+    <div class="variant-blend absolute inset-0 bg-[var(--color-primary)] mix-blend-multiply transition-opacity duration-500 opacity-0"></div>
+    
+    <!-- Variant 3: Dégradé complexe -->
+    <div class="variant-gradient absolute inset-0 transition-opacity duration-500 opacity-0">
+      <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/90 via-[var(--color-primary-hover)]/60 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
+    </div>
+    
+    <!-- Variant 4: Effet de texture -->
+    <div class="variant-texture absolute inset-0 transition-opacity duration-500 opacity-0">
+      <div class="absolute inset-0 bg-[var(--color-primary)] opacity-75"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-[var(--color-secondary)]/30"></div>
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, transparent 40%, rgba(255,255,255,0.1) 50%);"></div>
+    </div>
+  </div>
+  
+  <!-- Contenu principal -->
+  <div class="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up drop-shadow-lg">
+      {title}
+    </h1>
+    <p class="text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto leading-relaxed drop-shadow-md font-light">
+      {subtitle}
+    </p>
+    <a 
+      href={buttonHref}
+      class="inline-block bg-white/95 backdrop-blur-sm text-[var(--color-primary)] font-semibold px-8 py-4 text-lg rounded-lg hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+    >
+      {buttonText}
+    </a>
+  </div>
+  
+  <!-- Indicateur de scroll -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+    <div class="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-white/80 rounded-full mt-2 animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', function() {
+    const variantButtons = document.querySelectorAll('.variant-btn') as NodeListOf<HTMLButtonElement>;
+    const overlays = {
+      overlay: document.querySelector('.variant-overlay') as HTMLElement | null,
+      blend: document.querySelector('.variant-blend') as HTMLElement | null,
+      gradient: document.querySelector('.variant-gradient') as HTMLElement | null,
+      texture: document.querySelector('.variant-texture') as HTMLElement | null
+    };
+    
+    type VariantType = keyof typeof overlays;
+    let currentVariant: VariantType = 'overlay';
+    
+    // Fonction pour mettre à jour les styles des boutons
+    function updateButtonStyles() {
+      variantButtons.forEach(btn => {
+        const variant = btn.dataset.variant as VariantType;
+        const isActive = variant === currentVariant;
+        
+        if (isActive) {
+          btn.classList.remove('border-gray-300', 'text-gray-600', 'bg-white');
+          btn.classList.add('border-blue-500', 'text-white', 'bg-[var(--color-primary)]');
+          btn.dataset.active = 'true';
+        } else {
+          btn.classList.remove('border-blue-500', 'text-white', 'bg-[var(--color-primary)]');
+          btn.classList.add('border-gray-300', 'text-gray-600', 'bg-white');
+          btn.dataset.active = 'false';
+        }
+      });
+    }
+    
+    // Fonction pour changer de variante
+    function switchVariant(newVariant: VariantType) {
+      // Masquer toutes les superpositions
+      Object.values(overlays).forEach(overlay => {
+        if (overlay) {
+          overlay.style.opacity = '0';
+        }
+      });
+      
+      // Afficher la variante sélectionnée
+      const targetOverlay = overlays[newVariant];
+      if (targetOverlay) {
+        const opacityValue = newVariant === 'overlay' ? '0.85' : 
+                           newVariant === 'blend' ? '0.7' : '1';
+        targetOverlay.style.opacity = opacityValue;
+      }
+      
+      currentVariant = newVariant;
+      updateButtonStyles();
+      
+      // Sauvegarder la préférence
+      localStorage.setItem('heroVariant', newVariant);
+      
+      // Feedback visuel
+      console.log(`🎨 Variante changée: ${newVariant}`);
+    }
+    
+    // Event listeners pour les boutons
+    variantButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const variant = btn.dataset.variant as VariantType;
+        if (variant && variant !== currentVariant && variant in overlays) {
+          switchVariant(variant);
+        }
+      });
+    });
+    
+    // Charger la préférence sauvegardée
+    const savedVariant = localStorage.getItem('heroVariant') as VariantType;
+    if (savedVariant && savedVariant in overlays) {
+      switchVariant(savedVariant);
+    } else {
+      updateButtonStyles();
+    }
+    
+    // Raccourcis clavier pour les tests (1-4)
+    document.addEventListener('keydown', (e) => {
+      const variants: VariantType[] = ['overlay', 'blend', 'gradient', 'texture'];
+      const key = parseInt(e.key);
+      
+      if (key >= 1 && key <= 4) {
+        e.preventDefault();
+        switchVariant(variants[key - 1]);
+      }
+    });
+    
+    console.log('🧪 Mode test activé - Utilisez les boutons ou les touches 1-4 pour changer de variante');
+  });
+</script>
+
+<style>
+  /* Animation pour l'effet de parallaxe subtil */
+  @media (prefers-reduced-motion: no-preference) {
+    section {
+      animation: subtleParallax 20s ease-in-out infinite;
+    }
+  }
+  
+  @keyframes subtleParallax {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Amélioration de la lisibilité du texte */
+  h1, p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Effet de hover pour le bouton */
+  a:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Styles pour le sélecteur de variantes */
+  .variant-btn {
+    min-width: 70px;
+    text-align: center;
+  }
+  
+  .variant-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Responsive - masquer le sélecteur sur très petits écrans */
+  @media (max-width: 480px) {
+    .fixed {
+      display: none;
+    }
+  }
+</style>

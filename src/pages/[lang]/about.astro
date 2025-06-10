@@ -1,8 +1,8 @@
 ---
-// src/pages/[lang]/index.astro
+//about.astro mais qui est une version test de src/pages/[lang]/index.astro - Version avec sélecteur de variantes
 import Layout from '../../layouts/layout.astro';
 import TestimonialsCarousel from '../../components/testimonials_carousel.astro';
-import Hero from '../../components/hero.astro';
+import HeroBannerWithToggle from '../../components/hero_banner_with_toggle.astro';
 
 export function getStaticPaths() {
   return [
@@ -105,8 +105,8 @@ const t = content[lang] || content.fr;
 ---
 
 <Layout title={t.title} description={t.description} lang={lang}>
-  <Hero 
-    variant="gradient"
+  <!-- Hero Section avec sélecteur de variantes -->
+  <HeroBannerWithToggle 
     lang={lang}
     title={t.heroTitle}
     subtitle={t.heroSubtitle}
@@ -117,14 +117,14 @@ const t = content[lang] || content.fr;
   <!-- Expertise Section -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-(--color-primary)">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
         {t.expertiseTitle}
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {t.expertiseItems.map((item) => (
           <div class="card">
-            <h3 class="text-xl font-semibold mb-4 text-(--color-primary)">
+            <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
               {item.title}
             </h3>
             <p class="text-gray-600">
@@ -147,7 +147,7 @@ const t = content[lang] || content.fr;
       </h2>
       <a 
         href={`/${lang}/contact/`}
-        class="btn-primary bg-white text-(--color-primary) hover:bg-gray-50 text-lg px-8 py-4"
+        class="btn-primary bg-white text-[var(--color-primary)] hover:bg-gray-50 text-lg px-8 py-4"
       >
         {t.ctaButton}
       </a>
