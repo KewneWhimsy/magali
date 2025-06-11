@@ -206,9 +206,6 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       updateButtonStyles();
       updateContentStyles(newVariant);
       
-      // Sauvegarder la préférence
-      localStorage.setItem('heroVariant', newVariant);
-      
       // Feedback visuel
       console.log(`🎨 Variante changée: ${newVariant}`);
     }
@@ -223,14 +220,9 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       });
     });
     
-    // Charger la préférence sauvegardée
-    const savedVariant = localStorage.getItem('heroVariant') as VariantType;
-    if (savedVariant && savedVariant in overlays) {
-      switchVariant(savedVariant);
-    } else {
-      updateButtonStyles();
-      updateContentStyles(currentVariant);
-    }
+    // Initialiser les styles
+    updateButtonStyles();
+    updateContentStyles(currentVariant);
     
     // Raccourcis clavier pour les tests (1-5)
     document.addEventListener('keydown', (e) => {

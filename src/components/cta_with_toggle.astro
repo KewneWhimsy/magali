@@ -1,6 +1,6 @@
 ---
 // src/components/cta_with_toggle.astro
-// Version de test avec sélecteur de variantes pour CTA
+// Version de test avec sélecteur de variantes pour CTA + variante "none"
 import OptimizeImage from './optimize_image.astro';
 
 interface Props {
@@ -31,7 +31,8 @@ const variantLabels = {
       overlay: 'Superposition',
       blend: 'Fusion',
       gradient: 'Dégradé',
-      texture: 'Texture'
+      texture: 'Texture',
+      none: 'Aucun effet'
     }
   },
   en: {
@@ -40,7 +41,8 @@ const variantLabels = {
       overlay: 'Overlay',
       blend: 'Blend',
       gradient: 'Gradient', 
-      texture: 'Texture'
+      texture: 'Texture',
+      none: 'No effect'
     }
   },
   de: {
@@ -49,7 +51,8 @@ const variantLabels = {
       overlay: 'Überlagerung',
       blend: 'Mischung',
       gradient: 'Verlauf',
-      texture: 'Textur'
+      texture: 'Textur',
+      none: 'Kein Effekt'
     }
   }
 };
@@ -112,16 +115,21 @@ const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
       <div class="absolute inset-0 bg-gradient-to-br from-transparent via-black/15 to-[var(--color-secondary)]/40"></div>
       <div class="absolute inset-0" style="background-image: radial-gradient(circle at 80% 20%, transparent 30%, rgba(255,255,255,0.08) 40%);"></div>
     </div>
+    
+    <!-- Variant 5: Aucun effet -->
+    <div class="cta-variant-none absolute inset-0 transition-opacity duration-500 opacity-0">
+      <!-- Pas de superposition, juste l'image -->
+    </div>
   </div>
 
   <!-- Contenu principal -->
-  <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16">
-    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 drop-shadow-lg">
+  <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16" id={`${ctaId}-content`}>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 drop-shadow-lg" id={`${ctaId}-title`}>
       {title}
     </h2>
 
     {subtitle && (
-      <p class="text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light opacity-95">
+      <p class="text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md font-light opacity-95" id={`${ctaId}-subtitle`}>
         {subtitle}
       </p>
     )}
@@ -161,7 +169,8 @@ const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
             overlay: section.querySelector('.cta-variant-overlay') as HTMLElement | null,
             blend: section.querySelector('.cta-variant-blend') as HTMLElement | null,
             gradient: section.querySelector('.cta-variant-gradient') as HTMLElement | null,
-            texture: section.querySelector('.cta-variant-texture') as HTMLElement | null
+            texture: section.querySelector('.cta-variant-texture') as HTMLElement | null,
+            none: section.querySelector('.cta-variant-none') as HTMLElement | null
           },
           currentVariant: 'gradient'
         });
@@ -192,6 +201,28 @@ const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
       });
     }
     
+    // Fonction pour ajuster les styles du contenu selon la variante
+    function updateCTAContentStyles(targetId: string, variant: string) {
+      const ctaTitle = document.getElementById(`${targetId}-title`);
+      const ctaSubtitle = document.getElementById(`${targetId}-subtitle`);
+      
+      if (!ctaTitle) return;
+      
+      if (variant === 'none') {
+        // Pour la variante "none", augmenter l'ombre du texte pour plus de lisibilité
+        ctaTitle.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.7)';
+        if (ctaSubtitle) {
+          ctaSubtitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)';
+        }
+      } else {
+        // Pour les autres variantes, style normal
+        ctaTitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.4)';
+        if (ctaSubtitle) {
+          ctaSubtitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.4)';
+        }
+      }
+    }
+    
     // Fonction pour changer de variante CTA
     function switchCTAVariant(targetId: string, newVariant: string) {
       const ctaData = ctaSections.get(targetId);
@@ -208,12 +239,14 @@ const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
       const targetOverlay = ctaData.overlays[newVariant];
       if (targetOverlay) {
         const opacityValue = newVariant === 'overlay' ? '0.85' : 
-                           newVariant === 'blend' ? '0.7' : '1';
+                           newVariant === 'blend' ? '0.7' : 
+                           newVariant === 'none' ? '0' : '1';
         targetOverlay.style.opacity = opacityValue;
       }
       
       ctaData.currentVariant = newVariant;
       updateCTAButtonStyles(targetId);
+      updateCTAContentStyles(targetId, newVariant);
       
       // Sauvegarder la préférence
       localStorage.setItem(`ctaVariant-${targetId}`, newVariant);
@@ -244,17 +277,18 @@ const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
         switchCTAVariant(targetId, savedVariant);
       } else {
         updateCTAButtonStyles(targetId);
+        updateCTAContentStyles(targetId, ctaData.currentVariant);
       }
     });
     
-    // Raccourcis clavier pour les tests (Shift + 1-4 pour CTA)
+    // Raccourcis clavier pour les tests (Shift + 1-5 pour CTA)
     document.addEventListener('keydown', (e) => {
       if (!e.shiftKey) return;
       
-      const variants = ['overlay', 'blend', 'gradient', 'texture'];
+      const variants = ['overlay', 'blend', 'gradient', 'texture', 'none'];
       const key = parseInt(e.key);
       
-      if (key >= 1 && key <= 4) {
+      if (key >= 1 && key <= 5) {
         e.preventDefault();
         // Appliquer à toutes les sections CTA
         ctaSections.forEach((_, targetId) => {
@@ -263,7 +297,7 @@ const ctaId = `cta-${Math.random().toString(36).substr(2, 9)}`;
       }
     });
     
-    console.log('🧪 Mode test CTA activé - Utilisez les boutons ou Shift + 1-4 pour changer de variante');
+    console.log('🧪 Mode test CTA activé - Utilisez les boutons ou Shift + 1-5 pour changer de variante');
   });
 </script>
 
