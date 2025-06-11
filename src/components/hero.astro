@@ -1,10 +1,10 @@
 ---
 // src/components/hero.astro
-// Différentes variantes d'effets de transparence
+// Différentes variantes d'effets de transparence + variante "none"
 import OptimizeImage from './optimize_image.astro';
 
 interface Props {
-  variant?: 'overlay' | 'blend' | 'gradient' | 'texture';
+  variant?: 'overlay' | 'blend' | 'gradient' | 'texture' | 'none';
   lang: string;
   title: string;
   subtitle: string;
@@ -53,14 +53,20 @@ const { variant = 'overlay', lang, title, subtitle, buttonText, buttonHref } = A
         <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, transparent 40%, rgba(255,255,255,0.1) 50%);"></div>
       </>
     )}
+    
+    <!-- Variant 5: Aucun effet - image pure -->
+    {variant === 'none' && (
+      <!-- Pas de superposition, juste l'image -->
+      <div class="absolute inset-0"></div>
+    )}
   </div>
   
   <!-- Contenu principal -->
-  <div class="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
-    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up drop-shadow-lg">
+  <div class={`relative z-10 max-w-6xl mx-auto px-4 text-center ${variant === 'none' ? 'text-white' : 'text-white'}`}>
+    <h1 class={`text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up ${variant === 'none' ? 'drop-shadow-2xl' : 'drop-shadow-lg'}`}>
       {title}
     </h1>
-    <p class="text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto leading-relaxed drop-shadow-md font-light">
+    <p class={`text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto leading-relaxed font-light ${variant === 'none' ? 'drop-shadow-xl' : 'drop-shadow-md'}`}>
       {subtitle}
     </p>
     <a 
@@ -97,7 +103,7 @@ const { variant = 'overlay', lang, title, subtitle, buttonText, buttonHref } = A
     50% { transform: translateY(-10px); }
   }
   
-  /* Amélioration de la lisibilité du texte */
+  /* Amélioration de la lisibilité du texte pour la variante "none" */
   h1, p {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   }
@@ -107,14 +113,3 @@ const { variant = 'overlay', lang, title, subtitle, buttonText, buttonHref } = A
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   }
 </style>
-
-<!-- Exemple d'utilisation dans votre page :
-<HeroBannerVariants 
-  variant="gradient"
-  lang={lang}
-  title={t.heroTitle}
-  subtitle={t.heroSubtitle}
-  buttonText={t.heroButton}
-  buttonHref={`/${lang}/services/`}
-/>
--->

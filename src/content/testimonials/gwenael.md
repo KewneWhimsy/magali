@@ -13,8 +13,8 @@ Nous encourageons et recommandons les TPE/PME du secteur alimentaire à recourir
 
 ## en
 
-Thanks to ABC Gourmet's strategic support, we were able to export our cheeses to Germany and Belgium. Their knowledge of European regulations was decisive.
+
 
 ## de
 
-Dank der strategischen Unterstützung von ABC Gourmet konnten wir unsere Käse nach Deutschland und Belgien exportieren. Ihre Kenntnis der europäischen Vorschriften war entscheidend.
+

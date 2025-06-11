@@ -1,6 +1,6 @@
 ---
 // src/components/hero_banner_with_toggle.astro
-// Version de test avec sélecteur de variantes
+// Version de test avec sélecteur de variantes + variante "none"
 import OptimizeImage from './optimize_image.astro';
 
 interface Props {
@@ -21,7 +21,8 @@ const variantLabels = {
       overlay: 'Superposition',
       blend: 'Fusion',
       gradient: 'Dégradé',
-      texture: 'Texture'
+      texture: 'Texture',
+      none: 'Aucun effet'
     }
   },
   en: {
@@ -30,7 +31,8 @@ const variantLabels = {
       overlay: 'Overlay',
       blend: 'Blend',
       gradient: 'Gradient', 
-      texture: 'Texture'
+      texture: 'Texture',
+      none: 'No effect'
     }
   },
   de: {
@@ -39,7 +41,8 @@ const variantLabels = {
       overlay: 'Überlagerung',
       blend: 'Mischung',
       gradient: 'Verlauf',
-      texture: 'Textur'
+      texture: 'Textur',
+      none: 'Kein Effekt'
     }
   }
 };
@@ -99,14 +102,19 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       <div class="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-[var(--color-secondary)]/30"></div>
       <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, transparent 40%, rgba(255,255,255,0.1) 50%);"></div>
     </div>
+    
+    <!-- Variant 5: Aucun effet -->
+    <div class="variant-none absolute inset-0 transition-opacity duration-500 opacity-0">
+      <!-- Pas de superposition, juste l'image -->
+    </div>
   </div>
   
   <!-- Contenu principal -->
-  <div class="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
-    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up drop-shadow-lg">
+  <div class="relative z-10 max-w-6xl mx-auto px-4 text-center text-white" id="hero-content">
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up drop-shadow-lg" id="hero-title">
       {title}
     </h1>
-    <p class="text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto leading-relaxed drop-shadow-md font-light">
+    <p class="text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto leading-relaxed drop-shadow-md font-light" id="hero-subtitle">
       {subtitle}
     </p>
     <a 
@@ -132,8 +140,13 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       overlay: document.querySelector('.variant-overlay') as HTMLElement | null,
       blend: document.querySelector('.variant-blend') as HTMLElement | null,
       gradient: document.querySelector('.variant-gradient') as HTMLElement | null,
-      texture: document.querySelector('.variant-texture') as HTMLElement | null
+      texture: document.querySelector('.variant-texture') as HTMLElement | null,
+      none: document.querySelector('.variant-none') as HTMLElement | null
     };
+    
+    // Éléments de contenu pour ajuster les styles selon la variante
+    const heroTitle = document.getElementById('hero-title') as HTMLElement | null;
+    const heroSubtitle = document.getElementById('hero-subtitle') as HTMLElement | null;
     
     type VariantType = keyof typeof overlays;
     let currentVariant: VariantType = 'overlay';
@@ -156,6 +169,21 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       });
     }
     
+    // Fonction pour ajuster les styles du contenu selon la variante
+    function updateContentStyles(variant: VariantType) {
+      if (!heroTitle || !heroSubtitle) return;
+      
+      if (variant === 'none') {
+        // Pour la variante "none", augmenter l'ombre du texte pour plus de lisibilité
+        heroTitle.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.7)';
+        heroSubtitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)';
+      } else {
+        // Pour les autres variantes, style normal
+        heroTitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.3)';
+        heroSubtitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.3)';
+      }
+    }
+    
     // Fonction pour changer de variante
     function switchVariant(newVariant: VariantType) {
       // Masquer toutes les superpositions
@@ -169,12 +197,14 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       const targetOverlay = overlays[newVariant];
       if (targetOverlay) {
         const opacityValue = newVariant === 'overlay' ? '0.85' : 
-                           newVariant === 'blend' ? '0.7' : '1';
+                           newVariant === 'blend' ? '0.7' : 
+                           newVariant === 'none' ? '0' : '1';
         targetOverlay.style.opacity = opacityValue;
       }
       
       currentVariant = newVariant;
       updateButtonStyles();
+      updateContentStyles(newVariant);
       
       // Sauvegarder la préférence
       localStorage.setItem('heroVariant', newVariant);
@@ -199,20 +229,21 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
       switchVariant(savedVariant);
     } else {
       updateButtonStyles();
+      updateContentStyles(currentVariant);
     }
     
-    // Raccourcis clavier pour les tests (1-4)
+    // Raccourcis clavier pour les tests (1-5)
     document.addEventListener('keydown', (e) => {
-      const variants: VariantType[] = ['overlay', 'blend', 'gradient', 'texture'];
+      const variants: VariantType[] = ['overlay', 'blend', 'gradient', 'texture', 'none'];
       const key = parseInt(e.key);
       
-      if (key >= 1 && key <= 4) {
+      if (key >= 1 && key <= 5) {
         e.preventDefault();
         switchVariant(variants[key - 1]);
       }
     });
     
-    console.log('🧪 Mode test activé - Utilisez les boutons ou les touches 1-4 pour changer de variante');
+    console.log('🧪 Mode test activé - Utilisez les boutons ou les touches 1-5 pour changer de variante');
   });
 </script>
 

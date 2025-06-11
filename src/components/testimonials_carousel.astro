@@ -110,7 +110,7 @@ const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
               />
               <div class="carousel-item absolute opacity-0 w-full top-0 left-0 flex flex-col items-center justify-center h-full p-8 transition-opacity duration-500">
                 <div
-                  class={`testimonial-content md:text-lg leading-relaxed italic max-w-2xl mx-auto text-left ${testimonial.data.image ? "mb-8" : "mb-6"}`}
+                  class={`testimonial-content md:text-lg italic max-w-2xl mx-auto text-left ${testimonial.data.image ? "mb-8" : "mb-6"}`}
                 >
                   <p class="text-pretty" set:html={testimonial.langContent} />
                 </div>
