@@ -3,7 +3,7 @@ clientName: "Carine Meyers"
 company: "Responsable Département Crèmerie & Traiteur chez La Provencale"
 order: 2
 publishDate: 2025-01-15
-image: "/src/assets/img/carine.png"
+image: "/img_testimognals/carine.png"
 imageAlt: "Logo La Provencale"
 ---
 

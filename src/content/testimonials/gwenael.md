@@ -3,7 +3,7 @@ clientName: "Gwenaël Perhirin"
 company: "Directeur Général de Makuarazi France Katsuobushi"
 order: 1
 publishDate: 2025-02-10
-image: "/src/assets/img/gwenael.jpg"
+image: "/img_testimognals/gwenael.jpg"
 imageAlt: "Logo Makurazaki France Katsuobushi"
 ---
 

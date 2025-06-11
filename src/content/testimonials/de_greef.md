@@ -3,7 +3,7 @@ clientName: "M. De Greef"
 company: "CEO OF VIan Fish & Fine Food GmbH"
 order: 3
 publishDate: 2025-03-05
-image: "/src/assets/img/de_greef.png"
+image: "/img_testimognals/de_greef.png"
 imageAlt: "Logo VIan Fish & Fine Food GmbH"
 ---
 
