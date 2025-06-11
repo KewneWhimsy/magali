@@ -16,6 +16,7 @@
   --color-gray-900: #111827;
 }
 
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: #028995;
@@ -26,8 +27,6 @@
     --color-gray-200: #111827;
     --color-gray-600: #edf6f9;
     /* etc. */
-  }
-}
 
 /* === STYLES DE BASE === */
 
