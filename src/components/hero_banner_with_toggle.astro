@@ -111,6 +111,17 @@ const labels = variantLabels[lang as keyof typeof variantLabels] || variantLabel
   
   <!-- Contenu principal -->
   <div class="relative z-10 max-w-6xl mx-auto px-4 text-center text-white" id="hero-content">
+    <!-- Logo centré en haut -->
+    <div class="mb-8 flex justify-center">
+      <OptimizeImage 
+        src="/src/assets/img/logo_300x205.png"
+        alt="ABC Gourmet Logo"
+        class="h-20 md:h-24 lg:h-28 w-auto drop-shadow-lg"
+        loading="eager"
+        widths={[150, 200, 300]}
+      />
+    </div>
+    
     <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up drop-shadow-lg" id="hero-title">
       {title}
     </h1>

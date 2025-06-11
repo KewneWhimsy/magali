@@ -1,5 +1,6 @@
 ---
 // src/layouts/footer.astro
+import OptimizeImage from "../components/optimize_image.astro";
 
 // Récupérer l'URL actuelle pour détecter la langue
 const { pathname } = Astro.url;
@@ -57,7 +58,16 @@ const navLabels = footerNavLabels[currentLang as keyof typeof footerNavLabels] |
       
       <!-- Informations entreprise -->
       <div>
-        <h3 class="text-xl font-bold text-(--color-primary) mb-4">ABC Gourmet</h3>
+        <!-- Logo ABC Gourmet -->
+        <div class="mb-4">
+          <OptimizeImage 
+            src="/src/assets/img/logo_300x205.png"
+            alt="ABC Gourmet Logo"
+            class="h-16 w-auto"
+            loading="lazy"
+            widths={[120, 200, 300]}
+          />
+        </div>
         <p class="text-gray-600 mb-4">{t.description}</p>
         <p class="text-sm text-gray-600">{t.copyright}</p>
       </div>
