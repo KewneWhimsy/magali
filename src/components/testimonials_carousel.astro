@@ -87,14 +87,14 @@ const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <section
-  class="bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white py-16 min-h-[700px] flex items-center"
+  class="bg-[linear-gradient(to_right,var(--color-primary),var(--color-primary-hover))] text-white py-16 flex items-center"
 >
   <div class="max-w-6xl mx-auto px-8 w-full text-center">
     <h2 class="text-4xl font-light mb-12 uppercase tracking-[2px]">
       {t.testimonials}
     </h2>
 
-    <div class="carousel relative max-w-4xl mx-auto h-[600px]" id={carouselId}>
+    <div class="carousel relative max-w-4xl mx-auto h-[750px] sm:h-[400px]" id={carouselId}>
       <div class="carousel-inner w-full h-full relative">
         {
           sortedTestimonials.map((testimonial, index: number) => (
@@ -110,9 +110,9 @@ const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
               />
               <div class="carousel-item absolute opacity-0 w-full top-0 left-0 flex flex-col items-center justify-center h-full p-8 transition-opacity duration-500">
                 <div
-                  class={`testimonial-content md:text-lg leading-relaxed italic max-w-2xl ${testimonial.data.image ? "mb-8" : "mb-6"}`}
+                  class={`testimonial-content md:text-lg leading-relaxed italic max-w-2xl mx-auto text-left ${testimonial.data.image ? "mb-8" : "mb-6"}`}
                 >
-                  <p class="text-balance" set:html={testimonial.langContent} />
+                  <p class="text-pretty" set:html={testimonial.langContent} />
                 </div>
 
                 {testimonial.data.image && (

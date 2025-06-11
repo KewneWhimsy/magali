@@ -7,7 +7,8 @@ publishDate: 2025-03-05
 
 ## fr
 
-L'équipe d'ABC Gourmet nous a aidés à structurer notre offre et à définir notre positionnement marketing. Leur vision stratégique nous a fait gagner un temps précieux.
+L'équipe d'ABC Gourmet nous a aidés à structurer notre offre et à définir notre positionnement marketing. 
+Leur vision stratégique nous a fait gagner un temps précieux.
 
 ## en
 
