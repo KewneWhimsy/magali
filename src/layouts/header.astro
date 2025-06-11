@@ -13,6 +13,7 @@ const currentLang = langMatch ? langMatch[1] : 'fr';
 // Traduction des labels de navigation pour ABC Gourmet
 const navLabels = {
   fr: {
+    menu: 'Menu',
     home: 'Accueil',
     about: 'Qui sommes-nous ?',
     expertise: 'Expertises',
@@ -22,6 +23,7 @@ const navLabels = {
     contact: 'Contact'
   },
   en: {
+    menu: 'Menu',
     home: 'Home',
     about: 'Who are we?',
     expertise: 'Expertise', 
@@ -31,6 +33,7 @@ const navLabels = {
     contact: 'Contact'
   },
   de: {
+    menu: 'Menü',
     home: 'Startseite',
     about: 'Wer sind wir?',
     expertise: 'Expertise',
@@ -45,33 +48,133 @@ const navLabels = {
 const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
 ---
 
-<header class="bg-(--color-white) shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300" id="main-header">
+<header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300" id="main-header">
   <div class="max-w-7xl mx-auto px-4">
-    <div class="flex flex-col lg:flex-row justify-between items-center">
+    <!-- Version mobile et tablette -->
+    <div class="flex lg:hidden justify-between items-center py-2">
+      <!-- Logo -->
+      <div data-astro-transition-persist="header-logo">
+        <a 
+          href={`/${currentLang}/`}
+          class="flex items-center hover:opacity-80 transition-opacity"
+        >
+          <OptimizeImage 
+            src="/src/assets/img/logow_300x162.png"
+            alt="ABC Gourmet Logo"
+            class="h-10 w-auto"
+            loading="eager"
+          />
+        </a>
+      </div>
+
+      <!-- Sélecteur de langue + Menu hamburger -->
+      <div class="flex items-center gap-3">
+        <LanguageSwitcher />
+        
+        <!-- Bouton menu hamburger -->
+        <button 
+          id="mobile-menu-btn"
+          class="flex flex-col justify-center items-center w-8 h-8 text-gray-600 hover:text-[var(--color-primary)] transition-colors"
+          aria-label={labels.menu}
+          aria-expanded="false"
+        >
+          <span class="hamburger-line block w-6 h-0.5 bg-current mb-1.5 transition-all duration-300 origin-center"></span>
+          <span class="hamburger-line block w-6 h-0.5 bg-current mb-1.5 transition-all duration-300 origin-center"></span>
+          <span class="hamburger-line block w-6 h-0.5 bg-current transition-all duration-300 origin-center"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu mobile (caché par défaut) -->
+    <nav 
+      id="mobile-menu" 
+      class="lg:hidden bg-white border-t border-gray-200 absolute left-0 right-0 top-full shadow-lg opacity-0 invisible transform -translate-y-2 transition-all duration-300 ease-out"
+    >
+      <ul class="py-4 space-y-1">
+        <li>
+          <a 
+            href={`/${currentLang}/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname === `/${currentLang}/` ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.home}
+          </a>
+        </li>
+        <li>
+          <a 
+            href={`/${currentLang}/about/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/about') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.about}
+          </a>
+        </li>
+        <li>
+          <a 
+            href={`/${currentLang}/expertise/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/expertise') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.expertise}
+          </a>
+        </li>
+        <li>
+          <a 
+            href={`/${currentLang}/training/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/training') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.training}
+          </a>
+        </li>
+        <li>
+          <a 
+            href={`/${currentLang}/results/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/results') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.results}
+          </a>
+        </li>
+        <li>
+          <a 
+            href={`/${currentLang}/news/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/news') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.news}
+          </a>
+        </li>
+        <li>
+          <a 
+            href={`/${currentLang}/contact/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/contact') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+          >
+            {labels.contact}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Version desktop (inchangée) -->
+    <div class="hidden lg:flex justify-between items-center">
       <!-- Logo / Nom de l'entreprise -->
-      <div class="mb-4 lg:mb-0" data-astro-transition-persist="header-logo">
+      <div data-astro-transition-persist="header-logo">
         <a 
           href={`/${currentLang}/`}
           class="flex items-center gap-3 hover:opacity-80 transition-opacity mt-1 md:mt-0"
         >
-          <!-- Logo image -->
           <OptimizeImage 
             src="/src/assets/img/logow_300x162.png"
             alt="ABC Gourmet Logo"
-            class="h-24 lg:h-12 w-auto"
+            class="h-12 w-auto"
             loading="eager"
           />
         </a>
       </div>
       
-      <div class="flex flex-col lg:flex-row gap-4 items-center">
-        <!-- Navigation principale avec URL localisées -->
-        <nav class="w-full lg:w-auto">
-          <ul class="flex flex-wrap justify-center items-center gap-3 my-1 xl:gap-5">
+      <div class="flex items-center gap-4">
+        <!-- Navigation principale -->
+        <nav>
+          <ul class="flex items-center gap-5">
             <li>
               <a 
                 href={`/${currentLang}/`}
-                class={`nav-link lg:text-sm ${pathname === `/${currentLang}/` ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname === `/${currentLang}/` ? 'active' : ''}`}
               >
                 {labels.home}
               </a>
@@ -79,7 +182,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/about/`}
-                class={`nav-link lg:text-sm ${pathname.includes('/about') ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname.includes('/about') ? 'active' : ''}`}
               >
                 {labels.about}
               </a>
@@ -87,7 +190,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/expertise/`}
-                class={`nav-link lg:text-sm ${pathname.includes('/expertise') ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname.includes('/expertise') ? 'active' : ''}`}
               >
                 {labels.expertise}
               </a>
@@ -95,7 +198,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/training/`}
-                class={`nav-link lg:text-sm ${pathname.includes('/training') ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname.includes('/training') ? 'active' : ''}`}
               >
                 {labels.training}
               </a>
@@ -103,7 +206,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/results/`}
-                class={`nav-link lg:text-sm ${pathname.includes('/results') ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname.includes('/results') ? 'active' : ''}`}
               >
                 {labels.results}
               </a>
@@ -111,7 +214,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/news/`}
-                class={`nav-link lg:text-sm ${pathname.includes('/news') ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname.includes('/news') ? 'active' : ''}`}
               >
                 {labels.news}
               </a>
@@ -119,7 +222,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             <li>
               <a 
                 href={`/${currentLang}/contact/`}
-                class={`nav-link lg:text-sm ${pathname.includes('/contact') ? 'active' : ''}`}
+                class={`nav-link text-sm ${pathname.includes('/contact') ? 'active' : ''}`}
               >
                 {labels.contact}
               </a>
@@ -127,34 +230,108 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
           </ul>
         </nav>
         
-        
-      </div>
-      <!-- Sélecteur de langue -->
-      <div class="mt-2 lg:mt-0">
+        <!-- Sélecteur de langue -->
         <LanguageSwitcher />
       </div>
     </div>
   </div>
 </header>
 
-<!-- Script pour le comportement du header mobile - Version corrigée -->
 <script>
   document.addEventListener('astro:page-load', function() {
+    // Variables pour le header mobile
+    const header = document.getElementById('main-header') as HTMLElement | null;
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn') as HTMLButtonElement | null;
+    const mobileMenu = document.getElementById('mobile-menu') as HTMLElement | null;
+    const hamburgerLines = document.querySelectorAll('.hamburger-line') as NodeListOf<HTMLElement>;
+    
+    // État du menu
+    let isMenuOpen = false;
+    
+    // Fonction pour toggle le menu mobile
+    function toggleMobileMenu(): void {
+      if (!mobileMenu || !mobileMenuBtn) return;
+      
+      isMenuOpen = !isMenuOpen;
+      
+      // Mettre à jour l'attribut aria-expanded
+      mobileMenuBtn.setAttribute('aria-expanded', isMenuOpen.toString());
+      
+      if (isMenuOpen) {
+        // Ouvrir le menu
+        mobileMenu.classList.remove('opacity-0', 'invisible', '-translate-y-2');
+        mobileMenu.classList.add('opacity-100', 'visible', 'translate-y-0');
+        
+        // Animation hamburger vers X
+        if (hamburgerLines.length >= 3) {
+          hamburgerLines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+          hamburgerLines[1].style.opacity = '0';
+          hamburgerLines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+        }
+      } else {
+        // Fermer le menu
+        mobileMenu.classList.remove('opacity-100', 'visible', 'translate-y-0');
+        mobileMenu.classList.add('opacity-0', 'invisible', '-translate-y-2');
+        
+        // Reset hamburger
+        if (hamburgerLines.length >= 3) {
+          hamburgerLines[0].style.transform = 'none';
+          hamburgerLines[1].style.opacity = '1';
+          hamburgerLines[2].style.transform = 'none';
+        }
+      }
+    }
+    
+    // Event listener pour le bouton menu
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Fermer le menu quand on clique sur un lien
+    if (mobileMenu) {
+      const menuLinks = mobileMenu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (isMenuOpen) {
+            toggleMobileMenu();
+          }
+        });
+      });
+    }
+    
+    // Fermer le menu si on clique en dehors
+    document.addEventListener('click', (e: Event) => {
+      if (!mobileMenuBtn || !mobileMenu || !isMenuOpen) return;
+      
+      const target = e.target as HTMLElement;
+      if (!mobileMenuBtn.contains(target) && !mobileMenu.contains(target)) {
+        toggleMobileMenu();
+      }
+    });
+    
+    // Fermer le menu avec Escape
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        toggleMobileMenu();
+      }
+    });
+    
+    // Scroll behavior pour masquer/afficher le header
     let lastScrollY = 0;
-    const header = document.getElementById('main-header');
     let ticking = false;
 
-    if (!header) return;
-
-    function updateHeader() {
-      if (!header) return; // Protection supplémentaire
+    function updateHeader(): void {
+      if (!header) return;
       
       const currentScrollY = window.scrollY;
       
       // Seulement sur mobile/tablette
-      if (window.innerWidth < 1100) {
+      if (window.innerWidth < 1024) {
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scroll down - hide
+          // Scroll down - hide (mais fermer le menu d'abord)
+          if (isMenuOpen) {
+            toggleMobileMenu();
+          }
           header.style.transform = 'translateY(-100%)';
         } else if (currentScrollY < lastScrollY) {
           // Scroll up - show
@@ -169,7 +346,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
       ticking = false;
     }
 
-    function requestTick() {
+    function requestTick(): void {
       if (!ticking) {
         requestAnimationFrame(updateHeader);
         ticking = true;
@@ -184,6 +361,11 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
       if (header) {
         header.style.transform = 'translateY(0)';
         lastScrollY = window.scrollY;
+        
+        // Fermer le menu mobile si on passe en desktop
+        if (window.innerWidth >= 1024 && isMenuOpen) {
+          toggleMobileMenu();
+        }
       }
     });
 
@@ -192,6 +374,28 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
       if (header) {
         header.style.transform = 'translateY(0)';
       }
+      if (isMenuOpen) {
+        toggleMobileMenu();
+      }
     });
   });
 </script>
+
+<style>
+  /* Styles pour le menu hamburger animé */
+  .hamburger-line {
+    transform-origin: center;
+  }
+  
+  /* Animation smooth pour le menu déroulant */
+  #mobile-menu {
+    transition: opacity 300ms ease-out, visibility 300ms ease-out, transform 300ms ease-out;
+  }
+  
+  /* Améliorer les performances sur mobile */
+  @media (max-width: 1023px) {
+    #main-header {
+      will-change: transform;
+    }
+  }
+</style>
