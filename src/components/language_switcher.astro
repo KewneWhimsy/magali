@@ -1,5 +1,5 @@
 ---
-// src/components/LanguageSwitcher.astro
+// src/components/language_switcher.astro
 
 // Langues disponibles
 const languages = [
@@ -17,13 +17,9 @@ const currentLang = langMatch ? langMatch[1] : 'fr';
 
 // Fonction pour déterminer l'URL dans une autre langue
 const getLocalizedPath = (langCode: string): string => {
-  // Extraire le chemin sans le code de langue
   const pathWithoutLang = pathname.replace(/^\/[a-z]{2}/, '');
-  
-  // Construire le nouveau chemin avec la langue souhaitée
   let localizedPath = `/${langCode}${pathWithoutLang}`;
   
-  // S'assurer qu'il y a un slash final
   if (!localizedPath.endsWith('/')) {
     localizedPath += '/';
   }
@@ -36,17 +32,18 @@ const getLocalizedPath = (langCode: string): string => {
   <div class="flex items-center gap-2">
     {languages.map((lang, index) => (
       <>
-        <a 
-          href={getLocalizedPath(lang.code)} 
-          class={`text-sm transition-colors duration-200 ${
+        <button 
+          class={`language-button text-sm transition-colors duration-200 ${
             lang.code === currentLang 
-              ? 'text-(--color-primary) font-medium' 
-              : 'text-(--color-gray-600) hover:text-(--color-primary-hover)'
+              ? 'text-(--color-primary) font-medium cursor-default' 
+              : 'text-(--color-gray-600) hover:text-(--color-primary-hover) cursor-pointer'
           }`}
-          onclick={`localStorage.setItem('preferredLanguage', '${lang.code}')`}
+          data-lang={lang.code}
+          data-url={getLocalizedPath(lang.code)}
+          disabled={lang.code === currentLang}
         >
           {lang.label}
-        </a>
+        </button>
         
         {index < languages.length - 1 && (
           <span class="text-gray-400">|</span>
@@ -55,3 +52,72 @@ const getLocalizedPath = (langCode: string): string => {
     ))}
   </div>
 </div>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+  
+  document.addEventListener('astro:page-load', function() {
+    const languageButtons = document.querySelectorAll('.language-button:not([disabled])') as NodeListOf<HTMLButtonElement>;
+    
+    languageButtons.forEach(button => {
+      button.addEventListener('click', async function() {
+        const targetUrl = this.dataset.url;
+        const targetLang = this.dataset.lang;
+        
+        if (!targetUrl || !targetLang) return;
+        
+        // Marquer explicitement que c'est un changement de langue
+        sessionStorage.setItem('isLanguageSwitch', 'true');
+        sessionStorage.setItem('languageSwitchScrollY', window.scrollY.toString());
+        
+        // Sauvegarder la langue préférée
+        localStorage.setItem('preferredLanguage', targetLang);
+        
+        try {
+          await navigate(targetUrl, {
+            history: 'push'
+          });
+        } catch (error) {
+          console.warn('Navigation échouée:', error);
+          window.location.href = targetUrl;
+        }
+      });
+    });
+  });
+  
+  // Gestionnaire UNIQUEMENT pour les changements de langue
+  document.addEventListener('astro:after-swap', () => {
+    const isLanguageSwitch = sessionStorage.getItem('isLanguageSwitch');
+    const savedScrollY = sessionStorage.getItem('languageSwitchScrollY');
+    
+    if (isLanguageSwitch === 'true' && savedScrollY) {
+      // Restaurer la position SEULEMENT pour les changements de langue
+      window.scrollTo({
+        top: parseInt(savedScrollY, 10),
+        behavior: 'instant'
+      });
+      
+      // Nettoyer immédiatement
+      sessionStorage.removeItem('isLanguageSwitch');
+      sessionStorage.removeItem('languageSwitchScrollY');
+    }
+    // Pour toute autre navigation, laisser le comportement par défaut (scroll en haut)
+  });
+</script>
+
+<style>
+  .language-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+  }
+  
+  .language-button:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+  
+  .language-button:disabled {
+    opacity: 1;
+  }
+</style>
