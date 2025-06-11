@@ -6,12 +6,11 @@ interface Props {
   variant?: 'overlay' | 'blend' | 'gradient' | 'texture' | 'none';
   lang: string;
   title: string;
-  subtitle: string;
   buttonText: string;
   buttonHref: string;
 }
 
-const { variant = 'overlay', lang, title, subtitle, buttonText, buttonHref } = Astro.props;
+const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props;
 ---
 
 <section class="relative min-h-[600px] lg:min-h-[700px] flex items-center justify-center overflow-hidden">
