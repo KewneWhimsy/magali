@@ -1,7 +1,7 @@
 ---
 clientName: "Marie Dubois"
 company: "Artisan Boulangerie Bio"
-order: 1
+order: 2
 publishDate: 2025-01-15
 ---
 
