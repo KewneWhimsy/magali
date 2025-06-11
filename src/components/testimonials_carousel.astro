@@ -94,7 +94,7 @@ const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
       {t.testimonials}
     </h2>
 
-    <div class="carousel relative max-w-4xl mx-auto h-[800px] sm:h-[450px]" id={carouselId}>
+    <div class="carousel relative max-w-4xl mx-auto min-h-[540px] sm:h-[450px]" id={carouselId}>
       <div class="carousel-inner w-full h-full relative">
         {
           sortedTestimonials.map((testimonial, index: number) => (

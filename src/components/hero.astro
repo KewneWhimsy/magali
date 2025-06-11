@@ -1,6 +1,5 @@
 ---
-// src/components/hero.astro
-// Différentes variantes d'effets de transparence + variante "none"
+// src/components/hero.astro - Version KISS avec Tailwind
 import OptimizeImage from './optimize_image.astro';
 
 interface Props {
@@ -62,24 +61,23 @@ const { variant = 'overlay', lang, title, subtitle, buttonText, buttonHref } = A
   </div>
   
   <!-- Contenu principal -->
-  <div class={`relative z-10 max-w-6xl mx-auto px-4 text-center ${variant === 'none' ? 'text-white' : 'text-white'}`}>
-    <!-- Logo centré en haut -->
+  <div class={`relative z-10 max-w-6xl mx-auto px-4 mb-40 text-center ${variant === 'none' ? 'text-white' : 'text-white'}`}>
+    <!-- Logo avec bordure blanche simple -->
     <div class="mb-8 flex justify-center">
-      <OptimizeImage 
-        src="/src/assets/img/logo_300x205.png"
-        alt="ABC Gourmet Logo"
-        class="h-36 w-auto drop-shadow-lg"
-        loading="eager"
-        widths={[150, 200, 300]}
-      />
+      <div class="bg-white p-6 md:p-8 border-4 border-white rounded-b-lg shadow-lg">
+        <OptimizeImage 
+          src="/src/assets/img/logow_300x162.png"
+          alt="ABC Gourmet Logo"
+          class="h-10 md:h-12 lg:h-14 w-auto"
+          loading="eager"
+          widths={[150, 200, 300]}
+        />
+      </div>
     </div>
     
     <h1 class={`text-4xl md:text-6xl lg:text-7xl font-bold my-24 fade-in-up ${variant === 'none' ? 'drop-shadow-2xl' : 'drop-shadow-lg'}`}>
       {title}
     </h1>
-    <p class={`text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto leading-relaxed font-light opacity-0 ${variant === 'none' ? 'drop-shadow-xl' : 'drop-shadow-md'}`}>
-      {subtitle}
-    </p>
     <a 
       href={buttonHref}
       class="inline-block bg-white/95 backdrop-blur-sm text-[var(--color-primary)] font-semibold px-8 py-4 text-lg rounded-lg hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -97,11 +95,6 @@ const { variant = 'overlay', lang, title, subtitle, buttonText, buttonHref } = A
 </section>
 
 <style>
-  /* Styles spécifiques selon la variante */
-  section {
-    position: relative;
-  }
-  
   /* Animation pour l'effet de parallaxe subtil */
   @media (prefers-reduced-motion: no-preference) {
     section {
