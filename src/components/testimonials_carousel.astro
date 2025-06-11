@@ -94,7 +94,7 @@ const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
       {t.testimonials}
     </h2>
 
-    <div class="carousel relative max-w-4xl mx-auto h-[750px] sm:h-[400px]" id={carouselId}>
+    <div class="carousel relative max-w-4xl mx-auto h-[800px] sm:h-[450px]" id={carouselId}>
       <div class="carousel-inner w-full h-full relative">
         {
           sortedTestimonials.map((testimonial, index: number) => (
@@ -122,7 +122,7 @@ const carouselId = `testimonials-${Math.random().toString(36).substr(2, 9)}`;
                       alt={
                         testimonial.data.imageAlt || testimonial.data.company
                       }
-                      class="max-h-[60px] max-w-[150px] object-contain brightness-0 invert"
+                      class="max-h-[60px] max-w-[150px] object-contain rounded-full"
                       loading={index === 0 ? "eager" : "lazy"}
                     />
                   </div>

@@ -3,6 +3,8 @@ clientName: "M. De Greef"
 company: "CEO OF VIan Fish & Fine Food GmbH"
 order: 3
 publishDate: 2025-03-05
+image: "/src/assets/img/de_greef.png"
+imageAlt: "Logo VIan Fish & Fine Food GmbH"
 ---
 
 ## fr
@@ -19,9 +21,17 @@ Ivo
 
 ## en
 
+I have been working with Magali for almost 20 years.
+
+Always professional, friendly and always there for your clients, it's fun to work with her.
+
+Nothing stands in the way of another 20 years of cooperation.
+<br><br>
+Sincère amitiés
+<br><br>
+Ivo
 
 ## de
-
 
 Seit fast 20 Jahre arbeite ich nun schon mit Magali zusammen.
 
@@ -31,4 +41,4 @@ Weiteren 20 Jahren Zusammenarbeit steht somit nichts im Wege.
 <br><br>
 Sincères amitiés
 <br><br>
-Ivo					
+Ivo
