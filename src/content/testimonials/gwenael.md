@@ -9,11 +9,7 @@ imageAlt: "Logo Makurazaki France Katsuobushi"
 
 ## fr
 
-Nous avons sollicité Magali Caignec de chez ABC GOURMET sur un audit Commercial, marketing et stratégique de MAKURAZAKI FRANCE KATSUOBUSHI et de notre marque en France et à l'international. Ses recommandations nous ont permis d'une part d'adapter nos produits aux marchés visés, nos outils de communication également et de pénétrer des canaux de distribution relevant du secteur Gourmet.
-
-Dans le cadre de la poursuite de mission que nous avons opérée au niveau Business développement, ABC GOURMET a ouvert des marchés en Europe et a partagé avec nous son expérience et ses conseils bien adaptés sur les stratégies à adopter selon les différents secteurs de ventes en France et ailleurs dans l'UE.
-
-Nous encourageons et recommandons les TPE/PME du secteur alimentaire à recourir aux conseils et l'accompagnement d'ABC GOURMET.
+Grâce à l'audit commercial et stratégique d'ABC GOURMET, nous avons adapté nos produits KATSUOBUSHI aux marchés français et européens et pénétré de nouveaux canaux de distribution dans le secteur Gourmet. Leur accompagnement en business développement nous a permis d'ouvrir des marchés en Europe avec des stratégies adaptées à chaque secteur de vente. Nous encourageons et recommandons les TPE/PME du secteur alimentaire à recourir aux conseils et l'accompagnement d'ABC GOURMET.
 
 ## en
 
