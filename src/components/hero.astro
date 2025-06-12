@@ -54,7 +54,6 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
     
     <!-- Variant 5: Aucun effet - image pure -->
     {variant === 'none' && (
-      <!-- Pas de superposition, juste l'image -->
       <div class="absolute inset-0"></div>
     )}
   </div>
@@ -63,11 +62,11 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
   <div class={`relative z-10 max-w-6xl mx-auto px-4 mb-40 text-center ${variant === 'none' ? 'text-white' : 'text-white'}`}>
     <!-- Logo avec bordure blanche simple -->
     <div class="mb-8 flex justify-center">
-      <div class="bg-white p-6 md:p-8 border-4 border-white rounded-b-lg shadow-lg">
+      <div class="bg-white px-4 pb-2 pt-3 sm:px-6 sm:pb-3 sm:pt-4  border-4 border-white rounded-b-lg shadow-lg">
         <OptimizeImage 
           src="/src/assets/img/logow_300x162.png"
           alt="ABC Gourmet Logo"
-          class="h-10 md:h-12 lg:h-14 w-auto"
+          class="h-12 sm:h-18 w-auto"
           loading="eager"
           widths={[150, 200, 300]}
         />
