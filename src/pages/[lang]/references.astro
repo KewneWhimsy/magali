@@ -1,0 +1,346 @@
+---
+// src/pages/[lang]/results.astro
+import Layout from '../../layouts/layout.astro';
+import OptimizeImage from '../../components/optimize_image.astro';
+import TestimonialsCarousel from '../../components/testimonials_carousel.astro';
+import PartnersInfiniteScroller from '../../components/partners_infinite_scroller.astro';
+import CTASection from '../../components/cta.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "fr" } },
+    { params: { lang: "en" } },
+    { params: { lang: "de" } },
+  ];
+}
+
+const lang = Astro.params.lang as "fr" | "en" | "de";
+
+const content = {
+  fr: {
+    title: 'Références & Témoignages - ABC Gourmet',
+    description: 'Découvrez nos références concrètes et les témoignages de nos clients. 30% de croissance moyenne, 7+ nouveaux marchés ouverts.',
+    heroTitle: 'Nos résultats et impact',
+    heroSubtitle: 'Des résultats concrets pour nos clients',
+    
+    results: {
+      title: 'Nos résultats en chiffres',
+      stats: [
+        {
+          number: '30%',
+          title: 'Croissance du CA',
+          description: 'Dernière mission : 22 nouveaux comptes clients en 2024 dont 6 dans le top 20. Prospection du secteur huile d\'olive en GMS et RHF démarrée en 2023 : en binôme avec Rudy Verschueren.'
+        },
+        {
+          number: '100%',
+          title: 'Visibilité renforcée',
+          description: 'Réseau Bio en centrale (Biocoop, Naturalia, La Vie Claire) et en direct pour test marchés'
+        },
+        {
+          number: '7+',
+          title: 'Nouveaux marchés',
+          description: 'Dernière Mission : Ouverture de l\'Allemagne, Singapour, Italie, Luxembourg, Belgique, Espagne, Dubai.... Ouverture de la GMS France et distributeurs dans le secteur de l\'huile d\'olive extra vierge pour nos partenaires espagnols'
+        }
+      ]
+    },
+
+    clientCase: {
+      title: 'Exemples de Parcours client',
+      context: {
+        title: 'Contexte',
+        text: 'Besoin d\'une stratégie de création / repositionnement de la marque et du développement commercial en France et à l\'export'
+      },
+      actions: {
+        title: 'Actions menées',
+        items: [
+          'Réalisation d\'un audit complet de la structure',
+          'Refonte de la marque et /ou des packagings et création de recettes',
+          'Développement de la stratégie de distribution française, européenne et ....',
+          'Mise en place de la stratégie tarifaire par circuits et CGV'
+        ]
+      },
+      results: {
+        title: 'Exemples de résultats obtenus',
+        items: [
+          '+30% de CA en 3 ans',
+          'Ouverture de nouveaux marchés en Europe',
+          'Visibilité renforcée dans les réseaux Gourmet et Bio',
+          'Création et/ou développement de la distribution sur le circuit idoine',
+          'Des plateformes de centrales bio sauvées car menacées en raison d\'un branding vieillissant.'
+        ]
+      }
+    },
+
+    ctaTitle: 'Prêt à obtenir des résultats similaires ?',
+    ctaSubtitle: 'Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons vous accompagner.',
+    ctaButton: 'Parlons de votre projet'
+  },
+  en: {
+    title: 'References & Testimonials - ABC Gourmet',
+    description: 'Discover our concrete references and client testimonials. 30% average growth, 7+ new markets opened.',
+    heroTitle: 'Our results and impact',
+    heroSubtitle: 'Concrete results for our clients',
+    
+    results: {
+      title: 'Our results in numbers',
+      stats: [
+        {
+          number: '30%',
+          title: 'Revenue Growth',
+          description: 'Latest mission: 22 new client accounts in 2024 including 6 in the top 20. Olive oil sector prospecting in retail chains and food service started in 2023: in partnership with Rudy Verschueren.'
+        },
+        {
+          number: '100%',
+          title: 'Enhanced Visibility',
+          description: 'Organic network in central (Biocoop, Naturalia, La Vie Claire) and direct for market testing'
+        },
+        {
+          number: '7+',
+          title: 'New Markets',
+          description: 'Latest Mission: Opening of Germany, Singapore, Italy, Luxembourg, Belgium, Spain, Dubai.... Opening of French retail chains and distributors in the extra virgin olive oil sector for our Spanish partners'
+        }
+      ]
+    },
+
+    clientCase: {
+      title: 'Client Journey Examples',
+      context: {
+        title: 'Context',
+        text: 'Need for a brand creation/repositioning strategy and commercial development in France and for export'
+      },
+      actions: {
+        title: 'Actions taken',
+        items: [
+          'Complete structural audit',
+          'Brand redesign and/or packaging and recipe creation',
+          'Development of French, European and international distribution strategy',
+          'Implementation of pricing strategy by channels and terms & conditions'
+        ]
+      },
+      results: {
+        title: 'Examples of results obtained',
+        items: [
+          '+30% revenue in 3 years',
+          'Opening of new markets in Europe',
+          'Enhanced visibility in Gourmet and Organic networks',
+          'Creation and/or development of distribution on the appropriate channel',
+          'Organic central platforms saved as they were threatened due to aging branding.'
+        ]
+      }
+    },
+
+    ctaTitle: 'Ready to achieve similar results?',
+    ctaSubtitle: 'Contact us to discuss your project and discover how we can support you.',
+    ctaButton: 'Let\'s talk about your project'
+  },
+  de: {
+    title: 'Referenzen & Testimonials - ABC Gourmet',
+    description: 'Entdecken Sie unsere konkreten Referenzen und Kundenstimmen. 30% durchschnittliches Wachstum, 7+ neue Märkte eröffnet.',
+    heroTitle: 'Unsere Ergebnisse und Wirkung',
+    heroSubtitle: 'Konkrete Ergebnisse für unsere Kunden',
+    
+    results: {
+      title: 'Unsere Ergebnisse in Zahlen',
+      stats: [
+        {
+          number: '30%',
+          title: 'Umsatzwachstum',
+          description: 'Neueste Mission: 22 neue Kundenkonten in 2024, davon 6 in den Top 20. Olivenöl-Sektor-Prospection in Einzelhandelsketten und Gastronomie begonnen 2023: in Partnerschaft mit Rudy Verschueren.'
+        },
+        {
+          number: '100%',
+          title: 'Verstärkte Sichtbarkeit',
+          description: 'Bio-Netzwerk in Zentralen (Biocoop, Naturalia, La Vie Claire) und direkt für Markttests'
+        },
+        {
+          number: '7+',
+          title: 'Neue Märkte',
+          description: 'Neueste Mission: Eröffnung von Deutschland, Singapur, Italien, Luxemburg, Belgien, Spanien, Dubai.... Eröffnung französischer Einzelhandelsketten und Distributoren im Sektor natives Olivenöl extra für unsere spanischen Partner'
+        }
+      ]
+    },
+
+    clientCase: {
+      title: 'Beispiele für Kundenreisen',
+      context: {
+        title: 'Kontext',
+        text: 'Bedarf an einer Strategie zur Markenerstellung/Neupositionierung und kommerziellen Entwicklung in Frankreich und für den Export'
+      },
+      actions: {
+        title: 'Durchgeführte Maßnahmen',
+        items: [
+          'Vollständige Strukturprüfung',
+          'Marken-Redesign und/oder Verpackung und Rezepterstellung',
+          'Entwicklung französischer, europäischer und internationaler Vertriebsstrategie',
+          'Umsetzung der Preisstrategie nach Kanälen und Geschäftsbedingungen'
+        ]
+      },
+      results: {
+        title: 'Beispiele für erzielte Ergebnisse',
+        items: [
+          '+30% Umsatz in 3 Jahren',
+          'Eröffnung neuer Märkte in Europa',
+          'Verstärkte Sichtbarkeit in Gourmet- und Bio-Netzwerken',
+          'Erstellung und/oder Entwicklung des Vertriebs auf dem geeigneten Kanal',
+          'Bio-Zentralplattformen gerettet, da sie aufgrund veralteten Brandings bedroht waren.'
+        ]
+      }
+    },
+
+    ctaTitle: 'Bereit, ähnliche Ergebnisse zu erzielen?',
+    ctaSubtitle: 'Kontaktieren Sie uns, um Ihr Projekt zu besprechen und zu entdecken, wie wir Sie unterstützen können.',
+    ctaButton: 'Sprechen wir über Ihr Projekt'
+  }
+};
+
+const t = content[lang] || content.fr;
+---
+
+<Layout title={t.title} description={t.description} lang={lang}>
+  <!-- Hero Section -->
+  <section class="relative min-h-[400px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)]">
+    <div class="absolute inset-0 bg-black/20"></div>
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
+        {t.heroTitle}
+      </h1>
+      <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed drop-shadow-md font-light">
+        {t.heroSubtitle}
+      </p>
+    </div>
+  </section>
+
+  <!-- Résultats en chiffres -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
+        {t.results.title}
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {t.results.stats.map((stat) => (
+          <div class="card text-center">
+            <div class="text-5xl md:text-6xl font-bold text-[var(--color-primary)] mb-4">
+              {stat.number}
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">
+              {stat.title}
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {stat.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Exemples de parcours client -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
+        {t.clientCase.title}
+      </h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Image d'illustration -->
+        <div class="rounded-lg overflow-hidden shadow-lg">
+          <OptimizeImage 
+            src="/src/assets/img/cta.jpg"
+            alt="ABC Gourmet - Parcours client"
+            class="w-full h-[400px] object-cover"
+            loading="lazy"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 1023px) 100vw, 50vw"
+          />
+        </div>
+
+        <!-- Processus -->
+        <div class="space-y-8">
+          <!-- Contexte -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              1
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2 text-[var(--color-primary)]">
+                {t.clientCase.context.title}
+              </h3>
+              <p class="text-gray-600">
+                {t.clientCase.context.text}
+              </p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              2
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
+                {t.clientCase.actions.title}
+              </h3>
+              <ul class="space-y-2">
+                {t.clientCase.actions.items.map((item) => (
+                  <li class="flex items-start">
+                    <span class="text-[var(--color-primary)] mr-2 mt-1 text-sm">•</span>
+                    <span class="text-gray-600 text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Résultats -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-[var(--color-secondary)] rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              3
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-4 text-[var(--color-secondary)]">
+                {t.clientCase.results.title}
+              </h3>
+              <ul class="space-y-2">
+                {t.clientCase.results.items.map((item) => (
+                  <li class="flex items-start">
+                    <span class="text-[var(--color-secondary)] mr-2 mt-1 text-sm">•</span>
+                    <span class="text-gray-600 text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Témoignages avec votre composant -->
+  <TestimonialsCarousel lang={lang} />
+
+  <!-- Partenaires -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 text-center mb-8">
+      <h2 class="text-2xl font-bold text-[var(--color-primary)] mb-4">
+        {lang === 'fr' ? 'Nos partenaires de confiance' : 
+         lang === 'en' ? 'Our trusted partners' : 
+         'Unsere vertrauenswürdigen Partner'}
+      </h2>
+    </div>
+    <PartnersInfiniteScroller />
+  </section>
+
+  <!-- CTA Section -->
+  <CTASection 
+    variant="gradient"
+    lang={lang}
+    title={t.ctaTitle}
+    subtitle={t.ctaSubtitle}
+    buttonText={t.ctaButton}
+    buttonHref={`/${lang}/contact/`}
+    imageSrc="/src/assets/img/cta.jpg"
+    imageAlt="ABC Gourmet - Résultats clients"
+  />
+</Layout>

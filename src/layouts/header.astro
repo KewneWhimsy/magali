@@ -18,7 +18,7 @@ const navLabels = {
     about: 'Qui sommes-nous ?',
     expertise: 'Expertises',
     training: 'Formation et ateliers',
-    results: 'Références & témoignages',
+    references: 'Références & témoignages',
     news: 'Actualités',
     contact: 'Contact'
   },
@@ -28,7 +28,7 @@ const navLabels = {
     about: 'Who are we?',
     expertise: 'Expertise', 
     training: 'Partners & workshops',
-    results: 'Results & testimonials',
+    references: 'References & testimonials',
     news: 'News',
     contact: 'Contact'
   },
@@ -38,7 +38,7 @@ const navLabels = {
     about: 'Wer sind wir?',
     expertise: 'Expertise',
     training: 'Kunden und Workshops',
-    results: 'Ergebnisse & Testimonials',
+    references: 'Ergebnisse & Testimonials',
     news: 'Nachrichten',
     contact: 'Kontakt'
   }
@@ -125,10 +125,10 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
         </li>
         <li>
           <a 
-            href={`/${currentLang}/results/`}
-            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/results') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
+            href={`/${currentLang}/references/`}
+            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/references') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
           >
-            {labels.results}
+            {labels.references}
           </a>
         </li>
         <li>
@@ -205,10 +205,10 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
             </li>
             <li>
               <a 
-                href={`/${currentLang}/results/`}
-                class={`nav-link text-sm ${pathname.includes('/results') ? 'active' : ''}`}
+                href={`/${currentLang}/references/`}
+                class={`nav-link text-sm ${pathname.includes('/references') ? 'active' : ''}`}
               >
-                {labels.results}
+                {labels.references}
               </a>
             </li>
             <li>
