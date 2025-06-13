@@ -1,0 +1,90 @@
+---
+// src/components/partners_infinite_scroller.astro
+import { getCollection } from "astro:content";
+import OptimizeImage from './optimize_image.astro';
+
+// Récupérer tous les partenaires
+let partners = await getCollection("partners");
+
+// Séparer par catégorie
+const partnersInstitutionnels = partners.filter(p => p.data.category === 'institutionnel');
+const partnersPrives = partners.filter(p => p.data.category === 'prive');
+---
+
+<!-- Premier scroller - Partenaires institutionnels -->
+<section class="max-w-6xl w-full overflow-hidden mx-auto my-8 h-48 relative mask-gradient">
+  {partnersInstitutionnels.map((partner, index) => (
+    <div 
+      class="absolute w-48 h-48 z-10 animate-scroll-left"
+      style={`--n: ${index + 1}; --total: ${partnersInstitutionnels.length};`}
+    >
+      <a href={partner.data.website} target="_blank">
+        <OptimizeImage
+          src={partner.data.logo}
+          alt={partner.data.logoAlt}
+          class="w-full aspect-square object-contain"
+          loading="lazy"
+          widths={[200]}
+          sizes="200px"
+        />
+      </a>
+    </div>
+  ))}
+</section>
+
+<!-- Deuxième scroller - Partenaires privés -->
+<section class="max-w-6xl w-full overflow-hidden mx-auto my-8 h-48 relative mask-gradient">
+  {partnersPrives.map((partner, index) => (
+    <div 
+      class="absolute w-48 h-48 z-10 animate-scroll-right"
+      style={`--n: ${index + 1}; --total: ${partnersPrives.length};`}
+    >
+      <a href={partner.data.website} target="_blank">
+        <OptimizeImage
+          src={partner.data.logo}
+          alt={partner.data.logoAlt}
+          class="w-full aspect-square object-contain"
+          loading="lazy"
+          widths={[200]}
+          sizes="200px"
+        />
+      </a>
+    </div>
+  ))}
+</section>
+
+<style>
+  .mask-gradient {
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 1) 80%,
+      rgba(0, 0, 0, 0)
+    );
+  }
+
+  .animate-scroll-left {
+    left: max(calc(12rem * var(--total)), 100%);
+    animation: scrollleft 50s linear infinite;
+    animation-delay: calc(50s / var(--total) * (var(--total) - var(--n)) * -1);
+  }
+
+  .animate-scroll-right {
+    right: max(calc(12rem * var(--total)), 100%);
+    animation: scrollright 50s linear infinite;
+    animation-delay: calc(50s / var(--total) * (var(--total) - var(--n)) * -1);
+  }
+
+  @keyframes scrollleft {
+    to {
+      left: -12rem;
+    }
+  }
+
+  @keyframes scrollright {
+    to {
+      right: -12rem;
+    }
+  }
+</style>
