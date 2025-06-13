@@ -1,0 +1,529 @@
+---
+// src/pages/[lang]/training.astro
+import Layout from '../../layouts/layout.astro';
+import OptimizeImage from '../../components/optimize_image.astro';
+import CTASection from '../../components/cta.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "fr" } },
+    { params: { lang: "en" } },
+    { params: { lang: "de" } },
+  ];
+}
+
+const lang = Astro.params.lang as "fr" | "en" | "de";
+
+const content = {
+  fr: {
+    title: 'Formation et Ateliers - ABC Gourmet',
+    description: 'Formations spécialisées et ateliers pratiques pour les professionnels du secteur alimentaire. Développez vos compétences avec ABC Gourmet.',
+    heroTitle: 'Formation et Ateliers',
+    heroSubtitle: 'Développez vos compétences avec nos formations spécialisées et ateliers pratiques',
+    
+    intro: 'Nos programmes de formation sont conçus pour répondre aux besoins spécifiques des professionnels du secteur alimentaire. Que vous soyez dirigeant, commercial ou responsable marketing, nos formations vous donnent les clés pour réussir.',
+    
+    formations: [
+      {
+        title: 'Formation Export Alimentaire',
+        duration: '2 jours',
+        level: 'Tous niveaux',
+        description: 'Maîtrisez les fondamentaux de l\'export dans le secteur alimentaire',
+        objectives: [
+          'Comprendre les réglementations internationales',
+          'Adapter ses produits aux marchés export',
+          'Construire sa stratégie tarifaire',
+          'Identifier et approcher les distributeurs'
+        ],
+        image: '/src/assets/img/formation_export.jpg'
+      },
+      {
+        title: 'Atelier Négociation GMS',
+        duration: '1 jour',
+        level: 'Intermédiaire',
+        description: 'Techniques de négociation spécifiques aux grandes surfaces',
+        objectives: [
+          'Préparer sa négociation commerciale',
+          'Argumenter efficacement face aux centrales',
+          'Gérer les objections et les refus',
+          'Optimiser ses conditions commerciales'
+        ],
+        image: '/src/assets/img/formation_negociation.jpg'
+      },
+      {
+        title: 'Workshop Marketing Alimentaire',
+        duration: '1,5 jour',
+        level: 'Tous niveaux',
+        description: 'Construire l\'identité de marque dans l\'univers food',
+        objectives: [
+          'Définir son ADN de marque',
+          'Optimiser son packaging',
+          'Adapter sa communication aux circuits',
+          'Créer ses outils marketing'
+        ],
+        image: '/src/assets/img/formation_marketing.jpg'
+      },
+      {
+        title: 'Formation Management Commercial',
+        duration: '2 jours',
+        level: 'Managers',
+        description: 'Pilotage et animation d\'équipes commerciales dans l\'alimentaire',
+        objectives: [
+          'Recruter et former ses équipes',
+          'Fixer des objectifs motivants',
+          'Suivre la performance commerciale',
+          'Animer et motiver ses équipes'
+        ],
+        image: '/src/assets/img/formation_management.jpg'
+      }
+    ],
+    
+    methods: {
+      title: 'Notre approche pédagogique',
+      items: [
+        {
+          icon: '🎯',
+          title: 'Pratique et opérationnelle',
+          description: 'Formations axées sur des cas concrets et des mises en situation réelles'
+        },
+        {
+          icon: '👥',
+          title: 'Groupes restreints',
+          description: 'Maximum 8 participants pour garantir un accompagnement personnalisé'
+        },
+        {
+          icon: '📚',
+          title: 'Supports fournis',
+          description: 'Documents, templates et outils directement utilisables en entreprise'
+        },
+        {
+          icon: '📞',
+          title: 'Suivi post-formation',
+          description: 'Accompagnement téléphonique 3 mois après la formation'
+        }
+      ]
+    },
+    
+    ctaTitle: 'Intéressé par nos formations ?',
+    ctaSubtitle: 'Contactez-nous pour obtenir le programme détaillé et les prochaines dates disponibles.',
+    ctaButton: 'Demander plus d\'informations'
+  },
+  en: {
+    title: 'Training and Workshops - ABC Gourmet',
+    description: 'Specialized training and practical workshops for food industry professionals. Develop your skills with ABC Gourmet.',
+    heroTitle: 'Training and Workshops',
+    heroSubtitle: 'Develop your skills with our specialized training and practical workshops',
+    
+    intro: 'Our training programs are designed to meet the specific needs of food industry professionals. Whether you are a manager, salesperson or marketing manager, our training gives you the keys to success.',
+    
+    formations: [
+      {
+        title: 'Food Export Training',
+        duration: '2 days',
+        level: 'All levels',
+        description: 'Master the fundamentals of export in the food sector',
+        objectives: [
+          'Understand international regulations',
+          'Adapt products to export markets',
+          'Build pricing strategy',
+          'Identify and approach distributors'
+        ],
+        image: '/src/assets/img/formation_export.jpg'
+      },
+      {
+        title: 'Retail Chain Negotiation Workshop',
+        duration: '1 day',
+        level: 'Intermediate',
+        description: 'Negotiation techniques specific to large retailers',
+        objectives: [
+          'Prepare your commercial negotiation',
+          'Argue effectively with buying centers',
+          'Handle objections and refusals',
+          'Optimize your commercial conditions'
+        ],
+        image: '/src/assets/img/formation_negociation.jpg'
+      },
+      {
+        title: 'Food Marketing Workshop',
+        duration: '1.5 days',
+        level: 'All levels',
+        description: 'Build brand identity in the food universe',
+        objectives: [
+          'Define your brand DNA',
+          'Optimize your packaging',
+          'Adapt communication to channels',
+          'Create your marketing tools'
+        ],
+        image: '/src/assets/img/formation_marketing.jpg'
+      },
+      {
+        title: 'Commercial Management Training',
+        duration: '2 days',
+        level: 'Managers',
+        description: 'Management and animation of sales teams in food industry',
+        objectives: [
+          'Recruit and train your teams',
+          'Set motivating objectives',
+          'Monitor commercial performance',
+          'Animate and motivate your teams'
+        ],
+        image: '/src/assets/img/formation_management.jpg'
+      }
+    ],
+    
+    methods: {
+      title: 'Our pedagogical approach',
+      items: [
+        {
+          icon: '🎯',
+          title: 'Practical and operational',
+          description: 'Training focused on concrete cases and real-life situations'
+        },
+        {
+          icon: '👥',
+          title: 'Small groups',
+          description: 'Maximum 8 participants to guarantee personalized support'
+        },
+        {
+          icon: '📚',
+          title: 'Materials provided',
+          description: 'Documents, templates and tools directly usable in business'
+        },
+        {
+          icon: '📞',
+          title: 'Post-training follow-up',
+          description: 'Phone support 3 months after training'
+        }
+      ]
+    },
+    
+    ctaTitle: 'Interested in our training?',
+    ctaSubtitle: 'Contact us to get the detailed program and next available dates.',
+    ctaButton: 'Request more information'
+  },
+  de: {
+    title: 'Ausbildung und Workshops - ABC Gourmet',
+    description: 'Spezialisierte Schulungen und praktische Workshops für Fachkräfte der Lebensmittelindustrie. Entwickeln Sie Ihre Fähigkeiten mit ABC Gourmet.',
+    heroTitle: 'Ausbildung und Workshops',
+    heroSubtitle: 'Entwickeln Sie Ihre Fähigkeiten mit unseren spezialisierten Schulungen und praktischen Workshops',
+    
+    intro: 'Unsere Ausbildungsprogramme sind darauf ausgelegt, den spezifischen Bedürfnissen von Fachkräften der Lebensmittelindustrie gerecht zu werden. Ob Sie Manager, Verkäufer oder Marketingmanager sind, unsere Schulungen geben Ihnen die Schlüssel zum Erfolg.',
+    
+    formations: [
+      {
+        title: 'Lebensmittelexport-Schulung',
+        duration: '2 Tage',
+        level: 'Alle Ebenen',
+        description: 'Meistern Sie die Grundlagen des Exports im Lebensmittelsektor',
+        objectives: [
+          'Internationale Vorschriften verstehen',
+          'Produkte an Exportmärkte anpassen',
+          'Preisstrategie aufbauen',
+          'Händler identifizieren und ansprechen'
+        ],
+        image: '/src/assets/img/formation_export.jpg'
+      },
+      {
+        title: 'Einzelhandelsverhandlungs-Workshop',
+        duration: '1 Tag',
+        level: 'Mittelstufe',
+        description: 'Verhandlungstechniken speziell für Großhändler',
+        objectives: [
+          'Ihre Handelsverhandlung vorbereiten',
+          'Effektiv mit Einkaufszentren argumentieren',
+          'Einwände und Ablehnungen handhaben',
+          'Ihre Handelsbedingungen optimieren'
+        ],
+        image: '/src/assets/img/formation_negociation.jpg'
+      },
+      {
+        title: 'Lebensmittelmarketing-Workshop',
+        duration: '1,5 Tage',
+        level: 'Alle Ebenen',
+        description: 'Markenidentität im Lebensmitteluniversum aufbauen',
+        objectives: [
+          'Ihre Marken-DNA definieren',
+          'Ihre Verpackung optimieren',
+          'Kommunikation an Kanäle anpassen',
+          'Ihre Marketing-Tools erstellen'
+        ],
+        image: '/src/assets/img/formation_marketing.jpg'
+      },
+      {
+        title: 'Handelsmanagement-Schulung',
+        duration: '2 Tage',
+        level: 'Manager',
+        description: 'Management und Animation von Verkaufsteams in der Lebensmittelindustrie',
+        objectives: [
+          'Ihre Teams rekrutieren und schulen',
+          'Motivierende Ziele setzen',
+          'Handelsleistung überwachen',
+          'Ihre Teams animieren und motivieren'
+        ],
+        image: '/src/assets/img/formation_management.jpg'
+      }
+    ],
+    
+    methods: {
+      title: 'Unser pädagogischer Ansatz',
+      items: [
+        {
+          icon: '🎯',
+          title: 'Praktisch und operativ',
+          description: 'Schulungen fokussiert auf konkrete Fälle und reale Situationen'
+        },
+        {
+          icon: '👥',
+          title: 'Kleine Gruppen',
+          description: 'Maximal 8 Teilnehmer für garantierte persönliche Betreuung'
+        },
+        {
+          icon: '📚',
+          title: 'Materialien bereitgestellt',
+          description: 'Dokumente, Vorlagen und Tools direkt im Geschäft verwendbar'
+        },
+        {
+          icon: '📞',
+          title: 'Post-Training-Nachbetreuung',
+          description: 'Telefonische Unterstützung 3 Monate nach der Schulung'
+        }
+      ]
+    },
+    
+    ctaTitle: 'Interessiert an unseren Schulungen?',
+    ctaSubtitle: 'Kontaktieren Sie uns für das detaillierte Programm und die nächsten verfügbaren Termine.',
+    ctaButton: 'Weitere Informationen anfordern'
+  }
+};
+
+const t = content[lang] || content.fr;
+---
+
+<Layout title={t.title} description={t.description} lang={lang}>
+  <!-- Hero Section -->
+  <section class="relative min-h-[400px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)]">
+    <div class="absolute inset-0 bg-black/20"></div>
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
+        {t.heroTitle}
+      </h1>
+      <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed drop-shadow-md font-light">
+        {t.heroSubtitle}
+      </p>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <p class="text-lg text-gray-600 leading-relaxed">
+        {t.intro}
+      </p>
+    </div>
+  </section>
+
+  <!-- Formations -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {t.formations.map((formation) => (
+          <div class="card">
+            <div class="mb-6">
+              <OptimizeImage 
+                src={formation.image}
+                alt={formation.title}
+                class="w-full h-48 object-cover rounded-lg"
+                loading="lazy"
+                widths={[400, 600, 800]}
+                sizes="(max-width: 767px) 100vw, 50vw"
+              />
+            </div>
+            
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xl font-bold text-[var(--color-primary)] flex-1">
+                {formation.title}
+              </h3>
+              <div class="text-right ml-4">
+                <span class="inline-block bg-[var(--color-primary)] text-white text-xs px-2 py-1 rounded mb-1">
+                  {formation.duration}
+                </span>
+                <br>
+                <span class="text-xs text-gray-500">
+                  {formation.level}
+                </span>
+              </div>
+            </div>
+            
+            <p class="text-gray-600 mb-4">
+              {formation.description}
+            </p>
+            
+            <h4 class="font-semibold text-gray-800 mb-2">
+              {lang === 'fr' ? 'Objectifs :' : lang === 'en' ? 'Objectives:' : 'Ziele:'}
+            </h4>
+            
+            <ul class="space-y-2">
+              {formation.objectives.map((objective) => (
+                <li class="flex items-start">
+                  <span class="text-[var(--color-primary)] mr-2 mt-1 text-sm">•</span>
+                  <span class="text-sm text-gray-600">{objective}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Approche pédagogique -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
+        {t.methods.title}
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {t.methods.items.map((method) => (
+          <div class="card text-center">
+            <div class="text-4xl mb-4">{method.icon}</div>
+            <h3 class="text-lg font-semibold mb-3 text-[var(--color-primary)]">
+              {method.title}
+            </h3>
+            <p class="text-gray-600 text-sm">
+              {method.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Outils et méthodes basés sur le PDF -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
+        {lang === 'fr' ? 'Nos outils et méthodes' : 
+         lang === 'en' ? 'Our tools and methods' : 
+         'Unsere Werkzeuge und Methoden'}
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Outils de diagnostic -->
+        <div class="card">
+          <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
+            {lang === 'fr' ? 'Outils de diagnostic et de pilotage' : 
+             lang === 'en' ? 'Diagnostic and management tools' : 
+             'Diagnose- und Steuerungstools'}
+          </h3>
+          <ul class="text-gray-600 space-y-2">
+            <li>• SWOT, Canvas</li>
+            <li>• CRM Sellsy</li>
+            <li>• Google Alerts</li>
+            <li>• {lang === 'fr' ? 'Réseau international d\'experts' : 
+                  lang === 'en' ? 'International network of experts' : 
+                  'Internationales Expertennetzwerk'}</li>
+          </ul>
+        </div>
+
+        <!-- Outils marketing -->
+        <div class="card">
+          <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
+            {lang === 'fr' ? 'Outils marketing et digitaux' : 
+             lang === 'en' ? 'Marketing and digital tools' : 
+             'Marketing- und digitale Tools'}
+          </h3>
+          <ul class="text-gray-600 space-y-2">
+            <li>• {lang === 'fr' ? 'Collaboration avec des freelance' : 
+                  lang === 'en' ? 'Collaboration with freelancers' : 
+                  'Zusammenarbeit mit Freelancern'}</li>
+            <li>• {lang === 'fr' ? 'Graphiste, agence de communication' : 
+                  lang === 'en' ? 'Graphic designer, communication agency' : 
+                  'Grafiker, Kommunikationsagentur'}</li>
+          </ul>
+        </div>
+
+        <!-- Ressources commerciales -->
+        <div class="card">
+          <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
+            {lang === 'fr' ? 'Ressources commerciales' : 
+             lang === 'en' ? 'Commercial resources' : 
+             'Kommerzielle Ressourcen'}
+          </h3>
+          <ul class="text-gray-600 space-y-2">
+            <li>• 25+ {lang === 'fr' ? 'ans d\'expérience' : 
+                      lang === 'en' ? 'years of experience' : 
+                      'Jahre Erfahrung'}</li>
+            <li>• {lang === 'fr' ? 'Réseau de plus de 50 ans' : 
+                  lang === 'en' ? 'Network of over 50 years' : 
+                  'Netzwerk von über 50 Jahren'}</li>
+            <li>• {lang === 'fr' ? 'Formation continue' : 
+                  lang === 'en' ? 'Continuous training' : 
+                  'Kontinuierliche Ausbildung'}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications et agréments -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-8 text-[var(--color-primary)]">
+        {lang === 'fr' ? 'Certifications et agréments' : 
+         lang === 'en' ? 'Certifications and accreditations' : 
+         'Zertifizierungen und Akkreditierungen'}
+      </h2>
+      
+      <div class="flex justify-center items-center gap-8 flex-wrap">
+        <div class="text-center">
+          <div class="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-2">
+            <span class="text-white font-bold text-xl">BPI</span>
+          </div>
+          <p class="text-sm text-gray-600">
+            {lang === 'fr' ? 'Agréé BPI France' : 
+             lang === 'en' ? 'BPI France approved' : 
+             'BPI Frankreich genehmigt'}
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-2">
+            <span class="text-white font-bold text-xl">BCI</span>
+          </div>
+          <p class="text-sm text-gray-600">
+            {lang === 'fr' ? 'Agréé BCI' : 
+             lang === 'en' ? 'BCI approved' : 
+             'BCI genehmigt'}
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-2">
+            <span class="text-white font-bold text-sm">🇫🇷</span>
+          </div>
+          <p class="text-sm text-gray-600">Business France</p>
+        </div>
+      </div>
+      
+      <p class="text-gray-600 mt-8 text-lg">
+        {lang === 'fr' ? '4 langues parlées • 25+ ans d\'expérience internationale' : 
+         lang === 'en' ? '4 languages spoken • 25+ years international experience' : 
+         '4 Sprachen gesprochen • 25+ Jahre internationale Erfahrung'}
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <CTASection 
+    variant="texture"
+    lang={lang}
+    title={t.ctaTitle}
+    subtitle={t.ctaSubtitle}
+    buttonText={t.ctaButton}
+    buttonHref={`/${lang}/contact/`}
+    imageSrc="/src/assets/img/cta_formation.jpg"
+    imageAlt="ABC Gourmet - Formation professionnelle"
+  />
+</Layout>
