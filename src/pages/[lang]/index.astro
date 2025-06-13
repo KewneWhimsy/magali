@@ -4,6 +4,7 @@ import Layout from '../../layouts/layout.astro';
 import TestimonialsCarousel from '../../components/testimonials_carousel.astro';
 import Hero from '../../components/hero.astro';
 import CTASection from '../../components/cta.astro';
+import ExpertiseCard from '../../components/expertise_card.astro';
 
 export function getStaticPaths() {
   return [
@@ -21,25 +22,6 @@ const content = {
     description: 'Expertise stratégique et accompagnement opérationnel dans le secteur alimentaire. Développement produit, marketing, export et management.',
     heroTitle: 'Conseil stratégique et accompagnement opérationnel dans le secteur alimentaire',
     heroButton: 'Découvrir nos services',
-    expertiseTitle: 'Nos domaines d\'expertise',
-    expertiseItems: [
-      {
-        title: 'Développement produit',
-        description: 'Innovation alimentaire, formulation et mise sur le marché de nouveaux produits'
-      },
-      {
-        title: 'Marketing alimentaire',
-        description: 'Stratégie de marque, positionnement et communication dans l\'univers food'
-      },
-      {
-        title: 'Export agroalimentaire', 
-        description: 'Accompagnement à l\'international, réglementation et développement commercial'
-      },
-      {
-        title: 'Management opérationnel',
-        description: 'Optimisation des processus, qualité et organisation des équipes'
-      }
-    ],
     ctaTitle: 'Prêt à développer votre projet alimentaire ?',
     ctaSubtitle: 'Contactez-nous pour discuter de vos besoins et découvrir comment nous pouvons vous accompagner.',
     ctaButton: 'Nous contacter'
@@ -49,25 +31,6 @@ const content = {
     description: 'Strategic expertise and operational support in the food sector. Product development, marketing, export and management.',
     heroTitle: 'Strategic consulting and operational support in culinary enterprises',
     heroButton: 'Discover our services',
-    expertiseTitle: 'Our areas of expertise',
-    expertiseItems: [
-      {
-        title: 'Product development',
-        description: 'Food innovation, formulation and market launch of new products'
-      },
-      {
-        title: 'Food marketing',
-        description: 'Brand strategy, positioning and communication in the food universe'
-      },
-      {
-        title: 'Agri-food export',
-        description: 'International support, regulations and commercial development'
-      },
-      {
-        title: 'Operational management',
-        description: 'Process optimization, quality and team organization'
-      }
-    ],
     ctaTitle: 'Ready to develop your food project?',
     ctaSubtitle: 'Contact us to discuss your needs and discover how we can support you.',
     ctaButton: 'Contact us'
@@ -77,25 +40,6 @@ const content = {
     description: 'Strategische Expertise und operative Unterstützung im Lebensmittelsektor. Produktentwicklung, Marketing, Export und Management.',
     heroTitle: 'Strategische Beratung und operative Begleitung im Lebensmittelbereich',
     heroButton: 'Unsere Dienstleistungen entdecken',
-    expertiseTitle: 'Unsere Fachbereiche',
-    expertiseItems: [
-      {
-        title: 'Produktentwicklung',
-        description: 'Lebensmittelinnovation, Formulierung und Markteinführung neuer Produkte'
-      },
-      {
-        title: 'Lebensmittelmarketing',
-        description: 'Markenstrategie, Positionierung und Kommunikation im Food-Bereich'
-      },
-      {
-        title: 'Agrar- und Lebensmittelexport',
-        description: 'Internationale Unterstützung, Vorschriften und Geschäftsentwicklung'
-      },
-      {
-        title: 'Operatives Management',
-        description: 'Prozessoptimierung, Qualität und Teamorganisation'
-      }
-    ],
     ctaTitle: 'Bereit, Ihr Lebensmittelprojekt zu entwickeln?',
     ctaSubtitle: 'Kontaktieren Sie uns, um über Ihre Bedürfnisse zu sprechen und zu entdecken, wie wir Sie unterstützen können.',
     ctaButton: 'Kontaktieren Sie uns'
@@ -114,27 +58,8 @@ const t = content[lang] || content.fr;
     buttonHref={`/${lang}/services/`}
   />
 
-  <!-- Expertise Section -->
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-(--color-primary)">
-        {t.expertiseTitle}
-      </h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {t.expertiseItems.map((item) => (
-          <div class="card">
-            <h3 class="text-xl font-semibold mb-4 text-(--color-primary)">
-              {item.title}
-            </h3>
-            <p class="text-gray-600">
-              {item.description}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- Section expertises -->
+  <ExpertiseCard lang={lang} />
 
   <!-- Section témoignages -->
   <TestimonialsCarousel lang={lang} />

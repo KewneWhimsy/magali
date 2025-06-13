@@ -1,0 +1,194 @@
+---
+// src/components/expertise_card.astro
+interface Props {
+  lang: 'fr' | 'en' | 'de';
+}
+
+const { lang } = Astro.props;
+
+// Icônes SVG simples
+const icons = {
+  diamond: `<svg class="w-12 h-12 mx-auto mb-4 text-[var(--color-primary)]" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M6,2L18,2L22,8L12,22L2,8L6,2M12,19.5L19.5,8.5H4.5L12,19.5M6.5,3.5L4.5,7.5H8.5L10.5,3.5H6.5M13.5,3.5L15.5,7.5H19.5L17.5,3.5H13.5M11,7.5H13L12,10.5L11,7.5Z"/>
+  </svg>`,
+  
+  megaphone: `<svg class="w-12 h-12 mx-auto mb-4 text-[var(--color-primary)]" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12,8H4A2,2 0 0,0 2,10V14A2,2 0 0,0 4,16H5V20A1,1 0 0,0 6,21H8A1,1 0 0,0 9,20V16H12L17,20V4L12,8M21.5,12C21.5,13.71 20.54,15.26 19,16V8C20.53,8.75 21.5,10.3 21.5,12Z"/>
+  </svg>`,
+  
+  team: `<svg class="w-12 h-12 mx-auto mb-4 text-[var(--color-primary)]" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M16,4C18.21,4 20,5.79 20,8C20,10.21 18.21,12 16,12C13.79,12 12,10.21 12,8C12,5.79 13.79,4 16,4M16,14C18.67,14 24,15.33 24,18V20H8V18C8,15.33 13.33,14 16,14M8,4C10.21,4 12,5.79 12,8C12,10.21 10.21,12 8,12C5.79,12 4,10.21 4,8C4,5.79 5.79,4 8,4M8,14C10.67,14 16,15.33 16,18V20H0V18C0,15.33 5.33,14 8,14Z"/>
+  </svg>`,
+  
+  globe: `<svg class="w-12 h-12 mx-auto mb-4 text-[var(--color-primary)]" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+  </svg>`
+};
+
+// Données d'expertise basées exactement sur l'image fournie
+const expertiseData = {
+  fr: {
+    title: 'Nos expertises',
+    items: [
+      {
+        icon: icons.diamond,
+        title: 'VISION STRATÉGIQUE ET COMMERCIALE',
+        points: [
+          'Diagnostic, stratégie et tactique',
+          'Prospection et négociation : GMS, Centrale bio, Home service, RHF, restauration et Épicerie fine en direct.',
+          'Excellence du service client'
+        ]
+      },
+      {
+        icon: icons.megaphone,
+        title: 'MARKETING',
+        points: [
+          'Développement de l\'ADN de marque',
+          'Optimisation packaging et image',
+          'Adaptation produits aux marchés Européens (recettes et étuis)',
+          'Création d\'outils de communication'
+        ]
+      },
+      {
+        icon: icons.team,
+        title: 'MANAGEMENT',
+        points: [
+          'Recrutement et formation d\'équipes',
+          'Pilotage des VIE',
+          'Gestion des équipes de vente en France (interne ou agents)',
+          'Support ADV export'
+        ]
+      },
+      {
+        icon: icons.globe,
+        title: 'EXPORT',
+        points: [
+          '4 langues parlées',
+          'Agréé BPI, BCI et Business France',
+          '25+ ans d\'expérience internationale',
+          'Expertise particulière : Europe dont Allemagne, Espagne et Asie : Japon'
+        ]
+      }
+    ]
+  },
+  en: {
+    title: 'Our expertise',
+    items: [
+      {
+        icon: icons.diamond,
+        title: 'STRATEGIC AND COMMERCIAL VISION',
+        points: [
+          'Diagnosis, strategy and tactics',
+          'Prospecting and negotiation: Retail chains, Organic centers, Home service, Food service, catering and Fine food direct',
+          'Customer service excellence'
+        ]
+      },
+      {
+        icon: icons.megaphone,
+        title: 'MARKETING',
+        points: [
+          'Brand DNA development',
+          'Packaging and image optimization',
+          'Product adaptation to European markets (recipes and packaging)',
+          'Communication tools creation'
+        ]
+      },
+      {
+        icon: icons.team,
+        title: 'MANAGEMENT',
+        points: [
+          'Team recruitment and training',
+          'VIE management',
+          'Sales team management in France (internal or agents)',
+          'Export sales support'
+        ]
+      },
+      {
+        icon: icons.globe,
+        title: 'EXPORT',
+        points: [
+          '4 languages spoken',
+          'Accredited BPI, BCI and Business France',
+          '25+ years international experience',
+          'Particular expertise: Europe including Germany, Spain and Asia: Japan'
+        ]
+      }
+    ]
+  },
+  de: {
+    title: 'Unsere Expertise',
+    items: [
+      {
+        icon: icons.diamond,
+        title: 'STRATEGISCHE UND KOMMERZIELLE VISION',
+        points: [
+          'Diagnose, Strategie und Taktik',
+          'Akquise und Verhandlung: Einzelhandelsketten, Bio-Zentren, Home Service, Gastronomie und Feinkost direkt',
+          'Exzellenz im Kundenservice'
+        ]
+      },
+      {
+        icon: icons.megaphone,
+        title: 'MARKETING',
+        points: [
+          'Marken-DNA-Entwicklung',
+          'Verpackungs- und Image-Optimierung',
+          'Produktanpassung an europäische Märkte (Rezepte und Verpackung)',
+          'Erstellung von Kommunikationstools'
+        ]
+      },
+      {
+        icon: icons.team,
+        title: 'MANAGEMENT',
+        points: [
+          'Teamrekrutierung und -schulung',
+          'VIE-Management',
+          'Vertriebsteam-Management in Frankreich (intern oder Agenten)',
+          'Export-Vertriebsunterstützung'
+        ]
+      },
+      {
+        icon: icons.globe,
+        title: 'EXPORT',
+        points: [
+          '4 Sprachen gesprochen',
+          'Akkreditiert BPI, BCI und Business France',
+          '25+ Jahre internationale Erfahrung',
+          'Besondere Expertise: Europa einschließlich Deutschland, Spanien und Asien: Japan'
+        ]
+      }
+    ]
+  }
+};
+
+const content = expertiseData[lang];
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
+      {content.title}
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {content.items.map((expertise) => (
+        <div class="card text-center">
+          <div set:html={expertise.icon} />
+          
+          <h3 class="text-lg font-semibold mb-4 text-[var(--color-primary)] min-h-[3rem] flex items-center justify-center">
+            {expertise.title}
+          </h3>
+          
+          <ul class="text-gray-600 text-sm space-y-2 text-left">
+            {expertise.points.map((point) => (
+              <li class="flex items-start">
+                <span class="text-[var(--color-primary)] mr-2 mt-1 text-xs">•</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
