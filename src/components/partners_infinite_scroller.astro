@@ -1,7 +1,6 @@
 ---
 // src/components/partners_infinite_scroller.astro
 import { getCollection } from "astro:content";
-import OptimizeImage from './optimize_image.astro';
 
 // Récupérer tous les partenaires
 let partners = await getCollection("partners");
@@ -19,13 +18,11 @@ const partnersPrives = partners.filter(p => p.data.category === 'prive');
       style={`--n: ${index + 1}; --total: ${partnersInstitutionnels.length};`}
     >
       <a href={partner.data.website} target="_blank">
-        <OptimizeImage
+        <img
           src={partner.data.logo}
           alt={partner.data.logoAlt}
-          class="w-full aspect-square object-contain"
+          class="max-h-full w-auto object-contain"
           loading="lazy"
-          widths={[200]}
-          sizes="200px"
         />
       </a>
     </div>
@@ -40,13 +37,11 @@ const partnersPrives = partners.filter(p => p.data.category === 'prive');
       style={`--n: ${index + 1}; --total: ${partnersPrives.length};`}
     >
       <a href={partner.data.website} target="_blank">
-        <OptimizeImage
+        <img
           src={partner.data.logo}
           alt={partner.data.logoAlt}
-          class="w-full aspect-square object-contain"
+          class="max-h-full w-auto object-contain"
           loading="lazy"
-          widths={[200]}
-          sizes="200px"
         />
       </a>
     </div>
