@@ -1,7 +1,7 @@
 // src/content/config.ts - Ajout de la collection partners
 import { defineCollection, z } from 'astro:content';
 
-// Collections témoignages
+// Collections existantes
 const testimonialsCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -19,10 +19,9 @@ const partnersCollection = defineCollection({
   type: 'data',
   schema: z.object({
     website: z.string().url(),
-    logo: z.string(), // Chemin vers src/assets/partners/
+    logo: z.string(), // Chemin vers public/partners/
     logoAlt: z.string(),
-    category: z.enum(['institutionnel', 'prive']),
-    publishDate: z.date()
+    category: z.enum(['institutionnel', 'prive'])
   })
 });
 
