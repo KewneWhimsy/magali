@@ -50,6 +50,11 @@ const t = content[lang] || content.fr;
 ---
 
 <Layout title={t.title} description={t.description} lang={lang}>
+  <style is:global>
+h1, h2 {
+    font-family: var(--font-pacifico);
+}
+</style>
   <Hero 
     variant="none"
     lang={lang}

@@ -116,6 +116,11 @@ const t = content[lang] || content.fr;
 ---
 
 <Layout title={t.title} description={t.description} lang={lang}>
+  <style is:global>
+h1, h2, h3 {
+    font-family: var(--font-satisfy);
+}
+</style>
   <!-- Hero Section avec image de Magali -->
   <section
     class="relative min-h-[500px] flex items-center justify-center overflow-hidden"

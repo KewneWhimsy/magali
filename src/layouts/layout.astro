@@ -4,6 +4,7 @@ import "../styles/global.css";
 import Header from "./header.astro";
 import Footer from "./footer.astro";
 import HreflangLinks from "../components/hreflang_links.astro";
+import { Font } from "astro:assets";
 
 // Props du composant
 export interface Props {
@@ -64,6 +65,10 @@ import { ClientRouter } from "astro:transitions";
     <title>{title}</title>
 
     <ClientRouter />
+
+    <Font cssVariable="--font-pacifico" preload />
+    <Font cssVariable="--font-satisfy" preload />
+    
   </head>
   
   <body class="min-h-screen flex flex-col bg-white text-gray-900">
