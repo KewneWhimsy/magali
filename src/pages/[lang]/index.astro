@@ -20,7 +20,7 @@ const content = {
   fr: {
     title: 'ABC Gourmet - Conseil en Agroalimentaire',
     description: 'Expertise stratégique et accompagnement opérationnel dans le secteur alimentaire. Développement produit, marketing, export et management.',
-    heroTitle: 'Conseil stratégique et accompagnement opérationnel dans le secteur alimentaire',
+    heroTitle: 'Conseil stratégique et accompagnement opérationnel',
     heroButton: 'Découvrir nos services',
     ctaTitle: 'Prêt à développer votre projet alimentaire ?',
     ctaSubtitle: 'Contactez-nous pour discuter de vos besoins et découvrir comment nous pouvons vous accompagner.',
@@ -29,7 +29,7 @@ const content = {
   en: {
     title: 'ABC Gourmet - Food Industry Consulting',
     description: 'Strategic expertise and operational support in the food sector. Product development, marketing, export and management.',
-    heroTitle: 'Strategic consulting and operational support in culinary enterprises',
+    heroTitle: 'Strategic consulting and operational support',
     heroButton: 'Discover our services',
     ctaTitle: 'Ready to develop your food project?',
     ctaSubtitle: 'Contact us to discuss your needs and discover how we can support you.',
@@ -38,7 +38,7 @@ const content = {
   de: {
     title: 'ABC Gourmet - Beratung für die Lebensmittelindustrie',
     description: 'Strategische Expertise und operative Unterstützung im Lebensmittelsektor. Produktentwicklung, Marketing, Export und Management.',
-    heroTitle: 'Strategische Beratung und operative Begleitung im Lebensmittelbereich',
+    heroTitle: 'Strategische Beratung und operative Begleitung',
     heroButton: 'Unsere Dienstleistungen entdecken',
     ctaTitle: 'Bereit, Ihr Lebensmittelprojekt zu entwickeln?',
     ctaSubtitle: 'Kontaktieren Sie uns, um über Ihre Bedürfnisse zu sprechen und zu entdecken, wie wir Sie unterstützen können.',
@@ -50,11 +50,6 @@ const t = content[lang] || content.fr;
 ---
 
 <Layout title={t.title} description={t.description} lang={lang}>
-  <style is:global>
-h1, h2 {
-    font-family: var(--font-pacifico);
-}
-</style>
   <Hero 
     variant="none"
     lang={lang}

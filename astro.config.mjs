@@ -9,13 +9,8 @@ export default defineConfig({
     fonts: [
       {
         provider: fontProviders.google(),
-        name: "Pacifico",
-        cssVariable: "--font-pacifico"
-      },
-      {
-        provider: fontProviders.google(),
-        name: "Satisfy",
-        cssVariable: "--font-satisfy"
+        name: "Exo",
+        cssVariable: "--font-exo"
       },
     ],
   },

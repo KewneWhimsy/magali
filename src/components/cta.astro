@@ -81,7 +81,6 @@ const {
     <!-- Variant 5: Aucun effet - image pure -->
     {
       variant === "none" && (
-        <!-- Pas de superposition, juste l'image -->
         <div class="absolute inset-0"></div>
       )
     }
@@ -91,7 +90,7 @@ const {
   <div
     class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white py-16"
   >
-    <h2 class={`text-3xl md:text-4xl lg:text-5xl mb-6 ${variant === 'none' ? 'drop-shadow-2xl' : 'drop-shadow-lg'}`}>
+    <h2 class={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 ${variant === 'none' ? 'drop-shadow-2xl' : 'drop-shadow-lg'}`}>
       {title}
     </h2>
 
