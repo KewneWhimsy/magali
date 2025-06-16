@@ -10,14 +10,14 @@ const partnersInstitutionnels = partners.filter(p => p.data.category === 'instit
 const partnersPrives = partners.filter(p => p.data.category === 'prive');
 ---
 
-<!-- Premier scroller - Partenaires institutionnels -->
-<section class="max-w-6xl w-full overflow-hidden mx-auto my-8 h-48 relative mask-gradient">
-  {partnersInstitutionnels.map((partner, index) => (
+<!-- Premier scroller - Partenaires privés -->
+<section class="w-full overflow-hidden mx-auto my-8 h-48 relative mask-gradient">
+  {partnersPrives.map((partner, index) => (
     <div 
-      class="absolute w-48 h-48 z-10 animate-scroll-left"
-      style={`--n: ${index + 1}; --total: ${partnersInstitutionnels.length};`}
+      class="absolute w-48 h-48 z-10 animate-scroll-right"
+      style={`--n: ${index + 1}; --total: ${partnersPrives.length};`}
     >
-      <a href={partner.data.website} target="_blank">
+      <a href={partner.data.website} target="_blank" rel="noopener noreferrer">
         <img
           src={partner.data.logo}
           alt={partner.data.logoAlt}
@@ -29,14 +29,14 @@ const partnersPrives = partners.filter(p => p.data.category === 'prive');
   ))}
 </section>
 
-<!-- Deuxième scroller - Partenaires privés -->
-<section class="max-w-6xl w-full overflow-hidden mx-auto my-8 h-48 relative mask-gradient">
-  {partnersPrives.map((partner, index) => (
+<!-- Deuxième scroller - Partenaires institutionnels -->
+<section class="w-full overflow-hidden mx-auto my-8 h-48 relative mask-gradient">
+  {partnersInstitutionnels.map((partner, index) => (
     <div 
-      class="absolute w-48 h-48 z-10 animate-scroll-right"
-      style={`--n: ${index + 1}; --total: ${partnersPrives.length};`}
+      class="absolute w-48 h-48 z-10 animate-scroll-left"
+      style={`--n: ${index + 1}; --total: ${partnersInstitutionnels.length};`}
     >
-      <a href={partner.data.website} target="_blank">
+      <a href={partner.data.website} target="_blank" rel="noopener noreferrer">
         <img
           src={partner.data.logo}
           alt={partner.data.logoAlt}
