@@ -1,5 +1,5 @@
 ---
-// src/components/hero.astro - Version KISS avec Tailwind
+// src/components/hero.astro - Version simplifiée avec logo en haut
 import OptimizeImage from './optimize_image.astro';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props;
 ---
 
-<section class="relative min-h-[600px] lg:min-h-[700px] flex items-center justify-center overflow-hidden">
+<section class="relative min-h-[500px] md:min-h-[600px] lg:min-h-[700px] flex flex-col overflow-hidden">
   <!-- Image de fond -->
   <div class="absolute inset-0 z-0">
     <OptimizeImage 
@@ -25,17 +25,15 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
       sizes="100vw"
     />
     
-    <!-- Variant 1: Superposition classique avec dégradé -->
+    <!-- Overlays selon la variante -->
     {variant === 'overlay' && (
       <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-primary-hover)] to-[var(--color-secondary)] opacity-85"></div>
     )}
     
-    <!-- Variant 2: Mode de fusion (blend mode) -->
     {variant === 'blend' && (
       <div class="absolute inset-0 bg-[var(--color-primary)] mix-blend-multiply opacity-70"></div>
     )}
     
-    <!-- Variant 3: Dégradé complexe avec zones de transparence -->
     {variant === 'gradient' && (
       <>
         <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/90 via-[var(--color-primary-hover)]/60 to-transparent"></div>
@@ -43,7 +41,6 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
       </>
     )}
     
-    <!-- Variant 4: Effet de texture avec motif -->
     {variant === 'texture' && (
       <>
         <div class="absolute inset-0 bg-[var(--color-primary)] opacity-75"></div>
@@ -52,40 +49,42 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
       </>
     )}
     
-    <!-- Variant 5: Aucun effet - image pure -->
     {variant === 'none' && (
       <div class="absolute inset-0"></div>
     )}
   </div>
   
-  <!-- Contenu principal -->
-  <div class={`relative z-10 max-w-6xl mx-auto px-4 mb-40 text-center ${variant === 'none' ? 'text-white' : 'text-white'}`}>
-    <!-- Logo avec bordure blanche simple -->
-    <div class="mb-8 flex justify-center">
-      <div class="bg-white px-4 pb-2 pt-3 sm:px-6 sm:pb-3 sm:pt-4  border-4 border-white rounded-b-lg shadow-lg">
-        <OptimizeImage 
-          src="/src/assets/img/logow_300x162.png"
-          alt="ABC Gourmet Logo"
-          class="h-12 sm:h-18 w-auto"
-          loading="eager"
-          widths={[150, 200, 300]}
-        />
-      </div>
+  <!-- Logo collé en haut -->
+  <div class="relative z-10 flex justify-center">
+    <div class="bg-white px-4 pb-2 pt-3 sm:px-6 sm:pb-3 sm:pt-4 border-4 border-white rounded-b-lg shadow-lg">
+      <OptimizeImage 
+        src="/src/assets/img/logow_300x162.png"
+        alt="ABC Gourmet Logo"
+        class="h-12 sm:h-16 w-auto"
+        loading="eager"
+        widths={[150, 200, 300]}
+      />
     </div>
-    
-    <h1 class={`text-4xl md:text-6xl lg:text-7xl font-bold my-24 fade-in-up ${variant === 'none' ? 'drop-shadow-2xl drop-shadow-black' : 'drop-shadow-lg'}`}>
-      {title}
-    </h1>
+  </div>
+  
+  <!-- Contenu principal centré -->
+  <div class="relative z-10 flex-1 flex items-center justify-center px-4">
+    <div class="text-center text-white max-w-4xl">
+      <h1 class={`text-4xl md:text-6xl lg:text-7xl font-bold leading-tight md:leading-tight lg:leading-tight ${variant === 'none' ? 'drop-shadow-2xl' : 'drop-shadow-lg'}`}>
+        {title}
+      </h1>
+    </div>
+  </div>
+  
+  <!-- CTA et indicateur de scroll en bas -->
+  <div class="relative z-10 pb-8 flex flex-col items-center gap-8">
     <a 
       href={buttonHref}
       class="inline-block bg-white/95 backdrop-blur-sm text-[var(--color-primary)] font-semibold px-8 py-4 text-lg rounded-lg hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
     >
       {buttonText}
     </a>
-  </div>
-  
-  <!-- Indicateur de scroll -->
-  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+    
     <div class="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center">
       <div class="w-1 h-3 bg-white/80 rounded-full mt-2 animate-bounce"></div>
     </div>
@@ -93,7 +92,7 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
 </section>
 
 <style>
-  /* Animation pour l'effet de parallaxe subtil */
+  /* Animation parallaxe subtile */
   @media (prefers-reduced-motion: no-preference) {
     section {
       animation: subtleParallax 20s ease-in-out infinite;
@@ -105,12 +104,12 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
     50% { transform: translateY(-10px); }
   }
   
-  /* Amélioration de la lisibilité du texte pour la variante "none" */
-  h1, p {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  /* Styles pour la variante "none" */
+  .drop-shadow-2xl {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
   }
   
-  /* Effet de hover pour le bouton */
+  /* Hover effect du bouton */
   a:hover {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   }
