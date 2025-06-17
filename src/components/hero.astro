@@ -92,18 +92,6 @@ const { variant = 'overlay', lang, title, buttonText, buttonHref } = Astro.props
 </section>
 
 <style>
-  /* Animation parallaxe subtile */
-  @media (prefers-reduced-motion: no-preference) {
-    section {
-      animation: subtleParallax 20s ease-in-out infinite;
-    }
-  }
-  
-  @keyframes subtleParallax {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  
   /* Styles pour la variante "none" */
   .drop-shadow-2xl {
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
