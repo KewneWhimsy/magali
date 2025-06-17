@@ -4,7 +4,7 @@ import Layout from '../../layouts/layout.astro';
 import TestimonialsCarousel from '../../components/testimonials_carousel.astro';
 import Hero from '../../components/hero.astro';
 import CTASection from '../../components/cta.astro';
-import ExpertiseCard from '../../components/expertise_card.astro';
+import OptimizeImage from '../../components/optimize_image.astro';
 
 export function getStaticPaths() {
   return [
@@ -22,6 +22,18 @@ const content = {
     description: 'Expertise stratégique et accompagnement opérationnel dans le secteur alimentaire. Développement produit, marketing, export et management.',
     heroTitle: 'Conseil stratégique et accompagnement opérationnel',
     heroButton: 'Découvrir nos services',
+    
+    // Contenu "Qui sommes-nous"
+    aboutTitle: 'Qui sommes-nous ?',
+    aboutSubtitle: 'Deux passionnés de bons produits, de leurs histoires, de ceux qui les portent. Voici ce qui nous anime :',
+    visionTitle: 'Vision',
+    visionText: 'Faire voyager des TPE/PME du secteur alimentaire, leur donner les moyens des grandes sociétés pour une croissance durable en France et à l\'international. L\'idée : mutualiser les coûts et chasser en meute.',
+    missionTitle: 'Mission', 
+    missionText: 'Proposer un accompagnement stratégique et opérationnel sur-mesure, de la réflexion à l\'exécution. Des services, des compétences, une expérience accessibles aux TPE et PME.',
+    valuesTitle: 'Valeurs',
+    valuesText: 'Respect, expertise, réseau, agilité, excellence, confiance, passion, partage, émotion.',
+    tagline: 'ET AVANT TOUT LE GOÛT DES BONNES CHOSES !',
+    
     ctaTitle: 'Prêt à développer votre projet alimentaire ?',
     ctaSubtitle: 'Contactez-nous pour discuter de vos besoins et découvrir comment nous pouvons vous accompagner.',
     ctaButton: 'Nous contacter'
@@ -31,6 +43,18 @@ const content = {
     description: 'Strategic expertise and operational support in the food sector. Product development, marketing, export and management.',
     heroTitle: 'Strategic consulting and operational support',
     heroButton: 'Discover our services',
+    
+    // Contenu "Qui sommes-nous"
+    aboutTitle: 'Who are we?',
+    aboutSubtitle: 'Two passionate people about good products, their stories, those who carry them. Here\'s what drives us:',
+    visionTitle: 'Vision',
+    visionText: 'Make SMEs in the food sector travel, give them the means of large companies for sustainable growth in France and internationally. The idea: pool costs and hunt in packs.',
+    missionTitle: 'Mission',
+    missionText: 'Offer tailor-made strategic and operational support, from reflection to execution. Services, skills, experience accessible to SMEs.',
+    valuesTitle: 'Values',
+    valuesText: 'Respect, expertise, network, agility, excellence, trust, passion, sharing, emotion.',
+    tagline: 'AND ABOVE ALL THE TASTE FOR GOOD THINGS!',
+    
     ctaTitle: 'Ready to develop your food project?',
     ctaSubtitle: 'Contact us to discuss your needs and discover how we can support you.',
     ctaButton: 'Contact us'
@@ -40,6 +64,18 @@ const content = {
     description: 'Strategische Expertise und operative Unterstützung im Lebensmittelsektor. Produktentwicklung, Marketing, Export und Management.',
     heroTitle: 'Strategische Beratung und operative Begleitung',
     heroButton: 'Unsere Dienstleistungen entdecken',
+    
+    // Contenu "Qui sommes-nous"
+    aboutTitle: 'Wer sind wir?',
+    aboutSubtitle: 'Zwei Leidenschaftliche für gute Produkte, ihre Geschichten, diejenigen, die sie tragen. Das treibt uns an:',
+    visionTitle: 'Vision',
+    visionText: 'KMUs im Lebensmittelsektor reisen lassen, ihnen die Mittel großer Unternehmen für nachhaltiges Wachstum in Frankreich und international geben. Die Idee: Kosten bündeln und im Rudel jagen.',
+    missionTitle: 'Mission',
+    missionText: 'Maßgeschneiderte strategische und operative Begleitung anbieten, von der Reflexion bis zur Umsetzung. Dienstleistungen, Kompetenzen, Erfahrung zugänglich für KMUs.',
+    valuesTitle: 'Werte',
+    valuesText: 'Respekt, Expertise, Netzwerk, Agilität, Exzellenz, Vertrauen, Leidenschaft, Teilen, Emotion.',
+    tagline: 'UND VOR ALLEM DER GESCHMACK FÜR GUTE DINGE!',
+    
     ctaTitle: 'Bereit, Ihr Lebensmittelprojekt zu entwickeln?',
     ctaSubtitle: 'Kontaktieren Sie uns, um über Ihre Bedürfnisse zu sprechen und zu entdecken, wie wir Sie unterstützen können.',
     ctaButton: 'Kontaktieren Sie uns'
@@ -55,11 +91,84 @@ const t = content[lang] || content.fr;
     lang={lang}
     title={t.heroTitle}
     buttonText={t.heroButton}
-    buttonHref={`/${lang}/services/`}
+    buttonHref={`/${lang}/expertise/`}
   />
 
-  <!-- Section expertises -->
-  <ExpertiseCard lang={lang} />
+  <!-- Section "Qui sommes-nous" -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-[var(--color-primary)]">
+        {t.aboutTitle}
+      </h2>
+      <p class="text-lg text-gray-600 leading-relaxed">
+        {t.aboutSubtitle}
+      </p>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Vision -->
+        <div class="card text-center">
+          <div class="w-16 h-16 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">{t.visionTitle}</h3>
+          <p class="text-gray-600 leading-relaxed">{t.visionText}</p>
+        </div>
+
+        <!-- Mission -->
+        <div class="card text-center">
+          <div class="w-16 h-16 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">{t.missionTitle}</h3>
+          <p class="text-gray-600 leading-relaxed">{t.missionText}</p>
+        </div>
+
+        <!-- Valeurs -->
+        <div class="card text-center">
+          <div class="w-16 h-16 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">{t.valuesTitle}</h3>
+          <p class="text-gray-600 leading-relaxed mb-4">{t.valuesText}</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tagline Section -->
+  <section class="py-12 bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-secondary)] text-white">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl drop-shadow-lg">
+        {t.tagline}
+      </h2>
+    </div>
+  </section>
+
+  <!-- Image avec équipe conviviale -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="rounded-lg overflow-hidden shadow-lg">
+        <OptimizeImage 
+          src="/src/assets/img/bandeauabc.png"
+          alt="Équipe ABC Gourmet - Moment convivial"
+          class="w-full h-[400px] object-cover"
+          loading="lazy"
+          widths={[800, 1200, 1600]}
+          sizes="(max-width: 767px) 100vw, 1200px"
+        />
+      </div>
+    </div>
+  </section>
 
   <!-- Section témoignages -->
   <TestimonialsCarousel lang={lang} />

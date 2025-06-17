@@ -3,6 +3,7 @@
 import Layout from '../../layouts/layout.astro';
 import OptimizeImage from '../../components/optimize_image.astro';
 import CTASection from '../../components/cta.astro';
+import ExpertiseCard from '../../components/expertise_card.astro';
 
 export function getStaticPaths() {
   return [
@@ -16,286 +17,151 @@ const lang = Astro.params.lang as "fr" | "en" | "de";
 
 const content = {
   fr: {
-    title: 'Nos Expertises - ABC Gourmet',
-    description: 'Vision stratégique, marketing, management et export : découvrez toutes nos expertises dans le secteur alimentaire.',
-    heroTitle: 'Nos Expertises',
+    title: 'Expertises et Services - ABC Gourmet',
+    description: 'Vision stratégique, marketing, management et export : découvrez toutes nos expertises et services dans le secteur alimentaire.',
+    heroTitle: 'Expertises et Services',
     heroSubtitle: 'Plus de 25 ans d\'expérience au service de votre croissance',
     
-    expertises: [
+    servicesTitle: 'Nos Services',
+    servicesSubtitle: 'Des solutions sur-mesure pour accélérer votre croissance dans le secteur alimentaire',
+    
+    services: [
       {
-        title: 'VISION STRATÉGIQUE ET COMMERCIALE',
-        icon: '💎',
-        description: 'Diagnostic, stratégie et tactique pour optimiser votre approche commerciale',
+        title: 'Accompagnement stratégique',
+        subtitle: 'Diagnostic stratégique France et export',
         points: [
-          'Diagnostic, stratégie et tactique',
-          'Prospection et négociation : GMS, Centrale bio, Home service, RHF, restauration et Épicerie fine en direct',
-          'Excellence du service client'
+          'Structuration de la démarche commerciale',
+          'Mise en œuvre d\'une approche pragmatique agile',
+          'Définition et/ou adaptation de l\'offre',
+          'Des palais aiguisés au service de vos clients et des produits'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Analyse approfondie de votre positionnement concurrentiel',
-          'Définition de stratégies commerciales sur-mesure',
-          'Accompagnement dans la négociation avec les grandes enseignes',
-          'Formation aux techniques de vente spécialisées'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       },
       {
-        title: 'MARKETING',
-        icon: '📢',
-        description: 'Développement de votre identité de marque et optimisation de votre communication',
+        title: 'Conseil marketing et digital',
+        subtitle: 'Définition et force de proposition de l\'ADN de la marque',
         points: [
-          'Développement de l\'ADN de marque',
-          'Optimisation packaging et image',
-          'Adaptation produits aux marchés Européens (recettes et étuis)',
-          'Création d\'outils de communication'
+          'Branding, positionnement, storytelling',
+          'Adaptation des packagings aux circuits ciblés et pays (avec graphiste)',
+          'En partenariat : réseaux sociaux et digital'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Audit de marque et repositionnement stratégique',
-          'Création d\'identité visuelle et packaging attractif',
-          'Adaptation culturelle pour les marchés internationaux',
-          'Développement d\'outils marketing innovants'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       },
       {
-        title: 'MANAGEMENT',
-        icon: '👥',
-        description: 'Accompagnement dans la gestion et le développement de vos équipes',
+        title: 'Développement commercial France et export',
+        subtitle: 'Mise en place de la stratégie tarifaire par circuits',
         points: [
-          'Recrutement et formation d\'équipes',
-          'Pilotage des VIE',
-          'Gestion des équipes de vente en France (interne ou agents)',
-          'Support ADV export'
+          'CGV France et export',
+          'Prospection France : GMS, réseau bio centrales, RHF (cash et grossistes)',
+          'Secteur Gourmet : restaurant, épiceries, cavistes',
+          'Export : distributeurs (EMEA) et réseau de chefs',
+          'Représentation de la Marque : salons, in store promotions, démonstrations...'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Méthodologies de recrutement spécialisées',
-          'Programmes de formation sur-mesure',
-          'Accompagnement des Volontaires Internationaux en Entreprise',
-          'Optimisation des processus administratifs export'
-        ]
-      },
-      {
-        title: 'EXPORT',
-        icon: '🌍',
-        description: 'Expertise internationale pour développer vos marchés à l\'export',
-        points: [
-          '4 langues parlées',
-          'Agréé BPI, BCI et Business France',
-          '25+ ans d\'expérience internationale',
-          'Expertise particulière : Europe dont Allemagne, Espagne et Asie : Japon'
-        ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Études de marché et analyses concurrentielles',
-          'Accompagnement réglementaire et certifications',
-          'Mise en relation avec des distributeurs qualifiés',
-          'Support logistique et négociation commerciale'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       }
     ],
-    
-    numbers: {
-      title: 'Nos résultats en chiffres',
-      stats: [
-        { number: '30%', label: 'Croissance moyenne du CA de nos clients' },
-        { number: '25+', label: 'Années d\'expérience' },
-        { number: '7+', label: 'Nouveaux marchés ouverts' },
-        { number: '4', label: 'Langues parlées' }
-      ]
-    },
-    
-    ctaTitle: 'Prêt à développer votre expertise ?',
-    ctaSubtitle: 'Discutons de vos défis et identifions ensemble les solutions les plus adaptées.',
-    ctaButton: 'Parlons de votre projet'
+
+    ctaTitle: 'Besoin d\'un accompagnement personnalisé ?',
+    ctaSubtitle: 'Discutons de votre projet et trouvons ensemble les solutions adaptées à vos besoins.',
+    ctaButton: 'Nous contacter'
   },
   en: {
-    title: 'Our Expertise - ABC Gourmet',
-    description: 'Strategic vision, marketing, management and export: discover all our expertise in the food sector.',
-    heroTitle: 'Our Expertise',
+    title: 'Expertise and Services - ABC Gourmet',
+    description: 'Strategic vision, marketing, management and export: discover all our expertise and services in the food sector.',
+    heroTitle: 'Expertise and Services',
     heroSubtitle: 'Over 25 years of experience serving your growth',
     
-    expertises: [
+    servicesTitle: 'Our Services',
+    servicesSubtitle: 'Tailor-made solutions to accelerate your growth in the food sector',
+    
+    services: [
       {
-        title: 'STRATEGIC AND COMMERCIAL VISION',
-        icon: '💎',
-        description: 'Diagnosis, strategy and tactics to optimize your commercial approach',
+        title: 'Strategic support',
+        subtitle: 'Strategic diagnosis France and export',
         points: [
-          'Diagnosis, strategy and tactics',
-          'Prospecting and negotiation: Retail chains, Organic centers, Home service, Food service, catering and Fine food direct',
-          'Customer service excellence'
+          'Structuring the commercial approach',
+          'Implementation of an agile pragmatic approach',
+          'Definition and/or adaptation of the offer',
+          'Refined palates at the service of your customers and products'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'In-depth analysis of your competitive positioning',
-          'Definition of tailor-made commercial strategies',
-          'Support in negotiation with major retailers',
-          'Training in specialized sales techniques'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       },
       {
-        title: 'MARKETING',
-        icon: '📢',
-        description: 'Development of your brand identity and optimization of your communication',
+        title: 'Marketing and digital consulting',
+        subtitle: 'Definition and proposition force of brand DNA',
         points: [
-          'Brand DNA development',
-          'Packaging and image optimization',
-          'Product adaptation to European markets (recipes and packaging)',
-          'Communication tools creation'
+          'Branding, positioning, storytelling',
+          'Adaptation of packaging to targeted circuits and countries (with graphic designer)',
+          'In partnership: social networks and digital'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Brand audit and strategic repositioning',
-          'Visual identity and attractive packaging creation',
-          'Cultural adaptation for international markets',
-          'Development of innovative marketing tools'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       },
       {
-        title: 'MANAGEMENT',
-        icon: '👥',
-        description: 'Support in managing and developing your teams',
+        title: 'Commercial development France and export',
+        subtitle: 'Implementation of pricing strategy by circuits',
         points: [
-          'Team recruitment and training',
-          'VIE management',
-          'Sales team management in France (internal or agents)',
-          'Export sales support'
+          'Terms and conditions France and export',
+          'France prospecting: Retail chains, organic networks, Food service (cash and wholesalers)',
+          'Gourmet sector: restaurants, delicatessens, wine shops',
+          'Export: distributors (EMEA) and chef networks',
+          'Brand representation: trade shows, in-store promotions, demonstrations...'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Specialized recruitment methodologies',
-          'Tailor-made training programs',
-          'Support for Volunteers for International Experience',
-          'Optimization of export administrative processes'
-        ]
-      },
-      {
-        title: 'EXPORT',
-        icon: '🌍',
-        description: 'International expertise to develop your export markets',
-        points: [
-          '4 languages spoken',
-          'Accredited BPI, BCI and Business France',
-          '25+ years international experience',
-          'Particular expertise: Europe including Germany, Spain and Asia: Japan'
-        ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Market studies and competitive analyses',
-          'Regulatory support and certifications',
-          'Connection with qualified distributors',
-          'Logistics support and commercial negotiation'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       }
     ],
-    
-    numbers: {
-      title: 'Our results in numbers',
-      stats: [
-        { number: '30%', label: 'Average revenue growth of our clients' },
-        { number: '25+', label: 'Years of experience' },
-        { number: '7+', label: 'New markets opened' },
-        { number: '4', label: 'Languages spoken' }
-      ]
-    },
-    
-    ctaTitle: 'Ready to develop your expertise?',
-    ctaSubtitle: 'Let\'s discuss your challenges and identify the most suitable solutions together.',
-    ctaButton: 'Let\'s talk about your project'
+
+    ctaTitle: 'Need personalized support?',
+    ctaSubtitle: 'Let\'s discuss your project and find the right solutions for your needs together.',
+    ctaButton: 'Contact us'
   },
   de: {
-    title: 'Unsere Expertise - ABC Gourmet',
-    description: 'Strategische Vision, Marketing, Management und Export: entdecken Sie all unsere Expertise im Lebensmittelsektor.',
-    heroTitle: 'Unsere Expertise',
+    title: 'Expertise und Dienstleistungen - ABC Gourmet',
+    description: 'Strategische Vision, Marketing, Management und Export: entdecken Sie all unsere Expertise und Dienstleistungen im Lebensmittelsektor.',
+    heroTitle: 'Expertise und Dienstleistungen',
     heroSubtitle: 'Über 25 Jahre Erfahrung im Dienst Ihres Wachstums',
     
-    expertises: [
+    servicesTitle: 'Unsere Dienstleistungen',
+    servicesSubtitle: 'Maßgeschneiderte Lösungen zur Beschleunigung Ihres Wachstums im Lebensmittelsektor',
+    
+    services: [
       {
-        title: 'STRATEGISCHE UND KOMMERZIELLE VISION',
-        icon: '💎',
-        description: 'Diagnose, Strategie und Taktik zur Optimierung Ihres kommerziellen Ansatzes',
+        title: 'Strategische Begleitung',
+        subtitle: 'Strategische Diagnose Frankreich und Export',
         points: [
-          'Diagnose, Strategie und Taktik',
-          'Akquise und Verhandlung: Einzelhandelsketten, Bio-Zentren, Home Service, Gastronomie und Feinkost direkt',
-          'Exzellenz im Kundenservice'
+          'Strukturierung des kommerziellen Ansatzes',
+          'Umsetzung eines agilen pragmatischen Ansatzes',
+          'Definition und/oder Anpassung des Angebots',
+          'Verfeinerte Gaumen im Dienst Ihrer Kunden und Produkte'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Tiefgreifende Analyse Ihrer Wettbewerbsposition',
-          'Definition maßgeschneiderter Handelsstrategien',
-          'Unterstützung bei Verhandlungen mit großen Einzelhändlern',
-          'Schulung in spezialisierten Verkaufstechniken'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       },
       {
-        title: 'MARKETING',
-        icon: '📢',
-        description: 'Entwicklung Ihrer Markenidentität und Optimierung Ihrer Kommunikation',
+        title: 'Marketing- und Digital-Beratung',
+        subtitle: 'Definition und Vorschlagskraft der Marken-DNA',
         points: [
-          'Marken-DNA-Entwicklung',
-          'Verpackungs- und Image-Optimierung',
-          'Produktanpassung an europäische Märkte (Rezepte und Verpackung)',
-          'Erstellung von Kommunikationstools'
+          'Branding, Positionierung, Storytelling',
+          'Anpassung der Verpackungen an Zielkreise und Länder (mit Grafikdesigner)',
+          'In Partnerschaft: soziale Netzwerke und Digital'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Marken-Audit und strategische Neupositionierung',
-          'Visuelle Identität und attraktive Verpackung',
-          'Kulturelle Anpassung für internationale Märkte',
-          'Entwicklung innovativer Marketing-Tools'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       },
       {
-        title: 'MANAGEMENT',
-        icon: '👥',
-        description: 'Unterstützung bei der Verwaltung und Entwicklung Ihrer Teams',
+        title: 'Geschäftsentwicklung Frankreich und Export',
+        subtitle: 'Umsetzung der Preisstrategie nach Kreisen',
         points: [
-          'Teamrekrutierung und -schulung',
-          'VIE-Management',
-          'Vertriebsteam-Management in Frankreich (intern oder Agenten)',
-          'Export-Vertriebsunterstützung'
+          'AGB Frankreich und Export',
+          'Frankreich-Prospection: Einzelhandelsketten, Bio-Netzwerke, Gastronomie (Cash und Großhändler)',
+          'Gourmet-Sektor: Restaurants, Feinkostläden, Weinhandlungen',
+          'Export: Händler (EMEA) und Köche-Netzwerke',
+          'Markenvertretung: Messen, In-Store-Promotionen, Demonstrationen...'
         ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Spezialisierte Rekrutierungsmethoden',
-          'Maßgeschneiderte Schulungsprogramme',
-          'Betreuung von Freiwilligen für internationale Erfahrung',
-          'Optimierung von Export-Verwaltungsprozessen'
-        ]
-      },
-      {
-        title: 'EXPORT',
-        icon: '🌍',
-        description: 'Internationale Expertise zur Entwicklung Ihrer Exportmärkte',
-        points: [
-          '4 Sprachen gesprochen',
-          'Akkreditiert BPI, BCI und Business France',
-          '25+ Jahre internationale Erfahrung',
-          'Besondere Expertise: Europa einschließlich Deutschland, Spanien und Asien: Japan'
-        ],
-        image: '/src/assets/img/cta.jpg',
-        details: [
-          'Marktstudien und Wettbewerbsanalysen',
-          'Regulatorische Unterstützung und Zertifizierungen',
-          'Verbindung mit qualifizierten Händlern',
-          'Logistische Unterstützung und kommerzielle Verhandlung'
-        ]
+        image: '/src/assets/img/bandeauabc.png'
       }
     ],
-    
-    numbers: {
-      title: 'Unsere Ergebnisse in Zahlen',
-      stats: [
-        { number: '30%', label: 'Durchschnittliches Umsatzwachstum unserer Kunden' },
-        { number: '25+', label: 'Jahre Erfahrung' },
-        { number: '7+', label: 'Neue Märkte eröffnet' },
-        { number: '4', label: 'Gesprochene Sprachen' }
-      ]
-    },
-    
-    ctaTitle: 'Bereit, Ihre Expertise zu entwickeln?',
-    ctaSubtitle: 'Lassen Sie uns über Ihre Herausforderungen sprechen und gemeinsam die am besten geeigneten Lösungen identifizieren.',
-    ctaButton: 'Sprechen wir über Ihr Projekt'
+
+    ctaTitle: 'Benötigen Sie persönliche Betreuung?',
+    ctaSubtitle: 'Lassen Sie uns über Ihr Projekt sprechen und gemeinsam die richtigen Lösungen für Ihre Bedürfnisse finden.',
+    ctaButton: 'Kontaktieren Sie uns'
   }
 };
 
@@ -318,20 +184,32 @@ const t = content[lang] || content.fr;
     </div>
   </section>
 
-  <!-- Expertises détaillées -->
+  <!-- Section Expertises - Utilisation du composant existant -->
+  <ExpertiseCard lang={lang} />
+
+  <!-- Section Services -->
   <section class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="space-y-24">
-        {t.expertises.map((expertise, index) => (
-          <div class={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 items-center`}>
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[var(--color-primary)]">
+          {t.servicesTitle}
+        </h2>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+          {t.servicesSubtitle}
+        </p>
+      </div>
+
+      <div class="space-y-16">
+        {t.services.map((service, index) => (
+          <div class={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-12 items-center`}>
             
             <!-- Image -->
             <div class="w-full lg:w-1/2">
               <div class="rounded-lg overflow-hidden shadow-lg">
                 <OptimizeImage 
-                  src={expertise.image}
-                  alt={expertise.title}
-                  class="w-full h-[400px] object-cover"
+                  src={service.image}
+                  alt={service.title}
+                  class="w-full h-[300px] lg:h-[400px] object-cover"
                   loading="lazy"
                   widths={[400, 600, 800]}
                   sizes="(max-width: 1023px) 100vw, 50vw"
@@ -342,43 +220,19 @@ const t = content[lang] || content.fr;
             <!-- Content -->
             <div class="w-full lg:w-1/2">
               <div class="max-w-lg">
-                <div class="flex items-center mb-4">
-                  <span class="text-4xl mr-4">{expertise.icon}</span>
-                  <h2 class="text-2xl md:text-3xl font-bold text-[var(--color-primary)]">
-                    {expertise.title}
-                  </h2>
-                </div>
+                <h3 class="text-3xl md:text-4xl font-bold mb-4 text-[var(--color-primary)]">
+                  {service.title}
+                </h3>
                 
-                <p class="text-lg text-gray-600 mb-6">
-                  {expertise.description}
+                <p class="text-lg text-gray-600 mb-6 font-medium">
+                  {service.subtitle}
                 </p>
                 
-                <h3 class="font-semibold text-gray-800 mb-4">
-                  {lang === 'fr' ? 'Nos services :' : 
-                   lang === 'en' ? 'Our services:' : 
-                   'Unsere Dienstleistungen:'}
-                </h3>
-                
-                <ul class="space-y-3 mb-6">
-                  {expertise.points.map((point) => (
+                <ul class="space-y-3">
+                  {service.points.map((point) => (
                     <li class="flex items-start">
-                      <span class="text-[var(--color-primary)] mr-3 text-lg">•</span>
+                      <span class="text-[var(--color-primary)] mr-3 mt-1 text-lg">•</span>
                       <span class="text-gray-700">{point}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <h3 class="font-semibold text-gray-800 mb-4">
-                  {lang === 'fr' ? 'Détails de notre approche :' : 
-                   lang === 'en' ? 'Details of our approach:' : 
-                   'Details unseres Ansatzes:'}
-                </h3>
-                
-                <ul class="space-y-2">
-                  {expertise.details.map((detail) => (
-                    <li class="flex items-start">
-                      <span class="text-[var(--color-secondary)] mr-2 text-sm">▶</span>
-                      <span class="text-sm text-gray-600">{detail}</span>
                     </li>
                   ))}
                 </ul>
@@ -388,68 +242,6 @@ const t = content[lang] || content.fr;
           </div>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- Section chiffres clés -->
-  <section class="py-16 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white">
-    <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 drop-shadow-lg">
-        {t.numbers.title}
-      </h2>
-      
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-        {t.numbers.stats.map((stat) => (
-          <div class="text-center">
-            <div class="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">
-              {stat.number}
-            </div>
-            <p class="text-lg font-light drop-shadow-md">
-              {stat.label}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Section certifications -->
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-8 text-[var(--color-primary)]">
-        {lang === 'fr' ? 'Nos certifications' : 
-         lang === 'en' ? 'Our certifications' : 
-         'Unsere Zertifizierungen'}
-      </h2>
-      
-      <div class="flex justify-center items-center gap-8 flex-wrap mb-8">
-        <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-md">
-          <div class="w-16 h-16 bg-[var(--color-primary)] rounded-full flex items-center justify-center">
-            <span class="text-white font-bold">BPI</span>
-          </div>
-          <span class="font-semibold">BPI France</span>
-        </div>
-        
-        <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-md">
-          <div class="w-16 h-16 bg-[var(--color-primary)] rounded-full flex items-center justify-center">
-            <span class="text-white font-bold">BCI</span>
-          </div>
-          <span class="font-semibold">BCI</span>
-        </div>
-        
-        <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-md">
-          <div class="w-16 h-16 bg-[var(--color-primary)] rounded-full flex items-center justify-center">
-            <span class="text-white text-2xl">🇫🇷</span>
-          </div>
-          <span class="font-semibold">Business France</span>
-        </div>
-      </div>
-      
-      <p class="text-gray-600 text-lg">
-        {lang === 'fr' ? 'Agréments officiels pour vous accompagner dans vos projets de développement à l\'international' : 
-         lang === 'en' ? 'Official accreditations to support you in your international development projects' : 
-         'Offizielle Akkreditierungen zur Unterstützung Ihrer internationalen Entwicklungsprojekte'}
-      </p>
     </div>
   </section>
 
@@ -461,7 +253,7 @@ const t = content[lang] || content.fr;
     subtitle={t.ctaSubtitle}
     buttonText={t.ctaButton}
     buttonHref={`/${lang}/contact/`}
-    imageSrc="/src/assets/img/cta.jpg"
-    imageAlt="ABC Gourmet - Expertise conseil alimentaire"
+    imageSrc="/src/assets/img/bandeauabc.png"
+    imageAlt="ABC Gourmet - Services conseil alimentaire"
   />
 </Layout>

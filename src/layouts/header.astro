@@ -15,8 +15,7 @@ const navLabels = {
   fr: {
     menu: 'Menu',
     home: 'Accueil',
-    about: 'Qui sommes-nous ?',
-    expertise: 'Expertises',
+    expertise: 'Expertises & Services',
     training: 'Formation et ateliers',
     references: 'Références & témoignages',
     news: 'Actualités',
@@ -25,8 +24,7 @@ const navLabels = {
   en: {
     menu: 'Menu',
     home: 'Home',
-    about: 'Who are we?',
-    expertise: 'Expertise', 
+    expertise: 'Expertise & Services', 
     training: 'Partners & workshops',
     references: 'References & testimonials',
     news: 'News',
@@ -35,8 +33,7 @@ const navLabels = {
   de: {
     menu: 'Menü',
     home: 'Startseite',
-    about: 'Wer sind wir?',
-    expertise: 'Expertise',
+    expertise: 'Expertise & Dienstleistungen',
     training: 'Kunden und Workshops',
     references: 'Ergebnisse & Testimonials',
     news: 'Nachrichten',
@@ -101,14 +98,6 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
         </li>
         <li>
           <a 
-            href={`/${currentLang}/about/`}
-            class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/about') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
-          >
-            {labels.about}
-          </a>
-        </li>
-        <li>
-          <a 
             href={`/${currentLang}/expertise/`}
             class={`block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[var(--color-primary)] transition-colors border-l-4 border-transparent hover:border-[var(--color-primary)] ${pathname.includes('/expertise') ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50' : ''}`}
           >
@@ -150,7 +139,7 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
       </ul>
     </nav>
 
-    <!-- Version desktop (inchangée) -->
+    <!-- Version desktop -->
     <div class="hidden lg:flex justify-between items-center">
       <!-- Logo / Nom de l'entreprise -->
       <div data-astro-transition-persist="header-logo">
@@ -177,14 +166,6 @@ const labels = navLabels[currentLang as keyof typeof navLabels] || navLabels.fr;
                 class={`nav-link text-sm ${pathname === `/${currentLang}/` ? 'active' : ''}`}
               >
                 {labels.home}
-              </a>
-            </li>
-            <li>
-              <a 
-                href={`/${currentLang}/about/`}
-                class={`nav-link text-sm ${pathname.includes('/about') ? 'active' : ''}`}
-              >
-                {labels.about}
               </a>
             </li>
             <li>
