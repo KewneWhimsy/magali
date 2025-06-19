@@ -1,7 +1,6 @@
 ---
 // src/pages/[lang]/training.astro
 import Layout from '../../layouts/layout.astro';
-import OptimizeImage from '../../components/optimize_image.astro';
 import CTASection from '../../components/cta.astro';
 
 export function getStaticPaths() {
@@ -17,291 +16,362 @@ const lang = Astro.params.lang as "fr" | "en" | "de";
 const content = {
   fr: {
     title: 'Formation et Ateliers - ABC Gourmet',
-    description: 'Formations spécialisées et ateliers pratiques pour les professionnels du secteur alimentaire. Développez vos compétences avec ABC Gourmet.',
+    description: 'Formation spécialisée et ateliers pratiques pour les professionnels.',
     heroTitle: 'Formation et Ateliers',
     heroSubtitle: 'Développez vos compétences avec nos formations spécialisées et ateliers pratiques',
-    
-    intro: 'Nos programmes de formation sont conçus pour répondre aux besoins spécifiques des professionnels du secteur alimentaire. Que vous soyez dirigeant, commercial ou responsable marketing, nos formations vous donnent les clés pour réussir.',
-    
-    formations: [
-      {
-        title: 'Formation Export Alimentaire',
-        duration: '2 jours',
-        level: 'Tous niveaux',
-        description: 'Maîtrisez les fondamentaux de l\'export dans le secteur alimentaire',
-        objectives: [
-          'Comprendre les réglementations internationales',
-          'Adapter ses produits aux marchés export',
-          'Construire sa stratégie tarifaire',
-          'Identifier et approcher les distributeurs'
-        ],
-        image: '/src/assets/img/formation_export.jpg'
-      },
-      {
-        title: 'Atelier Négociation GMS',
-        duration: '1 jour',
-        level: 'Intermédiaire',
-        description: 'Techniques de négociation spécifiques aux grandes surfaces',
-        objectives: [
-          'Préparer sa négociation commerciale',
-          'Argumenter efficacement face aux centrales',
-          'Gérer les objections et les refus',
-          'Optimiser ses conditions commerciales'
-        ],
-        image: '/src/assets/img/formation_negociation.jpg'
-      },
-      {
-        title: 'Workshop Marketing Alimentaire',
-        duration: '1,5 jour',
-        level: 'Tous niveaux',
-        description: 'Construire l\'identité de marque dans l\'univers food',
-        objectives: [
-          'Définir son ADN de marque',
-          'Optimiser son packaging',
-          'Adapter sa communication aux circuits',
-          'Créer ses outils marketing'
-        ],
-        image: '/src/assets/img/formation_marketing.jpg'
-      },
-      {
-        title: 'Formation Management Commercial',
-        duration: '2 jours',
-        level: 'Managers',
-        description: 'Pilotage et animation d\'équipes commerciales dans l\'alimentaire',
-        objectives: [
-          'Recruter et former ses équipes',
-          'Fixer des objectifs motivants',
-          'Suivre la performance commerciale',
-          'Animer et motiver ses équipes'
-        ],
-        image: '/src/assets/img/formation_management.jpg'
-      }
-    ],
-    
-    methods: {
-      title: 'Notre approche pédagogique',
-      items: [
-        {
-          icon: '🎯',
-          title: 'Pratique et opérationnelle',
-          description: 'Formations axées sur des cas concrets et des mises en situation réelles'
-        },
-        {
-          icon: '👥',
-          title: 'Groupes restreints',
-          description: 'Maximum 8 participants pour garantir un accompagnement personnalisé'
-        },
-        {
-          icon: '📚',
-          title: 'Supports fournis',
-          description: 'Documents, templates et outils directement utilisables en entreprise'
-        },
-        {
-          icon: '📞',
-          title: 'Suivi post-formation',
-          description: 'Accompagnement téléphonique 3 mois après la formation'
-        }
+    ambition: {
+      title: 'NOTRE AMBITION',
+      points: [
+        'Proposer un programme de formation «sur-mesure»',
+        'Insuffler une culture du changement',
+        'Convertir les savoirs en pratique'
       ]
     },
     
+    content: {
+      title: 'LE CONTENU',
+      description: 'La maîtrise d\'un certain nombre de prérequis sous-tend l\'optimisation et la performance de vos transports multimodaux :',
+      subtitle: 'Environnement, Process, Risques, Coûts, Réglementations, Fiscalité, Documentation, etc…',
+      details: 'Ces différentes composantes seront abordées, illustrées par des cas pratiques, avec une large place réservée aux échanges et discussions.'
+    },
+    
+    publicVise: {
+      title: 'PUBLIC VISÉ',
+      targets: [
+        'Responsables, Assistants ou Collaborateurs Achats',
+        'Commerciaux – Key Account Managers – Global Account Managers',
+        'Responsables, Assistants ou Collaborateurs ADV',
+        'Responsables, Assistants ou Collaborateurs Services Import-Export',
+        'Responsables, Assistants ou Collaborateurs Services Expéditions',
+        'Agents de transit'
+      ]
+    },
+    
+    prerequis: {
+      title: 'PRÉREQUIS',
+      description: 'La formation s\'adresse aux professionnels intervenant à un point ou un autre de la chaîne logistique ayant a minima des notions de base dans le domaine concerné.',
+      formats: 'Nous proposons des formats présentiels et distanciels.',
+      elearning: 'ABC Gourmet a également développé un module e-learning et propose un apprentissage hybride (e-learning/distanciel) sur cette thématique.',
+      duration: 'La formation dans sa globalité s\'étend sur 3 journées.',
+      modules: 'Chaque module peut toutefois s\'envisager de façon dissociée et indépendante.',
+      tarification: 'La tarification est établie sur devis, selon le module défini.'
+    },
+    
+    accordions: [
+      {
+        title: 'OBJECTIFS',
+        content: [
+          'Appréhender l\'intégralité contextuelle des enjeux',
+          'Maîtriser l\'organisation des flux logistiques physiques, administratifs et financiers',
+          'Circonscrire les facteurs de risques tout au long de la chaîne'
+        ]
+      },
+      {
+        title: 'COMPÉTENCES VISÉES',
+        content: [
+          'Optimiser les process au sein de l\'organisation bénéficiaire',
+          'Améliorer les plans',
+          'Maîtriser les coûts',
+          'Appréhender les diverses réglementations',
+          'Identifier et maîtriser les risques'
+        ]
+      },
+      {
+        title: 'MODALITÉS ET SUPPORTS PÉDAGOGIQUES',
+        content: [
+          'Intervention sur site client',
+          'Questionnaire d\'évaluation préalable : identification des besoins, des attentes, des situations spécifiques (PSH)',
+          'Documents supports de formation projetés',
+          'Exposés théoriques',
+          'Études de cas concrets',
+          'Cas pratiques répondant aux spécificités de l\'entreprise',
+          'Quiz',
+          'Possibilité d\'adaptation des modalités et des supports aux Personnes en Situation de Handicap (Définition au cas-par-cas)',
+          'Mise à disposition de documents supports (synthèse) à l\'issue de la formation',
+          'Évaluations : à chaud & à froid',
+          'Matériel : Ordinateur portable – Rétroprojecteur'
+        ]
+      },
+      {
+        title: 'PROGRAMME',
+        content: [
+          'Module 1 : Diagnostic, stratégie et tactique, excellence du service client',
+          'Module 2 : Position de l\'organisation dans la définition des règles, principes du choix, exclusions, groupes, détail par règle',
+          'Module 3 : Process : les solutions et services, les flux documentaires et physiques, le contrat, les points de vigilance',
+          'Module 4 : Taxation : les règles par mode, les surcharges, les droits et taxes, les frais connexes',
+          'Module 5 : Couverture et exclusions, choix (Ad Valorem-FAP sauf), responsabilité civile, modalités de gestion'
+        ]
+      },
+      {
+        title: 'MOYENS DE SUIVI ET D\'ÉVALUATION DES RÉSULTATS',
+        content: [
+          'Évaluation de la participation (feuilles de présence)',
+          'Études de cas',
+          'Mises en situation',
+          'Appréciation de l\'évolution des connaissances en temps réel',
+          'Bilan/Débriefing',
+          'Formulaires d\'évaluation de la formation « à chaud »',
+          'Formulaires d\'évaluation de la formation « à froid » (Évaluation de l\'évolution des pratiques)'
+        ]
+      },
+      {
+        title: 'FORMATEUR',
+        content: [
+          'Spécialiste de la commission, de la gestion commerciale de PME et Grands Groupes industriels, du conseil.',
+          'Consultez notre parcours et nos expériences sur notre profil LinkedIn'
+        ]
+      },
+      {
+        title: 'MODALITÉS ET DÉLAIS D\'ACCÈS À LA FORMATION',
+        content: [
+          'Délais d\'accès : Les délais sont établis sur la base des disponibilités respectives du formateur et de l\'entreprise bénéficiaire de la formation.'
+        ]
+      }
+    ],
+    
+    certification: 'Organisme agréé BPI France, BCI et Business France au titre des actions de formation.',
     ctaTitle: 'Intéressé par nos formations ?',
-    ctaSubtitle: 'Contactez-nous pour obtenir le programme détaillé et les prochaines dates disponibles.',
-    ctaButton: 'Demander plus d\'informations'
+    ctaSubtitle: 'Formation sur-mesure - Devis personnalisé selon vos besoins',
+    ctaButton: 'Demander un devis'
   },
+  
+  // Ajout des traductions pour éviter l'erreur TypeScript
   en: {
     title: 'Training and Workshops - ABC Gourmet',
-    description: 'Specialized training and practical workshops for food industry professionals. Develop your skills with ABC Gourmet.',
+    description: 'Specialized training and practical workshops for professionals.',
     heroTitle: 'Training and Workshops',
     heroSubtitle: 'Develop your skills with our specialized training and practical workshops',
-    
-    intro: 'Our training programs are designed to meet the specific needs of food industry professionals. Whether you are a manager, salesperson or marketing manager, our training gives you the keys to success.',
-    
-    formations: [
-      {
-        title: 'Food Export Training',
-        duration: '2 days',
-        level: 'All levels',
-        description: 'Master the fundamentals of export in the food sector',
-        objectives: [
-          'Understand international regulations',
-          'Adapt products to export markets',
-          'Build pricing strategy',
-          'Identify and approach distributors'
-        ],
-        image: '/src/assets/img/formation_export.jpg'
-      },
-      {
-        title: 'Retail Chain Negotiation Workshop',
-        duration: '1 day',
-        level: 'Intermediate',
-        description: 'Negotiation techniques specific to large retailers',
-        objectives: [
-          'Prepare your commercial negotiation',
-          'Argue effectively with buying centers',
-          'Handle objections and refusals',
-          'Optimize your commercial conditions'
-        ],
-        image: '/src/assets/img/formation_negociation.jpg'
-      },
-      {
-        title: 'Food Marketing Workshop',
-        duration: '1.5 days',
-        level: 'All levels',
-        description: 'Build brand identity in the food universe',
-        objectives: [
-          'Define your brand DNA',
-          'Optimize your packaging',
-          'Adapt communication to channels',
-          'Create your marketing tools'
-        ],
-        image: '/src/assets/img/formation_marketing.jpg'
-      },
-      {
-        title: 'Commercial Management Training',
-        duration: '2 days',
-        level: 'Managers',
-        description: 'Management and animation of sales teams in food industry',
-        objectives: [
-          'Recruit and train your teams',
-          'Set motivating objectives',
-          'Monitor commercial performance',
-          'Animate and motivate your teams'
-        ],
-        image: '/src/assets/img/formation_management.jpg'
-      }
-    ],
-    
-    methods: {
-      title: 'Our pedagogical approach',
-      items: [
-        {
-          icon: '🎯',
-          title: 'Practical and operational',
-          description: 'Training focused on concrete cases and real-life situations'
-        },
-        {
-          icon: '👥',
-          title: 'Small groups',
-          description: 'Maximum 8 participants to guarantee personalized support'
-        },
-        {
-          icon: '📚',
-          title: 'Materials provided',
-          description: 'Documents, templates and tools directly usable in business'
-        },
-        {
-          icon: '📞',
-          title: 'Post-training follow-up',
-          description: 'Phone support 3 months after training'
-        }
+    ambition: {
+      title: 'OUR AMBITION',
+      points: [
+        'Offer a "tailor-made" training program',
+        'Instill a culture of change',
+        'Convert knowledge into practice'
       ]
     },
-    
+    content: {
+      title: 'CONTENT',
+      description: 'Mastering certain prerequisites underlies the optimization and performance of your multimodal transport:',
+      subtitle: 'Environment, Process, Risks, Costs, Regulations, Taxation, Documentation, etc...',
+      details: 'These various components will be addressed, illustrated by practical cases, with a large place reserved for exchanges and discussions.'
+    },
+    publicVise: {
+      title: 'TARGET AUDIENCE',
+      targets: [
+        'Purchasing Managers, Assistants or Collaborators',
+        'Sales representatives – Key Account Managers – Global Account Managers',
+        'Sales Administration Managers, Assistants or Collaborators',
+        'Import-Export Services Managers, Assistants or Collaborators',
+        'Shipping Services Managers, Assistants or Collaborators',
+        'Transit agents'
+      ]
+    },
+    prerequis: {
+      title: 'PREREQUISITES',
+      description: 'The training is aimed at professionals involved at one point or another in the logistics chain having at least basic knowledge in the field concerned.',
+      formats: 'We offer face-to-face and remote formats.',
+      elearning: 'ABC Gourmet has also developed an e-learning module and offers hybrid learning (e-learning/remote) on this theme.',
+      duration: 'The training in its entirety extends over 3 days.',
+      modules: 'Each module can however be considered separately and independently.',
+      tarification: 'Pricing is established on quote, according to the defined module.'
+    },
+    accordions: [
+      {
+        title: 'OBJECTIVES',
+        content: [
+          'Understand the complete contextual challenges',
+          'Master the organization of physical, administrative and financial logistics flows',
+          'Identify risk factors throughout the chain'
+        ]
+      },
+      {
+        title: 'TARGET SKILLS',
+        content: [
+          'Optimize processes within the beneficiary organization',
+          'Improve plans',
+          'Control costs',
+          'Understand various regulations',
+          'Identify and manage risks'
+        ]
+      },
+      {
+        title: 'METHODS AND EDUCATIONAL MATERIALS',
+        content: [
+          'On-site client intervention',
+          'Preliminary evaluation questionnaire: identification of needs, expectations, specific situations',
+          'Projected training support documents',
+          'Theoretical presentations',
+          'Concrete case studies',
+          'Practical cases responding to company specificities',
+          'Quizzes',
+          'Support documents provided at the end of training',
+          'Hot & cold evaluations',
+          'Equipment: Laptop – Projector'
+        ]
+      },
+      {
+        title: 'PROGRAM',
+        content: [
+          'Module 1: Diagnosis, strategy and tactics, customer service excellence',
+          'Module 2: Organization position in rule definition, choice principles, exclusions, groups',
+          'Module 3: Process: solutions and services, documentary and physical flows, contract, vigilance points',
+          'Module 4: Taxation: rules by mode, surcharges, duties and taxes, related fees',
+          'Module 5: Coverage and exclusions, choice, civil liability, management methods'
+        ]
+      },
+      {
+        title: 'MONITORING AND EVALUATION METHODS',
+        content: [
+          'Participation evaluation (attendance sheets)',
+          'Case studies',
+          'Role-playing situations',
+          'Real-time knowledge evolution assessment',
+          'Review/Debriefing',
+          '"Hot" training evaluation forms',
+          '"Cold" training evaluation forms (Practice evolution evaluation)'
+        ]
+      },
+      {
+        title: 'TRAINER',
+        content: [
+          'Specialist in commission, commercial management of SMEs and large industrial groups, consulting.',
+          'Check our background and experiences on our LinkedIn profile'
+        ]
+      },
+      {
+        title: 'TRAINING ACCESS METHODS AND DEADLINES',
+        content: [
+          'Access deadlines: Deadlines are established based on respective availability of trainer and beneficiary company.'
+        ]
+      }
+    ],
+    certification: 'Organization approved by BPI France, BCI and Business France for training actions.',
     ctaTitle: 'Interested in our training?',
-    ctaSubtitle: 'Contact us to get the detailed program and next available dates.',
-    ctaButton: 'Request more information'
+    ctaSubtitle: 'Customized Training – Personalized Quote Based on Your Needs',
+    ctaButton: 'Request a quote'
   },
+  
   de: {
     title: 'Ausbildung und Workshops - ABC Gourmet',
-    description: 'Spezialisierte Schulungen und praktische Workshops für Fachkräfte der Lebensmittelindustrie. Entwickeln Sie Ihre Fähigkeiten mit ABC Gourmet.',
+    description: 'Spezialisierte Schulungen und praktische Workshops für Fachleute.',
     heroTitle: 'Ausbildung und Workshops',
     heroSubtitle: 'Entwickeln Sie Ihre Fähigkeiten mit unseren spezialisierten Schulungen und praktischen Workshops',
-    
-    intro: 'Unsere Ausbildungsprogramme sind darauf ausgelegt, den spezifischen Bedürfnissen von Fachkräften der Lebensmittelindustrie gerecht zu werden. Ob Sie Manager, Verkäufer oder Marketingmanager sind, unsere Schulungen geben Ihnen die Schlüssel zum Erfolg.',
-    
-    formations: [
-      {
-        title: 'Lebensmittelexport-Schulung',
-        duration: '2 Tage',
-        level: 'Alle Ebenen',
-        description: 'Meistern Sie die Grundlagen des Exports im Lebensmittelsektor',
-        objectives: [
-          'Internationale Vorschriften verstehen',
-          'Produkte an Exportmärkte anpassen',
-          'Preisstrategie aufbauen',
-          'Händler identifizieren und ansprechen'
-        ],
-        image: '/src/assets/img/formation_export.jpg'
-      },
-      {
-        title: 'Einzelhandelsverhandlungs-Workshop',
-        duration: '1 Tag',
-        level: 'Mittelstufe',
-        description: 'Verhandlungstechniken speziell für Großhändler',
-        objectives: [
-          'Ihre Handelsverhandlung vorbereiten',
-          'Effektiv mit Einkaufszentren argumentieren',
-          'Einwände und Ablehnungen handhaben',
-          'Ihre Handelsbedingungen optimieren'
-        ],
-        image: '/src/assets/img/formation_negociation.jpg'
-      },
-      {
-        title: 'Lebensmittelmarketing-Workshop',
-        duration: '1,5 Tage',
-        level: 'Alle Ebenen',
-        description: 'Markenidentität im Lebensmitteluniversum aufbauen',
-        objectives: [
-          'Ihre Marken-DNA definieren',
-          'Ihre Verpackung optimieren',
-          'Kommunikation an Kanäle anpassen',
-          'Ihre Marketing-Tools erstellen'
-        ],
-        image: '/src/assets/img/formation_marketing.jpg'
-      },
-      {
-        title: 'Handelsmanagement-Schulung',
-        duration: '2 Tage',
-        level: 'Manager',
-        description: 'Management und Animation von Verkaufsteams in der Lebensmittelindustrie',
-        objectives: [
-          'Ihre Teams rekrutieren und schulen',
-          'Motivierende Ziele setzen',
-          'Handelsleistung überwachen',
-          'Ihre Teams animieren und motivieren'
-        ],
-        image: '/src/assets/img/formation_management.jpg'
-      }
-    ],
-    
-    methods: {
-      title: 'Unser pädagogischer Ansatz',
-      items: [
-        {
-          icon: '🎯',
-          title: 'Praktisch und operativ',
-          description: 'Schulungen fokussiert auf konkrete Fälle und reale Situationen'
-        },
-        {
-          icon: '👥',
-          title: 'Kleine Gruppen',
-          description: 'Maximal 8 Teilnehmer für garantierte persönliche Betreuung'
-        },
-        {
-          icon: '📚',
-          title: 'Materialien bereitgestellt',
-          description: 'Dokumente, Vorlagen und Tools direkt im Geschäft verwendbar'
-        },
-        {
-          icon: '📞',
-          title: 'Post-Training-Nachbetreuung',
-          description: 'Telefonische Unterstützung 3 Monate nach der Schulung'
-        }
+    ambition: {
+      title: 'UNSER ZIEL',
+      points: [
+        'Ein "maßgeschneidertes" Schulungsprogramm anbieten',
+        'Eine Kultur des Wandels einflößen',
+        'Wissen in die Praxis umsetzen'
       ]
     },
-    
+    content: {
+      title: 'INHALT',
+      description: 'Die Beherrschung bestimmter Voraussetzungen ist die Grundlage für die Optimierung und Leistung Ihrer multimodalen Transporte:',
+      subtitle: 'Umwelt, Prozesse, Risiken, Kosten, Vorschriften, Besteuerung, Dokumentation, etc...',
+      details: 'Diese verschiedenen Komponenten werden behandelt, durch praktische Fälle veranschaulicht, mit viel Raum für Austausch und Diskussionen.'
+    },
+    publicVise: {
+      title: 'ZIELGRUPPE',
+      targets: [
+        'Einkaufsleiter, Assistenten oder Mitarbeiter',
+        'Vertriebsmitarbeiter – Key Account Manager – Global Account Manager',
+        'Vertriebsadministrationsleiter, Assistenten oder Mitarbeiter',
+        'Import-Export-Serviceleiter, Assistenten oder Mitarbeiter',
+        'Versandserviceleiter, Assistenten oder Mitarbeiter',
+        'Transitagenten'
+      ]
+    },
+    prerequis: {
+      title: 'VORAUSSETZUNGEN',
+      description: 'Die Schulung richtet sich an Fachleute, die an einem Punkt der Logistikkette beteiligt sind und mindestens Grundkenntnisse im betreffenden Bereich haben.',
+      formats: 'Wir bieten Präsenz- und Remote-Formate an.',
+      elearning: 'ABC Gourmet hat auch ein E-Learning-Modul entwickelt und bietet hybrides Lernen (E-Learning/Remote) zu diesem Thema an.',
+      duration: 'Die Schulung in ihrer Gesamtheit erstreckt sich über 3 Tage.',
+      modules: 'Jedes Modul kann jedoch separat und unabhängig betrachtet werden.',
+      tarification: 'Die Preisgestaltung erfolgt auf Angebot, je nach definiertem Modul.'
+    },
+    accordions: [
+      {
+        title: 'ZIELE',
+        content: [
+          'Die vollständigen kontextuellen Herausforderungen verstehen',
+          'Die Organisation physischer, administrativer und finanzieller Logistikströme beherrschen',
+          'Risikofaktoren entlang der gesamten Kette identifizieren'
+        ]
+      },
+      {
+        title: 'ANGESTREBTE KOMPETENZEN',
+        content: [
+          'Prozesse innerhalb der begünstigten Organisation optimieren',
+          'Pläne verbessern',
+          'Kosten kontrollieren',
+          'Verschiedene Vorschriften verstehen',
+          'Risiken identifizieren und verwalten'
+        ]
+      },
+      {
+        title: 'METHODEN UND LEHRMATERIALIEN',
+        content: [
+          'Vor-Ort-Intervention beim Kunden',
+          'Vorab-Bewertungsfragebogen: Identifikation von Bedürfnissen, Erwartungen, spezifischen Situationen',
+          'Projizierte Schulungsunterlagen',
+          'Theoretische Präsentationen',
+          'Konkrete Fallstudien',
+          'Praktische Fälle entsprechend den Unternehmensspezifikationen',
+          'Quiz',
+          'Bereitstellung von Unterlagen am Ende der Schulung',
+          'Heiße & kalte Bewertungen',
+          'Ausrüstung: Laptop – Projektor'
+        ]
+      },
+      {
+        title: 'PROGRAMM',
+        content: [
+          'Modul 1: Diagnose, Strategie und Taktik, Exzellenz im Kundenservice',
+          'Modul 2: Position der Organisation bei der Regeldefinition, Auswahlprinzipien, Ausschlüsse, Gruppen',
+          'Modul 3: Prozess: Lösungen und Dienstleistungen, dokumentarische und physische Ströme, Vertrag, Wachsamkeitspunkte',
+          'Modul 4: Besteuerung: Regeln nach Modus, Zuschläge, Zölle und Steuern, Nebengebühren',
+          'Modul 5: Deckung und Ausschlüsse, Auswahl, Haftpflicht, Verwaltungsmethoden'
+        ]
+      },
+      {
+        title: 'ÜBERWACHUNGS- UND BEWERTUNGSMETHODEN',
+        content: [
+          'Teilnahmebewertung (Anwesenheitslisten)',
+          'Fallstudien',
+          'Rollenspielsituationen',
+          'Echtzeit-Bewertung der Wissensentwicklung',
+          'Überprüfung/Nachbesprechung',
+          '"Heiße" Schulungsbewertungsformulare',
+          '"Kalte" Schulungsbewertungsformulare (Bewertung der Praxisentwicklung)'
+        ]
+      },
+      {
+        title: 'TRAINER',
+        content: [
+          'Spezialist für Kommission, Handelsmanagement von KMU und großen Industriegruppen, Beratung.',
+          'Überprüfen Sie unseren Hintergrund und unsere Erfahrungen in unserem LinkedIn-Profil'
+        ]
+      },
+      {
+        title: 'SCHULUNGSZUGANG METHODEN UND FRISTEN',
+        content: [
+          'Zugriffsfristen: Fristen werden basierend auf der jeweiligen Verfügbarkeit von Trainer und begünstigtem Unternehmen festgelegt.'
+        ]
+      }
+    ],
+    certification: 'Organisation genehmigt von BPI France, BCI und Business France für Schulungsmaßnahmen.',
     ctaTitle: 'Interessiert an unseren Schulungen?',
-    ctaSubtitle: 'Kontaktieren Sie uns für das detaillierte Programm und die nächsten verfügbaren Termine.',
-    ctaButton: 'Weitere Informationen anfordern'
+    ctaSubtitle: 'Maßgeschneiderte Schulung – Individuelles Angebot nach Ihren Bedürfnissen',
+    ctaButton: 'Angebot anfordern'
   }
 };
 
-const t = content[lang] || content.fr;
+const t = content[lang];
 ---
 
 <Layout title={t.title} description={t.description} lang={lang}>
   
-  <!-- Hero Section -->
   <section class="relative min-h-[400px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)]">
     <div class="absolute inset-0 bg-black/20"></div>
     
@@ -315,204 +385,263 @@ const t = content[lang] || content.fr;
     </div>
   </section>
 
-  <!-- Introduction -->
+  <!-- Section Notre Ambition -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-8 text-[var(--color-primary)] uppercase tracking-wide">
+        {t.ambition.title}
+      </h2>
+      <div class="bg-[var(--color-primary)] h-1 w-16 mx-auto mb-8"></div>
+      <ul class="space-y-4 text-gray-700">
+        {t.ambition.points.map((point: string) => (
+          <li class="flex items-start justify-center">
+            <span class="text-[var(--color-primary)] mr-3 mt-1">•</span>
+            <span class="text-lg">{point}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Section Le Contenu -->
   <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
-      <p class="text-lg text-gray-600 leading-relaxed">
-        {t.intro}
+      <h2 class="text-3xl font-bold mb-8 text-[var(--color-primary)] uppercase tracking-wide">
+        {t.content.title}
+      </h2>
+      <div class="bg-[var(--color-primary)] h-1 w-16 mx-auto mb-8"></div>
+      
+      <p class="text-gray-700 mb-6 leading-relaxed text-lg">
+        {t.content.description}
+      </p>
+      <p class="font-semibold mb-6 text-lg text-[var(--color-secondary)]">
+        {t.content.subtitle}
+      </p>
+      <p class="text-gray-700 leading-relaxed text-lg">
+        {t.content.details}
       </p>
     </div>
   </section>
 
-  <!-- Formations -->
+  <!-- Section Public Visé + Prérequis -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {t.formations.map((formation) => (
-          <div class="card">
-            <div class="mb-6">
-              <OptimizeImage 
-                src={formation.image}
-                alt={formation.title}
-                class="w-full h-48 object-cover rounded-lg"
-                loading="lazy"
-                widths={[400, 600, 800]}
-                sizes="(max-width: 767px) 100vw, 50vw"
-              />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Public Visé -->
+        <div class="card">
+          <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary)] uppercase tracking-wide">
+            {t.publicVise.title}
+          </h2>
+          <div class="bg-[var(--color-primary)] h-1 w-16 mb-8"></div>
+          
+          <ul class="space-y-4">
+            {t.publicVise.targets.map((target: string) => (
+              <li class="flex items-start">
+                <span class="text-[var(--color-primary)] mr-3 mt-1 text-lg">•</span>
+                <span class="text-gray-700">{target}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Prérequis -->
+        <div class="card">
+          <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary)] uppercase tracking-wide">
+            {t.prerequis.title}
+          </h2>
+          <div class="bg-[var(--color-primary)] h-1 w-16 mb-8"></div>
+          
+          <div class="space-y-4 text-gray-700">
+            <p class="leading-relaxed">{t.prerequis.description}</p>
+            
+            <div class="mt-6 space-y-3">
+              <p class="font-medium">{t.prerequis.formats}</p>
+              <p>{t.prerequis.elearning}</p>
+              <p class="font-medium">{t.prerequis.duration}</p>
+              <p>{t.prerequis.modules}</p>
+              <p class="font-semibold text-[var(--color-secondary)]">{t.prerequis.tarification}</p>
             </div>
             
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold text-[var(--color-primary)] flex-1">
-                {formation.title}
-              </h3>
-              <div class="text-right ml-4">
-                <span class="inline-block bg-[var(--color-primary)] text-white text-xs px-2 py-1 rounded mb-1">
-                  {formation.duration}
-                </span>
-                <br>
-                <span class="text-xs text-gray-500">
-                  {formation.level}
-                </span>
+            <!-- Bouton Tarifs -->
+            <div class="mt-8">
+              <a href={`/${lang}/contact/?subject=demande-devis-formation`} class="btn-primary">
+                {t.ctaButton}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accordéons CSS -->
+  <section class="pb-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="space-y-4">
+        {t.accordions.map((accordion, index: number) => (
+          <div class="accordion-item border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+            <input 
+              type="checkbox" 
+              id={`accordion-${index}`}
+              class="sr-only"
+            />
+            <label 
+              for={`accordion-${index}`}
+              class="block w-full px-6 py-4 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+            >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <span class="accordion-toggle bg-[var(--color-primary)] text-white w-8 h-8 rounded mr-4 text-sm font-bold flex items-center justify-center"></span>
+                  <span class="font-bold text-[var(--color-primary)] uppercase tracking-wide">{accordion.title}</span>
+                </div>
+                <svg class="accordion-arrow w-5 h-5 text-[var(--color-primary)] transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </label>
+            <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300">
+              <div class="px-6 py-4 bg-white border-t border-gray-100">
+                <ul class="space-y-3">
+                  {accordion.content.map((item: string) => (
+                    <li class="flex items-start">
+                      <span class="text-[var(--color-primary)] mr-3 mt-1">•</span>
+                      <span class="text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            
-            <p class="text-gray-600 mb-4">
-              {formation.description}
-            </p>
-            
-            <h4 class="font-semibold text-gray-800 mb-2">
-              {lang === 'fr' ? 'Objectifs :' : lang === 'en' ? 'Objectives:' : 'Ziele:'}
-            </h4>
-            
-            <ul class="space-y-2">
-              {formation.objectives.map((objective) => (
-                <li class="flex items-start">
-                  <span class="text-[var(--color-primary)] mr-2 mt-1 text-sm">•</span>
-                  <span class="text-sm text-gray-600">{objective}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         ))}
       </div>
     </div>
   </section>
-
-  <!-- Approche pédagogique -->
+  <!-- Section Notre approche pédagogique -->
   <section class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
-        {t.methods.title}
+        Notre approche pédagogique
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {t.methods.items.map((method) => (
-          <div class="card text-center">
-            <div class="text-4xl mb-4">{method.icon}</div>
-            <h3 class="text-lg font-semibold mb-3 text-[var(--color-primary)]">
-              {method.title}
-            </h3>
-            <p class="text-gray-600 text-sm">
-              {method.description}
-            </p>
-          </div>
-        ))}
+        <div class="card text-center">
+          <div class="text-4xl mb-4">🎯</div>
+          <h3 class="text-lg font-semibold mb-3 text-[var(--color-primary)]">
+            Pratique et opérationnelle
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Formations axées sur des cas concrets et des mises en situation réelles
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <div class="text-4xl mb-4">👥</div>
+          <h3 class="text-lg font-semibold mb-3 text-[var(--color-primary)]">
+            Groupes restreints
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Maximum 8 participants pour garantir un accompagnement personnalisé
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <div class="text-4xl mb-4">📚</div>
+          <h3 class="text-lg font-semibold mb-3 text-[var(--color-primary)]">
+            Supports fournis
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Documents, templates et outils directement utilisables en entreprise
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <div class="text-4xl mb-4">📞</div>
+          <h3 class="text-lg font-semibold mb-3 text-[var(--color-primary)]">
+            Suivi post-formation
+          </h3>
+          <p class="text-gray-600 text-sm">
+            Accompagnement téléphonique 3 mois après la formation
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Outils et méthodes basés sur le PDF -->
+  <!-- Outils et méthodes -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--color-primary)]">
-        {lang === 'fr' ? 'Nos outils et méthodes' : 
-         lang === 'en' ? 'Our tools and methods' : 
-         'Unsere Werkzeuge und Methoden'}
+        Nos outils et méthodes
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Outils de diagnostic -->
         <div class="card">
           <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
-            {lang === 'fr' ? 'Outils de diagnostic et de pilotage' : 
-             lang === 'en' ? 'Diagnostic and management tools' : 
-             'Diagnose- und Steuerungstools'}
+            Outils de diagnostic et de pilotage
           </h3>
           <ul class="text-gray-600 space-y-2">
             <li>• SWOT, Canvas</li>
             <li>• CRM Sellsy</li>
             <li>• Google Alerts</li>
-            <li>• {lang === 'fr' ? 'Réseau international d\'experts' : 
-                  lang === 'en' ? 'International network of experts' : 
-                  'Internationales Expertennetzwerk'}</li>
+            <li>• Réseau international d'experts</li>
           </ul>
         </div>
 
         <!-- Outils marketing -->
         <div class="card">
           <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
-            {lang === 'fr' ? 'Outils marketing et digitaux' : 
-             lang === 'en' ? 'Marketing and digital tools' : 
-             'Marketing- und digitale Tools'}
+            Outils marketing et digitaux
           </h3>
           <ul class="text-gray-600 space-y-2">
-            <li>• {lang === 'fr' ? 'Collaboration avec des freelance' : 
-                  lang === 'en' ? 'Collaboration with freelancers' : 
-                  'Zusammenarbeit mit Freelancern'}</li>
-            <li>• {lang === 'fr' ? 'Graphiste, agence de communication' : 
-                  lang === 'en' ? 'Graphic designer, communication agency' : 
-                  'Grafiker, Kommunikationsagentur'}</li>
+            <li>• Collaboration avec des freelance</li>
+            <li>• Graphiste, agence de communication</li>
           </ul>
         </div>
 
         <!-- Ressources commerciales -->
         <div class="card">
           <h3 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">
-            {lang === 'fr' ? 'Ressources commerciales' : 
-             lang === 'en' ? 'Commercial resources' : 
-             'Kommerzielle Ressourcen'}
+            Ressources commerciales
           </h3>
           <ul class="text-gray-600 space-y-2">
-            <li>• 25+ {lang === 'fr' ? 'ans d\'expérience' : 
-                      lang === 'en' ? 'years of experience' : 
-                      'Jahre Erfahrung'}</li>
-            <li>• {lang === 'fr' ? 'Réseau de plus de 50 ans' : 
-                  lang === 'en' ? 'Network of over 50 years' : 
-                  'Netzwerk von über 50 Jahren'}</li>
-            <li>• {lang === 'fr' ? 'Formation continue' : 
-                  lang === 'en' ? 'Continuous training' : 
-                  'Kontinuierliche Ausbildung'}</li>
+            <li>• 25+ ans d'expérience</li>
+            <li>• Réseau de plus de 50 ans</li>
+            <li>• Formation continue</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Certifications et agréments -->
+  <!-- Section Certification -->
   <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-8 text-[var(--color-primary)]">
-        {lang === 'fr' ? 'Certifications et agréments' : 
-         lang === 'en' ? 'Certifications and accreditations' : 
-         'Zertifizierungen und Akkreditierungen'}
-      </h2>
-      
-      <div class="flex justify-center items-center gap-8 flex-wrap">
+      <div class="flex justify-center items-center gap-8 mb-8 flex-wrap">
         <div class="text-center">
           <div class="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-2">
-            <span class="text-white font-bold text-xl">BPI</span>
+            <span class="text-white font-bold text-lg">BPI</span>
           </div>
-          <p class="text-sm text-gray-600">
-            {lang === 'fr' ? 'Agréé BPI France' : 
-             lang === 'en' ? 'BPI France approved' : 
-             'BPI Frankreich genehmigt'}
-          </p>
+          <p class="text-sm text-gray-600">BPI France</p>
         </div>
         
         <div class="text-center">
           <div class="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-2">
-            <span class="text-white font-bold text-xl">BCI</span>
+            <span class="text-white font-bold text-lg">BCI</span>
           </div>
-          <p class="text-sm text-gray-600">
-            {lang === 'fr' ? 'Agréé BCI' : 
-             lang === 'en' ? 'BCI approved' : 
-             'BCI genehmigt'}
-          </p>
+          <p class="text-sm text-gray-600">BCI</p>
         </div>
         
         <div class="text-center">
           <div class="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-2">
-            <span class="text-white font-bold text-sm">🇫🇷</span>
+            <span class="text-white font-bold text-lg">🇫🇷</span>
           </div>
           <p class="text-sm text-gray-600">Business France</p>
         </div>
       </div>
       
-      <p class="text-gray-600 mt-8 text-lg">
-        {lang === 'fr' ? '4 langues parlées • 25+ ans d\'expérience internationale' : 
-         lang === 'en' ? '4 languages spoken • 25+ years international experience' : 
-         '4 Sprachen gesprochen • 25+ Jahre internationale Erfahrung'}
-      </p>
+      <p class="text-gray-700 font-medium text-lg">{t.certification}</p>
     </div>
   </section>
 
@@ -528,3 +657,33 @@ const t = content[lang] || content.fr;
     imageAlt="ABC Gourmet - Formation professionnelle"
   />
 </Layout>
+
+<style>
+
+  /* Accordéons CSS pur */
+  .accordion-item input[type="checkbox"]:checked + label .accordion-toggle {
+    background-color: var(--color-secondary);
+  }
+  
+  .accordion-item input[type="checkbox"]:checked + label .accordion-toggle::after {
+    content: '−';
+  }
+  
+  .accordion-item input[type="checkbox"]:checked + label .accordion-arrow {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item input[type="checkbox"]:checked ~ .accordion-content {
+    max-height: 1000px;
+  }
+  
+  .accordion-toggle::after {
+    content: '+';
+  }
+  
+  @media (max-width: 768px) {
+    .text-3xl {
+      font-size: 1.875rem;
+    }
+  }
+</style>
