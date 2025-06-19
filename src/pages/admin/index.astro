@@ -1,0 +1,810 @@
+---
+// src/pages/admin/index.astro
+import Layout from '../../layouts/layout.astro';
+import type { APIRoute } from 'astro';
+
+// Types pour cette page
+interface TestimonialData {
+  clientName: string;
+  company: string;
+  order: number;
+  image?: string;
+  imageAlt?: string;
+  contentFr: string;
+  contentEn: string;
+  contentDe: string;
+}
+
+interface PartnerData {
+  website: string;
+  logo: string;
+  logoAlt: string;
+  category: 'institutionnel' | 'prive';
+}
+
+// API Endpoints dans la même page
+export const POST: APIRoute = async ({ request }) => {
+  const url = new URL(request.url);
+  const endpoint = url.searchParams.get('endpoint');
+
+  try {
+    switch (endpoint) {
+      case 'testimonials':
+        return await handleTestimonial(request);
+      case 'partners':
+        return await handlePartner(request);
+      case 'upload-image':
+        return await handleImageUpload(request);
+      default:
+        return new Response(JSON.stringify({ error: 'Endpoint invalide' }), { status: 400 });
+    }
+  } catch (error) {
+    return new Response(JSON.stringify({ 
+      error: error instanceof Error ? error.message : 'Erreur serveur' 
+    }), { status: 500 });
+  }
+};
+
+// Handlers API
+async function handleTestimonial(request: Request) {
+  const data: TestimonialData = await request.json();
+  
+  if (!data.clientName || !data.company || !data.contentFr) {
+    return new Response(JSON.stringify({ error: 'Champs requis manquants' }), { status: 400 });
+  }
+
+  const slug = generateSlug(data.clientName);
+  const content = generateTestimonialMarkdown(data);
+  const result = await commitToGitHub(`src/content/testimonials/${slug}.md`, content, `feat: add testimonial from ${data.clientName}`);
+  
+  return new Response(JSON.stringify({ 
+    success: true, 
+    filename: `${slug}.md`,
+    commitSha: result.sha 
+  }));
+}
+
+async function handlePartner(request: Request) {
+  const data: PartnerData = await request.json();
+  
+  if (!data.website || !data.logo || !data.logoAlt || !data.category) {
+    return new Response(JSON.stringify({ error: 'Tous les champs sont requis' }), { status: 400 });
+  }
+
+  const timestamp = Date.now();
+  const slug = generateSlug(data.logoAlt);
+  const filename = `${String(timestamp).slice(-3)}-${slug}.json`;
+  const content = JSON.stringify(data, null, 2);
+  const result = await commitToGitHub(`src/content/partners/${filename}`, content, `feat: add partner ${data.logoAlt}`);
+  
+  return new Response(JSON.stringify({ 
+    success: true, 
+    filename,
+    commitSha: result.sha 
+  }));
+}
+
+// Handler pour l'upload d'images
+async function handleImageUpload(request: Request) {
+  const formData = await request.formData();
+  const file = formData.get('image') as File;
+  const folder = formData.get('folder') as string; // 'testimognals' ou 'partners'
+  
+  if (!file || !file.size) {
+    return new Response(JSON.stringify({ error: 'Aucun fichier fourni' }), { status: 400 });
+  }
+
+  // Validation du type de fichier
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
+    return new Response(JSON.stringify({ 
+      error: 'Type de fichier non supporté. Utilisez JPG, PNG ou WebP.' 
+    }), { status: 400 });
+  }
+
+  // Validation de la taille (max 2MB)
+  if (file.size > 2 * 1024 * 1024) {
+    return new Response(JSON.stringify({ 
+      error: 'Fichier trop volumineux. Maximum 2MB.' 
+    }), { status: 400 });
+  }
+
+  try {
+    // Générer un nom de fichier unique
+    const timestamp = Date.now();
+    const extension = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const filename = `${timestamp}-${generateSlug(file.name.split('.')[0])}.${extension}`;
+    
+    // Convertir le fichier en base64
+    const arrayBuffer = await file.arrayBuffer();
+    const base64Content = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+    
+    // Upload vers GitHub
+    const imagePath = `public/img_${folder}/${filename}`;
+    const result = await commitToGitHub(
+      imagePath, 
+      base64Content, 
+      `feat: upload image ${filename}`,
+      true // indiquer que c'est du contenu binaire
+    );
+    
+    return new Response(JSON.stringify({ 
+      success: true, 
+      filename,
+      imagePath: `/img_${folder}/${filename}`, // Chemin public pour l'utilisation
+      commitSha: result.sha 
+    }));
+
+  } catch (error) {
+    console.error('Upload error:', error);
+    return new Response(JSON.stringify({ 
+      error: 'Erreur lors de l\'upload' 
+    }), { status: 500 });
+  }
+}
+
+// Utilitaires
+function generateSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function generateTestimonialMarkdown(data: TestimonialData): string {
+  let frontmatter = `---
+clientName: "${data.clientName}"
+company: "${data.company}"
+order: ${data.order}
+publishDate: ${new Date().toISOString().split('T')[0]}`;
+
+  if (data.image) frontmatter += `\nimage: "${data.image}"`;
+  if (data.imageAlt) frontmatter += `\nimageAlt: "${data.imageAlt}"`;
+  
+  frontmatter += '\n---\n\n';
+
+  return frontmatter + `## fr
+
+${data.contentFr}
+
+## en
+
+${data.contentEn || data.contentFr}
+
+## de
+
+${data.contentDe || data.contentFr}`;
+}
+
+// Service GitHub
+async function commitToGitHub(filePath: string, content: string, message: string, isBinary: boolean = false) {
+  const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
+  const GITHUB_OWNER = import.meta.env.GITHUB_OWNER;
+  const GITHUB_REPO = import.meta.env.GITHUB_REPO;
+  
+  if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) {
+    throw new Error('Configuration GitHub manquante');
+  }
+
+  const headers = {
+    'Authorization': `token ${GITHUB_TOKEN}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json',
+  };
+
+  // Vérifier si le fichier existe déjà
+  let existingSha: string | undefined;
+  try {
+    const existingFile = await fetch(
+      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
+      { headers }
+    );
+    if (existingFile.ok) {
+      const fileData = await existingFile.json();
+      existingSha = fileData.sha;
+    }
+  } catch {
+    // Fichier n'existe pas
+  }
+
+  // Commit du fichier
+  const body: any = {
+    message,
+    content: isBinary ? content : btoa(unescape(encodeURIComponent(content))),
+  };
+
+  if (existingSha) {
+    body.sha = existingSha;
+  }
+
+  const response = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
+    {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(body),
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`GitHub API error: ${errorData.message}`);
+  }
+
+  const result = await response.json();
+  return { sha: result.content.sha, url: result.content.html_url };
+}
+---
+
+<Layout title="Admin - ABC Gourmet" description="Interface d'administration" lang="fr">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-900">Admin ABC Gourmet</h1>
+    
+    <!-- Authentification -->
+    <div id="auth-section" class="max-w-md mx-auto">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-4">Connexion</h2>
+        <input 
+          type="password" 
+          id="admin-password" 
+          placeholder="Mot de passe admin"
+          class="w-full p-3 border rounded mb-4"
+        />
+        <button 
+          id="auth-btn"
+          class="w-full bg-[var(--color-primary)] text-white p-3 rounded hover:bg-[var(--color-primary-hover)] transition-colors"
+        >
+          🔐 Se connecter
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel admin -->
+    <div id="admin-panel" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        
+        <!-- Témoignages -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">Témoignages</h2>
+          <button 
+            id="new-testimonial-btn"
+            class="w-full bg-[var(--color-primary)] text-white p-3 rounded hover:bg-[var(--color-primary-hover)] transition-colors"
+          >
+            ✨ Nouveau témoignage
+          </button>
+        </div>
+
+        <!-- Partenaires -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold mb-4 text-[var(--color-primary)]">Partenaires</h2>
+          <button 
+            id="new-partner-btn"
+            class="w-full bg-[var(--color-secondary)] text-white p-3 rounded hover:bg-[var(--color-primary-hover)] transition-colors"
+          >
+            🤝 Nouveau partenaire
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages de statut -->
+      <div id="status" class="mb-4 p-4 rounded hidden"></div>
+
+      <!-- Modal centré par défaut -->
+      <div id="modal" class="fixed inset-0 bg-gradient-to-br from-[var(--color-primary)]/80 via-[var(--color-primary-hover)]/70 to-[var(--color-secondary)]/60 backdrop-blur-sm z-50 hidden">
+        <div class="w-full h-full flex items-center justify-center p-4">
+          <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-xl font-semibold text-[var(--color-primary)]"></h3>
+                <button id="modal-close" class="text-gray-500 hover:text-[var(--color-primary)] transition-colors">✕</button>
+              </div>
+              
+              <!-- Messages de statut dans le modal -->
+              <div id="modal-status" class="mb-4 p-3 rounded hidden"></div>
+              
+              <div id="modal-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Types pour le frontend
+  interface TestimonialData {
+    clientName: string;
+    company: string;
+    order: number;
+    image?: string;
+    imageAlt?: string;
+    contentFr: string;
+    contentEn: string;
+    contentDe: string;
+  }
+
+  interface PartnerData {
+    website: string;
+    logo: string;
+    logoAlt: string;
+    category: 'institutionnel' | 'prive';
+  }
+
+  class AdminUI {
+    private readonly ADMIN_PASSWORD = 'abc2024admin'; // À changer !
+
+    // Utilitaires UI
+    private showStatus(message: string, type: 'success' | 'error' | 'info' = 'info'): void {
+      // Utiliser modal-status si le modal est ouvert, sinon status normal
+      const modal = document.getElementById('modal');
+      const isModalOpen = modal && !modal.classList.contains('hidden');
+      
+      const statusElement = document.getElementById(isModalOpen ? 'modal-status' : 'status');
+      if (!statusElement) return;
+      
+      statusElement.className = `mb-4 p-3 rounded ${
+        type === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
+        type === 'error' ? 'bg-red-100 text-red-800 border border-red-200' :
+        'bg-blue-100 text-blue-800 border border-blue-200'
+      }`;
+      statusElement.textContent = message;
+      statusElement.classList.remove('hidden');
+      
+      setTimeout(() => statusElement.classList.add('hidden'), 6000);
+    }
+
+    private closeModal(): void {
+      document.getElementById('modal')!.classList.add('hidden');
+      // Nettoyer le message de statut du modal
+      document.getElementById('modal-status')!.classList.add('hidden');
+    }
+
+    // Authentification
+    private authenticate(password: string): boolean {
+      if (password === this.ADMIN_PASSWORD) {
+        document.getElementById('auth-section')!.classList.add('hidden');
+        document.getElementById('admin-panel')!.classList.remove('hidden');
+        this.showStatus('Connexion réussie !', 'success');
+        return true;
+      }
+      return false;
+    }
+
+    // API calls
+    private async apiCall(endpoint: string, data: any): Promise<any> {
+      const response = await fetch(`/admin/?endpoint=${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result.error) {
+        throw new Error(result.error || 'Erreur API');
+      }
+
+      return result;
+    }
+
+    // Upload d'image
+    private async uploadImage(file: File, folder: string): Promise<string> {
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('folder', folder);
+
+      const response = await fetch('/admin/?endpoint=upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result.error) {
+        throw new Error(result.error || 'Erreur upload');
+      }
+
+      return result.imagePath;
+    }
+
+    // Formulaires
+    private showTestimonialForm(): void {
+      document.getElementById('modal-title')!.textContent = 'Nouveau témoignage';
+      document.getElementById('modal-content')!.innerHTML = `
+        <form id="testimonial-form">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Nom du client *</label>
+              <input type="text" name="clientName" required class="w-full p-2 border rounded" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Entreprise *</label>
+              <input type="text" name="company" required class="w-full p-2 border rounded" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Ordre d'affichage</label>
+              <input type="number" name="order" value="1" min="1" class="w-full p-2 border rounded" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Image (optionnel)</label>
+              <div class="space-y-2">
+                <div class="flex gap-2">
+                  <input type="file" id="testimonial-image-upload" accept="image/*" class="hidden" />
+                  <button type="button" id="select-testimonial-image" class="bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
+                    📁 Choisir une image
+                  </button>
+                  <button type="button" id="upload-testimonial-image" class="bg-[var(--color-secondary)] text-white px-3 py-2 rounded text-sm hover:bg-[var(--color-accent)] disabled:bg-gray-300 transition-colors" disabled>
+                    📤 Uploader
+                  </button>
+                </div>
+                <input type="text" name="image" id="testimonial-image-path" class="hidden" />
+                <div id="testimonial-image-preview" class="text-sm text-gray-600"></div>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Alt de l'image</label>
+              <input type="text" name="imageAlt" placeholder="Logo de l'entreprise" class="w-full p-2 border rounded" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Témoignage (Français) *</label>
+              <textarea name="contentFr" rows="4" required class="w-full p-2 border rounded" 
+                placeholder="Votre témoignage en français..."></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Témoignage (Anglais)</label>
+              <textarea name="contentEn" rows="4" class="w-full p-2 border rounded" 
+                placeholder="English testimonial..."></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Témoignage (Allemand)</label>
+              <textarea name="contentDe" rows="4" class="w-full p-2 border rounded" 
+                placeholder="Deutsches Testimonial..."></textarea>
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded hover:bg-[var(--color-primary-hover)] transition-colors">
+                💾 Sauvegarder
+              </button>
+              <button type="button" class="cancel-btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors">
+                Annuler
+              </button>
+            </div>
+          </div>
+        </form>
+      `;
+
+      document.getElementById('modal')!.classList.remove('hidden');
+      this.attachFormListeners();
+    }
+
+    private showPartnerForm(): void {
+      document.getElementById('modal-title')!.textContent = 'Nouveau partenaire';
+      document.getElementById('modal-content')!.innerHTML = `
+        <form id="partner-form">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Site web *</label>
+              <input type="url" name="website" required class="w-full p-2 border rounded" 
+                placeholder="https://example.com" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Logo du partenaire *</label>
+              <div class="space-y-2">
+                <div class="flex gap-2">
+                  <input type="file" id="partner-logo-upload" accept="image/*" class="hidden" />
+                  <button type="button" id="select-partner-logo" class="bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
+                    📁 Choisir un logo
+                  </button>
+                  <button type="button" id="upload-partner-logo" class="bg-[var(--color-secondary)] text-white px-3 py-2 rounded text-sm hover:bg-[var(--color-accent)] disabled:bg-gray-300 transition-colors" disabled>
+                    📤 Uploader
+                  </button>
+                </div>
+                <input type="text" name="logo" id="partner-logo-path" required class="hidden" />
+                <div id="partner-logo-preview" class="text-sm text-gray-600"></div>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Alt du logo *</label>
+              <input type="text" name="logoAlt" required class="w-full p-2 border rounded" 
+                placeholder="Logo de l'entreprise" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Catégorie *</label>
+              <select name="category" required class="w-full p-2 border rounded">
+                <option value="">Choisir...</option>
+                <option value="institutionnel">Institutionnel</option>
+                <option value="prive">Privé</option>
+              </select>
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded hover:bg-[var(--color-primary-hover)] transition-colors">
+                💾 Sauvegarder
+              </button>
+              <button type="button" class="cancel-btn bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors">
+                Annuler
+              </button>
+            </div>
+          </div>
+        </form>
+      `;
+
+      document.getElementById('modal')!.classList.remove('hidden');
+      this.attachFormListeners();
+    }
+
+    private attachFormListeners(): void {
+      const testimonialForm = document.getElementById('testimonial-form');
+      const partnerForm = document.getElementById('partner-form');
+      const cancelBtn = document.querySelector('.cancel-btn');
+
+      // File selection handlers
+      const selectTestimonialBtn = document.getElementById('select-testimonial-image');
+      const selectPartnerBtn = document.getElementById('select-partner-logo');
+      const testimonialFileInput = document.getElementById('testimonial-image-upload') as HTMLInputElement;
+      const partnerFileInput = document.getElementById('partner-logo-upload') as HTMLInputElement;
+
+      // Upload handlers
+      const uploadTestimonialBtn = document.getElementById('upload-testimonial-image');
+      const uploadPartnerBtn = document.getElementById('upload-partner-logo');
+
+      if (testimonialForm) {
+        testimonialForm.addEventListener('submit', (e) => this.handleTestimonialSubmit(e));
+      }
+
+      if (partnerForm) {
+        partnerForm.addEventListener('submit', (e) => this.handlePartnerSubmit(e));
+      }
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => this.closeModal());
+      }
+
+      // Boutons de sélection de fichier
+      if (selectTestimonialBtn && testimonialFileInput) {
+        selectTestimonialBtn.addEventListener('click', () => testimonialFileInput.click());
+        testimonialFileInput.addEventListener('change', () => this.handleFileSelection('testimognals'));
+      }
+
+      if (selectPartnerBtn && partnerFileInput) {
+        selectPartnerBtn.addEventListener('click', () => partnerFileInput.click());
+        partnerFileInput.addEventListener('change', () => this.handleFileSelection('partners'));
+      }
+
+      // Boutons d'upload
+      if (uploadTestimonialBtn) {
+        uploadTestimonialBtn.addEventListener('click', () => this.handleImageUpload('testimognals'));
+      }
+
+      if (uploadPartnerBtn) {
+        uploadPartnerBtn.addEventListener('click', () => this.handleImageUpload('partners'));
+      }
+    }
+
+    // Handler pour la sélection de fichier
+    private handleFileSelection(folder: string): void {
+      const isTestimonial = folder === 'testimognals';
+      const fileInputId = isTestimonial ? 'testimonial-image-upload' : 'partner-logo-upload';
+      const uploadBtnId = isTestimonial ? 'upload-testimonial-image' : 'upload-partner-logo';
+      const previewId = isTestimonial ? 'testimonial-image-preview' : 'partner-logo-preview';
+      
+      const fileInput = document.getElementById(fileInputId) as HTMLInputElement;
+      const uploadBtn = document.getElementById(uploadBtnId) as HTMLButtonElement;
+      const preview = document.getElementById(previewId) as HTMLElement;
+      
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        
+        // Validation
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        if (!allowedTypes.includes(file.type)) {
+          this.showStatus('❌ Type de fichier non supporté. Utilisez JPG, PNG ou WebP.', 'error');
+          fileInput.value = '';
+          return;
+        }
+
+        if (file.size > 2 * 1024 * 1024) {
+          this.showStatus('❌ Fichier trop volumineux. Maximum 2MB.', 'error');
+          fileInput.value = '';
+          return;
+        }
+
+        // Activer le bouton upload et afficher le nom du fichier
+        uploadBtn.disabled = false;
+        uploadBtn.classList.remove('disabled:bg-gray-300');
+        
+        const sizeKB = Math.round(file.size / 1024);
+        preview.textContent = `✅ ${file.name} (${sizeKB} KB) prêt à uploader`;
+        preview.className = 'text-sm text-green-600';
+        
+        this.showStatus(`📁 Fichier sélectionné: ${file.name}`, 'success');
+      } else {
+        // Désactiver le bouton si aucun fichier
+        uploadBtn.disabled = true;
+        uploadBtn.classList.add('disabled:bg-gray-300');
+        preview.textContent = '';
+      }
+    }
+
+    // Handler pour l'upload d'images
+    private async handleImageUpload(folder: string): Promise<void> {
+      const isTestimonial = folder === 'testimognals';
+      const fileInputId = isTestimonial ? 'testimonial-image-upload' : 'partner-logo-upload';
+      const pathInputId = isTestimonial ? 'testimonial-image-path' : 'partner-logo-path';
+      
+      const fileInput = document.getElementById(fileInputId) as HTMLInputElement;
+      const pathInput = document.getElementById(pathInputId) as HTMLInputElement;
+      
+      if (!fileInput.files || !fileInput.files[0]) {
+        this.showStatus('⚠️ Veuillez sélectionner un fichier', 'error');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      
+      try {
+        this.showStatus('📤 Upload en cours...', 'info');
+        const imagePath = await this.uploadImage(file, folder);
+        
+        // Remplir automatiquement le champ chemin
+        pathInput.value = imagePath;
+        
+        // Mettre à jour le preview
+        const preview = document.getElementById(isTestimonial ? 'testimonial-image-preview' : 'partner-logo-preview');
+        if (preview) {
+          preview.textContent = `✅ Image uploadée avec succès !`;
+          preview.className = 'text-sm text-green-600 font-medium';
+        }
+        
+        this.showStatus(`✅ Image uploadée ! 🎉`, 'success');
+      } catch (error) {
+        this.showStatus(
+          `❌ Erreur upload: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
+          'error'
+        );
+      }
+    }
+
+    // Handlers de soumission
+    private async handleTestimonialSubmit(event: Event): Promise<void> {
+      event.preventDefault();
+      
+      const form = event.target as HTMLFormElement;
+      const formData = new FormData(form);
+      
+      const data: TestimonialData = {
+        clientName: formData.get('clientName') as string,
+        company: formData.get('company') as string,
+        order: parseInt(formData.get('order') as string),
+        image: formData.get('image') as string || undefined,
+        imageAlt: formData.get('imageAlt') as string || undefined,
+        contentFr: formData.get('contentFr') as string,
+        contentEn: formData.get('contentEn') as string,
+        contentDe: formData.get('contentDe') as string,
+      };
+
+      try {
+        this.showStatus('⏳ Sauvegarde en cours...', 'info');
+        const result = await this.apiCall('testimonials', data);
+        
+        this.showStatus(
+          `✅ Témoignage sauvegardé ! 📁 ${result.filename} | 🔗 ${result.commitSha.slice(0, 7)} | 🚀 Le site va se rebuilder automatiquement.`,
+          'success'
+        );
+        
+        this.closeModal();
+      } catch (error) {
+        this.showStatus(
+          `❌ Erreur: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
+          'error'
+        );
+      }
+    }
+
+    private async handlePartnerSubmit(event: Event): Promise<void> {
+      event.preventDefault();
+      
+      const form = event.target as HTMLFormElement;
+      const formData = new FormData(form);
+      
+      const data: PartnerData = {
+        website: formData.get('website') as string,
+        logo: formData.get('logo') as string,
+        logoAlt: formData.get('logoAlt') as string,
+        category: formData.get('category') as 'institutionnel' | 'prive',
+      };
+
+      try {
+        this.showStatus('⏳ Sauvegarde en cours...', 'info');
+        const result = await this.apiCall('partners', data);
+        
+        this.showStatus(
+          `✅ Partenaire sauvegardé ! 📁 ${result.filename} | 🔗 ${result.commitSha.slice(0, 7)} | 🚀 Le site va se rebuilder automatiquement.`,
+          'success'
+        );
+        
+        this.closeModal();
+      } catch (error) {
+        this.showStatus(
+          `❌ Erreur: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
+          'error'
+        );
+      }
+    }
+
+    // Initialisation
+    init(): void {
+      // Authentification
+      document.getElementById('auth-btn')!.addEventListener('click', () => {
+        const passwordInput = document.getElementById('admin-password') as HTMLInputElement;
+        if (!this.authenticate(passwordInput.value)) {
+          this.showStatus('❌ Mot de passe incorrect', 'error');
+          passwordInput.value = '';
+        }
+      });
+
+      document.getElementById('admin-password')!.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          document.getElementById('auth-btn')!.click();
+        }
+      });
+
+      // Boutons principaux
+      document.getElementById('new-testimonial-btn')!.addEventListener('click', () => {
+        this.showTestimonialForm();
+      });
+
+      document.getElementById('new-partner-btn')!.addEventListener('click', () => {
+        this.showPartnerForm();
+      });
+
+      // Modal
+      document.getElementById('modal-close')!.addEventListener('click', () => {
+        this.closeModal();
+      });
+
+      document.getElementById('modal')!.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modal')) {
+          this.closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.closeModal();
+        }
+      });
+
+      console.log('🔧 Admin interface loaded');
+    }
+  }
+
+  // Initialisation
+  document.addEventListener('astro:page-load', () => {
+    const admin = new AdminUI();
+    admin.init();
+  });
+</script>
+
+<style>
+  .container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-color) 0%, #f8fafc 100%);
+  }
+  
+  #status {
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--color-primary);
+  }
+  
+  form input:focus,
+  form textarea:focus,
+  form select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 109, 119, 0.1);
+  }
+</style>
+</Layout>
