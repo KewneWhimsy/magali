@@ -49,12 +49,24 @@ const content = {
     
     prerequis: {
       title: 'PRÉREQUIS',
-      description: 'La formation s\'adresse aux professionnels intervenant à un point ou un autre de la chaîne logistique ayant a minima des notions de base dans le domaine concerné.',
-      formats: 'Nous proposons des formats présentiels et distanciels.',
-      elearning: 'ABC Gourmet a également développé un module e-learning et propose un apprentissage hybride (e-learning/distanciel) sur cette thématique.',
-      duration: 'La formation dans sa globalité s\'étend sur 3 journées.',
-      modules: 'Chaque module peut toutefois s\'envisager de façon dissociée et indépendante.',
-      tarification: 'La tarification est établie sur devis, selon le module défini.'
+      description: 'La formation s\'adresse aux professionnels intervenant à un point ou un autre de la chaîne logistique ayant a minima des notions de base dans le domaine concerné.'
+    },
+    
+    formats: {
+      title: 'FORMATS DE FORMATION',
+      presentation: 'Nous proposons des formats présentiels et distanciels.',
+      elearning: 'ABC Gourmet a également développé un module e-learning et propose un apprentissage hybride (e-learning/distanciel) sur cette thématique.'
+    },
+    
+    duree: {
+      title: 'DURÉE',
+      global: 'La formation dans sa globalité s\'étend sur 3 journées.',
+      modules: 'Chaque module peut toutefois s\'envisager de façon dissociée et indépendante.'
+    },
+    
+    tarifs: {
+      title: 'TARIFS',
+      description: 'La tarification est établie sur devis, selon le module défini.'
     },
     
     accordions: [
@@ -135,7 +147,6 @@ const content = {
     ctaButton: 'Demander un devis'
   },
   
-  // Ajout des traductions pour éviter l'erreur TypeScript
   en: {
     title: 'Training and Workshops - ABC Gourmet',
     description: 'Specialized training and practical workshops for professionals.',
@@ -168,12 +179,24 @@ const content = {
     },
     prerequis: {
       title: 'PREREQUISITES',
-      description: 'The training is aimed at professionals involved at one point or another in the logistics chain having at least basic knowledge in the field concerned.',
-      formats: 'We offer face-to-face and remote formats.',
-      elearning: 'ABC Gourmet has also developed an e-learning module and offers hybrid learning (e-learning/remote) on this theme.',
-      duration: 'The training in its entirety extends over 3 days.',
-      modules: 'Each module can however be considered separately and independently.',
-      tarification: 'Pricing is established on quote, according to the defined module.'
+      description: 'The training is aimed at professionals involved at one point or another in the logistics chain having at least basic knowledge in the field concerned.'
+    },
+    
+    formats: {
+      title: 'TRAINING FORMATS',
+      presentation: 'We offer face-to-face and remote formats.',
+      elearning: 'ABC Gourmet has also developed an e-learning module and offers hybrid learning (e-learning/remote) on this theme.'
+    },
+    
+    duree: {
+      title: 'DURATION',
+      global: 'The training in its entirety extends over 3 days.',
+      modules: 'Each module can however be considered separately and independently.'
+    },
+    
+    tarifs: {
+      title: 'PRICING',
+      description: 'Pricing is established on quote, according to the defined module.'
     },
     accordions: [
       {
@@ -283,12 +306,24 @@ const content = {
     },
     prerequis: {
       title: 'VORAUSSETZUNGEN',
-      description: 'Die Schulung richtet sich an Fachleute, die an einem Punkt der Logistikkette beteiligt sind und mindestens Grundkenntnisse im betreffenden Bereich haben.',
-      formats: 'Wir bieten Präsenz- und Remote-Formate an.',
-      elearning: 'ABC Gourmet hat auch ein E-Learning-Modul entwickelt und bietet hybrides Lernen (E-Learning/Remote) zu diesem Thema an.',
-      duration: 'Die Schulung in ihrer Gesamtheit erstreckt sich über 3 Tage.',
-      modules: 'Jedes Modul kann jedoch separat und unabhängig betrachtet werden.',
-      tarification: 'Die Preisgestaltung erfolgt auf Angebot, je nach definiertem Modul.'
+      description: 'Die Schulung richtet sich an Fachleute, die an einem Punkt der Logistikkette beteiligt sind und mindestens Grundkenntnisse im betreffenden Bereich haben.'
+    },
+    
+    formats: {
+      title: 'SCHULUNGSFORMATE',
+      presentation: 'Wir bieten Präsenz- und Remote-Formate an.',
+      elearning: 'ABC Gourmet hat auch ein E-Learning-Modul entwickelt und bietet hybrides Lernen (E-Learning/Remote) zu diesem Thema an.'
+    },
+    
+    duree: {
+      title: 'DAUER',
+      global: 'Die Schulung in ihrer Gesamtheit erstreckt sich über 3 Tage.',
+      modules: 'Jedes Modul kann jedoch separat und unabhängig betrachtet werden.'
+    },
+    
+    tarifs: {
+      title: 'PREISE',
+      description: 'Die Preisgestaltung erfolgt auf Angebot, je nach definiertem Modul.'
     },
     accordions: [
       {
@@ -423,7 +458,7 @@ const t = content[lang];
     </div>
   </section>
 
-  <!-- Section Public Visé + Prérequis -->
+  <!-- Section Public Visé + Prérequis + Formats + Durée + Tarifs -->
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -452,19 +487,51 @@ const t = content[lang];
           </h2>
           <div class="bg-[var(--color-primary)] h-1 w-16 mb-8"></div>
           
-          <div class="space-y-4 text-gray-700">
-            <p class="leading-relaxed">{t.prerequis.description}</p>
-            
-            <div class="mt-6 space-y-3">
-              <p class="font-medium">{t.prerequis.formats}</p>
-              <p>{t.prerequis.elearning}</p>
-              <p class="font-medium">{t.prerequis.duration}</p>
-              <p>{t.prerequis.modules}</p>
-              <p class="font-semibold text-[var(--color-secondary)]">{t.prerequis.tarification}</p>
-            </div>
+          <p class="text-gray-700 leading-relaxed">{t.prerequis.description}</p>
+        </div>
+      </div>
+      
+      <!-- Formats, Durée et Tarifs -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        
+        <!-- Formats -->
+        <div class="card">
+          <h2 class="text-xl font-bold mb-4 text-[var(--color-primary)] uppercase tracking-wide">
+            {t.formats.title}
+          </h2>
+          <div class="bg-[var(--color-primary)] h-1 w-12 mb-6"></div>
+          
+          <div class="space-y-3 text-gray-700">
+            <p>{t.formats.presentation}</p>
+            <p class="text-sm">{t.formats.elearning}</p>
+          </div>
+        </div>
+
+        <!-- Durée -->
+        <div class="card">
+          <h2 class="text-xl font-bold mb-4 text-[var(--color-primary)] uppercase tracking-wide">
+            {t.duree.title}
+          </h2>
+          <div class="bg-[var(--color-primary)] h-1 w-12 mb-6"></div>
+          
+          <div class="space-y-3 text-gray-700">
+            <p class="font-medium">{t.duree.global}</p>
+            <p class="text-sm">{t.duree.modules}</p>
+          </div>
+        </div>
+
+        <!-- Tarifs -->
+        <div class="card">
+          <h2 class="text-xl font-bold mb-4 text-[var(--color-primary)] uppercase tracking-wide">
+            {t.tarifs.title}
+          </h2>
+          <div class="bg-[var(--color-primary)] h-1 w-12 mb-6"></div>
+          
+          <div class="space-y-4">
+            <p class="text-gray-700">{t.tarifs.description}</p>
             
             <!-- Bouton Tarifs -->
-            <div class="mt-8">
+            <div class="pt-2">
               <a href={`/${lang}/contact/?subject=demande-devis-formation`} class="btn-primary">
                 {t.ctaButton}
               </a>
@@ -517,6 +584,7 @@ const t = content[lang];
       </div>
     </div>
   </section>
+
   <!-- Section Notre approche pédagogique -->
   <section class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-4">
@@ -659,7 +727,6 @@ const t = content[lang];
 </Layout>
 
 <style>
-
   /* Accordéons CSS pur */
   .accordion-item input[type="checkbox"]:checked + label .accordion-toggle {
     background-color: var(--color-secondary);
